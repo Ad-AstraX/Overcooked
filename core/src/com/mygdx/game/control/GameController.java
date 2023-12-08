@@ -1,10 +1,10 @@
 package com.mygdx.game.control;
 
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.model.Game;
+import com.mygdx.game.model.GameState;
 
 public class GameController {
-    private final Game game;
+    private final GameState game;
     private final PlayerController playerController1;
     private final PlayerController playerController2;
     private final CustomerController customerController;
@@ -12,7 +12,7 @@ public class GameController {
     private final WorldController worldController;
 
     public GameController(float timeSeconds, int payGoal) {
-        game = new Game(timeSeconds, payGoal);
+        game = new GameState(timeSeconds, payGoal);
         playerController1 = new PlayerController(new Vector2(2, 0));
         playerController2 = new PlayerController(new Vector2(-2, 0));
         customerController = new CustomerController(); // TODO
@@ -27,6 +27,6 @@ public class GameController {
     }
 
     public void tickTime(float dt) {
-        game.timeleft -= dt;
+        game.timeLeft -= dt;
     }
 }

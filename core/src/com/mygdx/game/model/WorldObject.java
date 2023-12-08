@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class WorldObject {
-    private final Texture texture;
+    private Texture texture;
     public Vector2 position;
     public Vector2 size;
 
@@ -14,7 +14,22 @@ public abstract class WorldObject {
         this.size = size;
     }
 
+    // All Getters
     public Texture getTexture() {
         return texture;
+    }
+    public Vector2 getPosition() {
+        return position;
+    }
+    public Vector2 getSize() {
+        return size;
+    }
+
+    // All Setters
+    public void setPosition(Vector2 position) {
+        this.position = position;
+    }
+    public void setSize(Vector2 size) {
+        this.size = size;
     }
 }
