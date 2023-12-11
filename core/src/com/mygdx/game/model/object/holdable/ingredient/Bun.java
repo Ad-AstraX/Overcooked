@@ -10,11 +10,6 @@ public class Bun extends Ingredient{
 
     @Override
     public boolean pickup(Player player) {
-        if (player != null){
-            pickedUp = true;
-            position.set(new Vector2(player.getPosition()).add(new Vector2(5, 5)));
-            return true;
-        }
         return false;
     }
 

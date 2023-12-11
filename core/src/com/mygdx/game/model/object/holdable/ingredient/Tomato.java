@@ -12,16 +12,6 @@ public class Tomato extends Ingredient implements ICuttable{
 
     @Override
     public boolean pickup(Player player) {
-        if (player != null){
-            pickedUp = true;
-            position.set(new Vector2(player.getPosition()).add(new Vector2(5, 5)));
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean putDown(Player player) {
         return false;
     }
 
