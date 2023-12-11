@@ -1,5 +1,7 @@
 package com.mygdx.game.model.object.holdable;
 
+import com.mygdx.game.model.Player;
+
 public interface IHoldable {
 
     /**
@@ -7,7 +9,14 @@ public interface IHoldable {
      * <p>
      * @return Whether or not the interaction was successful
      */
-    public boolean pickup();
+    public boolean pickup(Player player);
+
+    /**
+     * Allows a Holdable object to be put down by the player
+     * <p>
+     * @return Whether or not the interaction was succesful
+     */
+    public boolean putDown(Player player);
 
     /**
      * Gives info on the Type of a given Holdable instance
