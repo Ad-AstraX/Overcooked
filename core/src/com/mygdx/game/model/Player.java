@@ -10,9 +10,7 @@ public class Player extends WorldObject {
     public Player(Vector2 position) {
         super("badlogic.jpg", position, new Vector2(1f, 1f));
     }
-    public float getMOVEMENT_SPEED() {
-        return MOVEMENT_SPEED;
-    }
+
     public IHoldable getHand() {
         return hand;
     }

@@ -3,15 +3,9 @@ package com.mygdx.game.model.object.holdable.ingredient;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 
-public class Patty extends Ingredient implements ICookable {
-    private boolean isCooked;
-    public Patty(Vector2 position) {
-        super("badlogic.jpg", position, new Vector2(20, 20));
-    }
-
-    @Override
-    public void cook() {
-        isCooked = true;
+public class Sauce extends Ingredient{
+    public Sauce(Vector2 position) {
+        super("badlogic.png", position, new Vector2(20, 20));
     }
 
     @Override
@@ -22,9 +16,5 @@ public class Patty extends Ingredient implements ICookable {
     @Override
     public String getSubclassTypeName() {
         return this.getClass().getTypeName();
-    }
-
-    public boolean isCooked() {
-        return isCooked;
     }
 }

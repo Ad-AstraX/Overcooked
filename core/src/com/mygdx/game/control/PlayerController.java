@@ -10,7 +10,10 @@ public class PlayerController {
         player = new Player(spawnPosition);
     }
 
-    public void UpdateInput(float dt, Vector2 movement, boolean pickup, boolean interact) {
-        player.position.add(movement.scl(dt));
+    public void UpdateInput(float dt, Vector2 moveInput, boolean pickup, boolean interact) {
+        Vector2 move = moveInput.scl(Player.MOVEMENT_SPEED).scl(dt);
+        player.position.add(move);
+
+        // TODO: Player Input (Pickup, Interact)
     }
 }

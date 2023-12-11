@@ -27,7 +27,7 @@ public class Tomato extends Ingredient implements ICuttable{
 
     @Override
     public String getSubclassTypeName() {
-        return "Tomato";
+        return this.getClass().getTypeName();
     }
 
     @Override

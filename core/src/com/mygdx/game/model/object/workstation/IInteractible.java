@@ -11,5 +11,5 @@ public interface IInteractible {
      * @param holdable The ingredient or food to be "processed" by the kitchen counter
      * @return Whether or not the Interaction was successful
      */
-    public boolean interact(IHoldable holdable);
+    boolean interact(IHoldable holdable);
 }

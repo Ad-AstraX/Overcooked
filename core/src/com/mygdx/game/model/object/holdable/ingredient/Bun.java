@@ -19,12 +19,7 @@ public class Bun extends Ingredient{
     }
 
     @Override
-    public boolean putDown(Player player) {
-        return false;
-    }
-
-    @Override
     public String getSubclassTypeName() {
-        return "Bun";
+        return this.getClass().getTypeName();
     }
 }
