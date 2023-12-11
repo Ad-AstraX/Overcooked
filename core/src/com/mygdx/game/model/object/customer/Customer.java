@@ -7,7 +7,7 @@ public class Customer extends WorldObject {
     private Order order;
     private int patience;
 
-    public Customer(String texturePath, Vector2 position, Vector2 size) {
+    public Customer(Vector2 position) {
         super("badlogic.jpg", position, new Vector2(20, 20));
     }
 
