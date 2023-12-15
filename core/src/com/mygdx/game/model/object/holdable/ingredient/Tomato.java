@@ -6,6 +6,10 @@ import com.mygdx.game.model.Player;
 public class Tomato extends Ingredient implements ICuttable{
     private boolean isCut;
 
+    public Tomato() {
+        super("", Vector2.Zero, Vector2.Zero);
+    }
+
     public Tomato(Vector2 position) {
         super("badlogic.jpg", position, new Vector2(20, 20));
     }

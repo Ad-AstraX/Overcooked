@@ -4,6 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 
 public class Bun extends Ingredient{
+    public Bun() {
+        super("", Vector2.Zero, Vector2.Zero);
+    }
+
     public Bun(Vector2 position) {
         super("badlogic.png", position, new Vector2(20, 20));
     }

@@ -7,8 +7,9 @@ public class Customer extends WorldObject {
     private Order order;
     private int patience;
 
-    public Customer(Vector2 position) {
+    public Customer(Vector2 position, Order order) {
         super("badlogic.jpg", position, new Vector2(20, 20));
+        this.order = order;
     }
 
     public Order getOrder() {
