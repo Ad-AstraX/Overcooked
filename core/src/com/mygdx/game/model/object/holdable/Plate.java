@@ -35,11 +35,6 @@ public class Plate extends WorldObject implements IHoldable {
     }
 
     @Override
-    public boolean putDown(Player player) {
-        return false;
-    }
-
-    @Override
     public String getSubclassTypeName() {
         return "Plate";
     }

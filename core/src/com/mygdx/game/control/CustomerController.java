@@ -5,7 +5,11 @@ import com.mygdx.game.model.datastructures.Queue;
 import com.mygdx.game.model.object.customer.Customer;
 
 public class CustomerController {
-    private Queue<Customer> customerQ = new Queue<>();
+    private final Queue<Customer> customerQ;
+
+    public CustomerController() {
+        customerQ = new Queue<>();
+    }
 
     public void generateNewCustomer(OrderController orderController) {
         Customer customer = new Customer(

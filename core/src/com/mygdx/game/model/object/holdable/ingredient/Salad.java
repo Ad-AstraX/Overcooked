@@ -7,7 +7,7 @@ public class Salad extends Ingredient implements ICuttable {
    private boolean isCut;
 
    public Salad() {
-      super("", Vector2.Zero, Vector2.Zero);
+      super("badlogic.jpg", Vector2.Zero, Vector2.Zero);
    }
 
    public Salad(Vector2 position) {

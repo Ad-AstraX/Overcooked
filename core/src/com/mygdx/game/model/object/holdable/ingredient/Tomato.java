@@ -7,7 +7,7 @@ public class Tomato extends Ingredient implements ICuttable{
     private boolean isCut;
 
     public Tomato() {
-        super("", Vector2.Zero, Vector2.Zero);
+        super("badlogic.jpg", Vector2.Zero, Vector2.Zero);
     }
 
     public Tomato(Vector2 position) {

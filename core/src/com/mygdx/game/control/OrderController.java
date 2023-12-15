@@ -11,6 +11,9 @@ public class OrderController {
     }
 
     public Order generateNewOrder(int recipeCount) {
+        if (recipeCount > 3)
+            recipeCount = 3;
+
         Recipe[] recipes = new Recipe[recipeCount];
 
         for (int i = 0; i < recipeCount; i++)
