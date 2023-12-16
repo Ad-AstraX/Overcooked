@@ -6,11 +6,11 @@ import com.mygdx.game.model.Player;
 public class Patty extends Ingredient implements ICookable {
     private boolean isCooked;
     public Patty() {
-        super("badlogic.jpg", Vector2.Zero, Vector2.Zero);
+        super("Ingredients/patty.png", Vector2.Zero, Vector2.Zero);
     }
 
     public Patty(Vector2 position) {
-        super("badlogic.jpg", position, new Vector2(20, 20));
+        super("Ingredients/patty.png", position, new Vector2(20, 20));
     }
 
     @Override

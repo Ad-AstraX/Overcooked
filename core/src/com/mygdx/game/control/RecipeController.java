@@ -7,8 +7,8 @@ public class RecipeController {
     private static final Recipe[] ALL_RECIPES = {
             new Recipe( new Ingredient[] { new Bun(), new Patty(), new Bun() }),
             new Recipe( new Ingredient[] { new Bun(), new Patty(), new Tomato(), new Bun() }),
-            new Recipe( new Ingredient[] { new Bun(), new Patty(), new Tomato(), new Salad(), new Bun() }),
-            new Recipe( new Ingredient[] { new Bun(), new Patty(), new Sauce(), new Tomato(), new Salad(), new Bun() })
+            new Recipe( new Ingredient[] { new Bun(), new Patty(), new Tomato(), new Lettuce(), new Bun() }),
+            new Recipe( new Ingredient[] { new Bun(), new Patty(), new Sauce(), new Tomato(), new Lettuce(), new Bun() })
     };
 
     public Recipe getRandomRecipe() {

@@ -13,8 +13,8 @@ public class GameController {
 
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
         game = new Game(roundLength, payGoal, customerSpawnChance);
-        playerController1 = new PlayerController(new Vector2(2, 0));
-        playerController2 = new PlayerController(new Vector2(-2, 0));
+        playerController1 = new PlayerController(0, new Vector2(400, 0));
+        playerController2 = new PlayerController(1, new Vector2(600, 0));
 
         customerController = new CustomerController();
         orderController = new OrderController(new RecipeController());
