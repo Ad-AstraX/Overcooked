@@ -9,7 +9,7 @@ public class PlayerController {
 
     public PlayerController(int id, Vector2 spawnPosition) {
         player = new Player(id, spawnPosition);
-        Main.getInteractables().append(player);
+        Main.getWorldObjectList().append(player);
     }
 
     public void UpdateInput(float dt, Vector2 moveInput, boolean pickup, boolean interact) {

@@ -18,7 +18,7 @@ public class CustomerController {
                 orderController.generateNewOrder((int)((Math.random() + 1) * 3)));
 
         customerQ.enqueue(customer);
-        Main.getInteractables().append(customer);
+        Main.getWorldObjectList().append(customer);
     }
 
     public Queue<Customer> getCustomerQ() {

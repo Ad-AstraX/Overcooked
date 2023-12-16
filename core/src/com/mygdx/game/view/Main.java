@@ -5,23 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.control.GameController;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
-import com.mygdx.game.model.object.holdable.ingredient.Tomato;
-import com.mygdx.game.model.object.workstation.IInteractible;
 
 public class Main extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 
-	private static List<WorldObject> interactables = new List<>();
+	private static List<WorldObject> worldObjectList = new List<>();
 	private GameController gameController;
 
 	public Main() {
@@ -47,16 +40,16 @@ public class Main extends ApplicationAdapter {
 		batch.begin();
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(new Texture("floorTiles.png"), 0, 0, 800, 800);
-		interactables.toFirst();
-		while (interactables.hasAccess()) {
+		worldObjectList.toFirst();
+		while (worldObjectList.hasAccess()) {
 			batch.draw(
-					interactables.getContent().getTexture(),
-					interactables.getContent().getPosition().x,
-					interactables.getContent().getPosition().y,
-					interactables.getContent().getSize().x,
-					interactables.getContent().getSize().y);
+					worldObjectList.getContent().getTexture(),
+					worldObjectList.getContent().getPosition().x,
+					worldObjectList.getContent().getPosition().y,
+					worldObjectList.getContent().getSize().x,
+					worldObjectList.getContent().getSize().y);
 
-			interactables.next();
+			worldObjectList.next();
 		}
 		batch.end();
 	}
@@ -66,7 +59,7 @@ public class Main extends ApplicationAdapter {
 		batch.dispose();
 	}
 
-	public static List<WorldObject> getInteractables() {
-		return interactables;
+	public static List<WorldObject> getWorldObjectList() {
+		return worldObjectList;
 	}
 }
