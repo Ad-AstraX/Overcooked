@@ -46,4 +46,9 @@ public class Plate extends WorldObject implements IHoldable {
     public Stack<Ingredient> getIngredients() {
         return ingredients;
     }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Plate(this.position);
+    }
 }

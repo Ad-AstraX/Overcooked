@@ -21,4 +21,9 @@ public class Customer extends WorldObject {
     public void setPatience(int patience) {
         this.patience = patience;
     }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Customer(this.position, this.order);
+    }
 }

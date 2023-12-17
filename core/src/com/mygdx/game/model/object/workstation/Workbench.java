@@ -6,8 +6,11 @@ import com.mygdx.game.model.object.holdable.IHoldable;
 
 public class Workbench extends WorldObject implements IInteractible {
     private IHoldable currentHoldable;
+    public Workbench() {
+        super("Interactables/workbench.png", Vector2.Zero, new Vector2(130, 160));
+    }
     public Workbench(Vector2 position) {
-        super("Interactables/workbench.png", position, new Vector2(20, 20));
+        super("Interactables/workbench.png", position, new Vector2(130, 160));
     }
 
     /**
@@ -23,5 +26,10 @@ public class Workbench extends WorldObject implements IInteractible {
 
     public IHoldable getCurrentHoldable() {
         return currentHoldable;
+    }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Workbench(this.position);
     }
 }

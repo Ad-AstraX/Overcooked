@@ -7,9 +7,12 @@ import com.mygdx.game.model.object.holdable.ingredient.ICuttable;
 
 public class Cuttingboard extends WorldObject implements IInteractible {
     private ICuttable currentCuttable;
+    public Cuttingboard() {
+        super("Interactables/cuttingboard.png", Vector2.Zero, new Vector2(130, 160));
+    }
 
     public Cuttingboard(Vector2 position) {
-        super("Interactables/cuttingboard.png", position, new Vector2(20, 20));
+        super("Interactables/cuttingboard.png", position, new Vector2(130, 160));
     }
 
     /**
@@ -25,5 +28,10 @@ public class Cuttingboard extends WorldObject implements IInteractible {
 
     public ICuttable getCurrentCuttable() {
         return currentCuttable;
+    }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Cuttingboard(this.position);
     }
 }

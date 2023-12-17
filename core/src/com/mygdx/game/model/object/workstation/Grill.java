@@ -7,9 +7,11 @@ import com.mygdx.game.model.object.holdable.ingredient.ICookable;
 
 public class Grill extends WorldObject implements IInteractible {
     private ICookable currentCookable;
-
+    public Grill() {
+        super("Interactables/grill.png", Vector2.Zero, new Vector2(130, 160));
+    }
     public Grill(Vector2 position) {
-        super("Interactables/grill.png", position, new Vector2(20, 20));
+        super("Interactables/grill.png", position, new Vector2(130, 160));
     }
 
     /**
@@ -25,5 +27,10 @@ public class Grill extends WorldObject implements IInteractible {
 
     public ICookable getCurrentCookable() {
         return currentCookable;
+    }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Grill(this.position);
     }
 }

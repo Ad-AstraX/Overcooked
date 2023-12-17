@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.control.GameController;
+import com.mygdx.game.model.Floor;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
 import com.mygdx.game.model.datastructures.Utilities;
@@ -36,7 +37,7 @@ public class Main extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		worldObjectList.append(
-				new WorldObject("floorTiles.png", new Vector2(0, 0), new Vector2(1200, 1000)));
+				new Floor("floorTiles.png", new Vector2(0, 0), new Vector2(1200, 1000)));
 		gameController = new GameController(120f, 60, 1f);
 	}
 

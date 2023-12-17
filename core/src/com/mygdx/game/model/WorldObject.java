@@ -3,8 +3,9 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.mygdx.game.model.object.workstation.Grill;
 
-public class WorldObject {
+public abstract class WorldObject {
     private Texture texture;
     public Vector2 position;
     public Vector2 size;
@@ -22,6 +23,7 @@ public class WorldObject {
     }
 
     // All Getters
+    public abstract WorldObject getCopy();
     public Texture getTexture() {
         return texture;
     }

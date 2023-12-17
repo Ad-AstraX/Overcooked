@@ -24,4 +24,9 @@ public class Trash extends WorldObject implements IInteractible {
     public IHoldable getCurrentHoldable() {
         return currentHoldable;
     }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Trash(this.position);
+    }
 }

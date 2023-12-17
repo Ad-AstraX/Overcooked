@@ -14,4 +14,9 @@ public class Player extends WorldObject {
     public IHoldable getHand() {
         return hand;
     }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Player("fallbackTexture.png", this.position);
+    }
 }

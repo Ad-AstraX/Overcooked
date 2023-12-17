@@ -2,6 +2,7 @@ package com.mygdx.game.model.object.holdable.ingredient;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
+import com.mygdx.game.model.WorldObject;
 
 public class Patty extends Ingredient implements ICookable {
     private boolean isCooked;
@@ -30,5 +31,10 @@ public class Patty extends Ingredient implements ICookable {
 
     public boolean isCooked() {
         return isCooked;
+    }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Patty(this.position);
     }
 }

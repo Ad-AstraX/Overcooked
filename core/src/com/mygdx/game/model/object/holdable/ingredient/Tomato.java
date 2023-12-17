@@ -2,6 +2,7 @@ package com.mygdx.game.model.object.holdable.ingredient;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
+import com.mygdx.game.model.WorldObject;
 
 public class Tomato extends Ingredient implements ICuttable{
     private boolean isCut;
@@ -31,5 +32,10 @@ public class Tomato extends Ingredient implements ICuttable{
 
     public boolean isCut() {
         return isCut;
+    }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Tomato(this.position);
     }
 }

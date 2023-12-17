@@ -2,6 +2,7 @@ package com.mygdx.game.model.object.holdable.ingredient;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
+import com.mygdx.game.model.WorldObject;
 
 public class Bun extends Ingredient{
     public Bun() {
@@ -20,5 +21,10 @@ public class Bun extends Ingredient{
     @Override
     public String getSubclassTypeName() {
         return this.getClass().getTypeName();
+    }
+
+    @Override
+    public WorldObject getCopy() {
+        return new Bun(this.position);
     }
 }
