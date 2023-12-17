@@ -8,6 +8,7 @@ public class WorldObject {
     private Texture texture;
     public Vector2 position;
     public Vector2 size;
+    public Vector2 hitbox;
 
     public WorldObject(String texturePath, Vector2 position, Vector2 size) {
         try {
@@ -17,6 +18,7 @@ public class WorldObject {
         }
         this.position = position;
         this.size = size;
+        this.hitbox = size;
     }
 
     // All Getters
@@ -28,6 +30,9 @@ public class WorldObject {
     }
     public Vector2 getSize() {
         return size;
+    }
+    public Vector2 getHitbox() {
+        return hitbox;
     }
 
     // All Setters
@@ -44,5 +49,8 @@ public class WorldObject {
     }
     public void setSize(Vector2 size) {
         this.size = size;
+    }
+    public void setHitbox(Vector2 hitbox) {
+        this.hitbox = hitbox;
     }
 }

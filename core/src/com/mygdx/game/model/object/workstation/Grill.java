@@ -9,7 +9,7 @@ public class Grill extends WorldObject implements IInteractible {
     private ICookable currentCookable;
 
     public Grill(Vector2 position) {
-        super("badlogic.jpg", position, new Vector2(20, 20));
+        super("Interactables/grill.png", position, new Vector2(20, 20));
     }
 
     /**

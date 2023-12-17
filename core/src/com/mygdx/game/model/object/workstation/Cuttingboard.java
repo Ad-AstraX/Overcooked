@@ -9,7 +9,7 @@ public class Cuttingboard extends WorldObject implements IInteractible {
     private ICuttable currentCuttable;
 
     public Cuttingboard(Vector2 position) {
-        super("badlogic.jpg", position, new Vector2(20, 20));
+        super("Interactables/cuttingboard.png", position, new Vector2(20, 20));
     }
 
     /**

@@ -7,7 +7,7 @@ import com.mygdx.game.model.object.holdable.IHoldable;
 public class Workbench extends WorldObject implements IInteractible {
     private IHoldable currentHoldable;
     public Workbench(Vector2 position) {
-        super("badlogic.jpg", position, new Vector2(20, 20));
+        super("Interactables/workbench.png", position, new Vector2(20, 20));
     }
 
     /**

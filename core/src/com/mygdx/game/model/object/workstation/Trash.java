@@ -7,7 +7,7 @@ import com.mygdx.game.model.object.holdable.IHoldable;
 public class Trash extends WorldObject implements IInteractible {
     private IHoldable currentHoldable;
     public Trash(Vector2 position) {
-        super("badlogic.jpg", position, new Vector2(20, 20));
+        super("Interactables/trashCan.png", position, new Vector2(20, 20));
     }
 
     /**

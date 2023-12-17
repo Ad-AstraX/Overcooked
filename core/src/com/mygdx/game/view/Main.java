@@ -7,15 +7,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.control.GameController;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
 
 public class Main extends ApplicationAdapter {
+	private Viewport viewport;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 
-	private static List<WorldObject> worldObjectList = new List<>();
+	private static final List<WorldObject> worldObjectList = new List<>();
 	private GameController gameController;
 
 	public Main() {
@@ -24,13 +26,14 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 800);
+		camera.setToOrtho(false, 1200, 1000);
+		viewport = new FitViewport(1200, 1000, camera);
 
 		batch = new SpriteBatch();
 
-		gameController = new GameController(120f, 60, 1f);
 		worldObjectList.append(
-				new WorldObject("floorTiles.png", new Vector2(0, 0), new Vector2(800, 800)));
+				new WorldObject("floorTiles.png", new Vector2(0, 0), new Vector2(1200, 1000)));
+		gameController = new GameController(120f, 60, 1f);
 	}
 
 	@Override
@@ -63,6 +66,10 @@ public class Main extends ApplicationAdapter {
 			worldObjectList.getContent().getTexture().dispose();
 			worldObjectList.next();
 		}
+	}
+
+	public void resize(int width, int height) {
+		viewport.update(width, height);
 	}
 
 	public static List<WorldObject> getWorldObjectList() {

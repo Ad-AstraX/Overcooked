@@ -4,15 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
 public class Player extends WorldObject {
-    public static final int MOVEMENT_SPEED = 100;
-    private final int id;
+    public static final int MOVEMENT_SPEED = 200;
     private IHoldable hand;
 
-    public Player(int id, Vector2 position) {
-        super("Players/PlayerOne/playerOrangeFront.png", position, new Vector2(50, 110));
-
-        if (id == 1) this.setTexture("Players/PlayerTwo/playerGreenFront.png");
-        this.id = id;
+    public Player(String path, Vector2 position) {
+        super(path, position, new Vector2(80, 140));
     }
 
     public IHoldable getHand() {
