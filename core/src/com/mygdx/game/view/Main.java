@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.control.GameController;
 import com.mygdx.game.model.WorldObject;
@@ -28,6 +29,8 @@ public class Main extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		gameController = new GameController(120f, 60, 1f);
+		worldObjectList.append(
+				new WorldObject("floorTiles.png", new Vector2(0, 0), new Vector2(800, 800)));
 	}
 
 	@Override
@@ -39,7 +42,6 @@ public class Main extends ApplicationAdapter {
 
 		batch.begin();
 		batch.setProjectionMatrix(camera.combined);
-		batch.draw(new Texture("floorTiles.png"), 0, 0, 800, 800);
 		worldObjectList.toFirst();
 		while (worldObjectList.hasAccess()) {
 			batch.draw(
@@ -57,6 +59,10 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		while (worldObjectList.hasAccess()) {
+			worldObjectList.getContent().getTexture().dispose();
+			worldObjectList.next();
+		}
 	}
 
 	public static List<WorldObject> getWorldObjectList() {

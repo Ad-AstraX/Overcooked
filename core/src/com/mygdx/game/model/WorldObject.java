@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-public abstract class WorldObject {
+public class WorldObject {
     private Texture texture;
     public Vector2 position;
     public Vector2 size;
