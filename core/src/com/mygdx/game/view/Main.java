@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.control.GameController;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
+import com.mygdx.game.model.datastructures.Utilities;
 
 public class Main extends ApplicationAdapter {
 	private Viewport viewport;
@@ -43,18 +44,23 @@ public class Main extends ApplicationAdapter {
 		ScreenUtils.clear(0, 0, 0, 1);
 		camera.update();
 
+		WorldObject[] worldObjectArray = new WorldObject[Utilities.countListElements(worldObjectList)];
+		worldObjectList.toFirst();
+		for (int i = 0; i < worldObjectArray.length; i++) {
+			worldObjectArray[i] = worldObjectList.getContent();
+			worldObjectList.next();
+		}
+
+		Utilities.quickSort(worldObjectArray, 1, worldObjectArray.length-1);
 		batch.begin();
 		batch.setProjectionMatrix(camera.combined);
-		worldObjectList.toFirst();
-		while (worldObjectList.hasAccess()) {
-			batch.draw(
-					worldObjectList.getContent().getTexture(),
-					worldObjectList.getContent().getPosition().x,
-					worldObjectList.getContent().getPosition().y,
-					worldObjectList.getContent().getSize().x,
-					worldObjectList.getContent().getSize().y);
-
-			worldObjectList.next();
+        for (WorldObject worldObject : worldObjectArray) {
+            batch.draw(
+                    worldObject.getTexture(),
+                    worldObject.getPosition().x,
+                    worldObject.getPosition().y,
+                    worldObject.getSize().x,
+                    worldObject.getSize().y);
 		}
 		batch.end();
 	}

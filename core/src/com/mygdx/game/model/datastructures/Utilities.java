@@ -1,5 +1,7 @@
 package com.mygdx.game.model.datastructures;
 
+import com.mygdx.game.model.WorldObject;
+
 public class Utilities {
     public static <ContentType> int countStackElements(Stack<ContentType> stack) {
         int count = 0;
@@ -74,5 +76,36 @@ public class Utilities {
             list.next();
         }
         return count;
+    }
+
+
+    // Sorting algorithm for WorldObjects. I need it, don't you dare delete
+    public static void quickSort(WorldObject[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex-1);
+            quickSort(arr, partitionIndex+1, end);
+        }
+    }
+    private static int partition(WorldObject[] arr, int begin, int end) {
+        float pivot = arr[end].getPosition().y;
+        int i = (begin-1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j].getPosition().y >= pivot) {
+                i++;
+
+                WorldObject swapTemp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = swapTemp;
+            }
+        }
+
+        WorldObject swapTemp = arr[i+1];
+        arr[i+1] = arr[end];
+        arr[end] = swapTemp;
+
+        return i+1;
     }
 }
