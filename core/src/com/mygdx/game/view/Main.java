@@ -13,6 +13,9 @@ import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
 import com.mygdx.game.model.datastructures.Utilities;
 
+/**
+ * DON'T YOU DARE MAKE CHANGES TO THIS CLASS WITHOUT CONSULTING ME
+ */
 public class Main extends ApplicationAdapter {
 	private Viewport viewport;
 	private OrthographicCamera camera;

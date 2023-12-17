@@ -19,6 +19,13 @@ public class PlayerController {
         Main.getWorldObjectList().append(player);
     }
 
+    /**
+     * Updates the player's input for interaction (movement, interaction etc.)
+     * <p>
+     * @param dt Time
+     * @param pickup // TODO
+     * @param interact // TODO
+     */
     public void UpdateInput(float dt, boolean pickup, boolean interact) {
         Vector2 move = Vector2.Zero;
         if (Gdx.input.isKeyPressed(controls[0])) {

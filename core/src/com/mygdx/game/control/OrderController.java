@@ -10,6 +10,12 @@ public class OrderController {
         recipeController = recipes;
     }
 
+    /**
+     * Generates a new Order which contains 1-3 recipes
+     * <p>
+     * @param recipeCount the amount of recipes this order has
+     * @return the finished order
+     */
     public Order generateNewOrder(int recipeCount) {
         if (recipeCount > 3)
             recipeCount = 3;

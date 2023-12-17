@@ -45,6 +45,11 @@ public class GameController {
         }
     }
 
+    /**
+     * The method that will be updated every frame
+     * <p>
+     * @param dt time
+     */
     public void mainLoop(float dt) {
         tickTime(dt);
 
@@ -55,11 +60,19 @@ public class GameController {
         tickGenCustomer();
     }
 
+    /**
+     * Calculates the time since and left since the last frame
+     * <p>
+     * @param dt Time
+     */
     public void tickTime(float dt) {
         game.timeLeftLastFrame = game.timeLeft;
         game.timeLeft -= dt;
     }
 
+    /**
+     * Creates a customer after a certain amount of time has passed
+     */
     public void tickGenCustomer() {
         if (Math.floor(game.timeLeft) == Math.floor(game.timeLeftLastFrame))
             return;

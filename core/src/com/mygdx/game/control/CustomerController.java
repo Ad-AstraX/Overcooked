@@ -12,6 +12,12 @@ public class CustomerController {
         customerQ = new Queue<>();
     }
 
+    /**
+     * Generates a new customer at a given position with a
+     * random amount (1-3) of recipes in its order
+     * <p>
+     * @param orderController the controller used to generate all recipes for every customer
+     */
     public void generateNewCustomer(OrderController orderController) {
         Customer customer = new Customer(
                 new Vector2(0, 0),

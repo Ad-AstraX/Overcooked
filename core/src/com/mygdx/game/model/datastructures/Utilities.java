@@ -3,6 +3,13 @@ package com.mygdx.game.model.datastructures;
 import com.mygdx.game.model.WorldObject;
 
 public class Utilities {
+    /**
+     * Counts the amount of elements in a given stack
+     * <p>
+     * @param stack the stack whose elements will be counted
+     * @return The amount of elements in the given stack
+     * @param <ContentType> The type of the stack's content
+     */
     public static <ContentType> int countStackElements(Stack<ContentType> stack) {
         int count = 0;
         Stack<ContentType> help = new Stack<>();
@@ -21,6 +28,13 @@ public class Utilities {
         return count;
     }
 
+    /**
+     * Copies a stack
+     * <p>
+     * @param stack the stack that is to be copied
+     * @return a copy of the stack
+     * @param <ContentType> The type of the stack's content
+     */
     public static <ContentType> Stack<ContentType> copyStack(Stack<ContentType> stack) {
         Stack<ContentType> help = new Stack<>();
         Stack<ContentType> copy = new Stack<>();
@@ -38,6 +52,14 @@ public class Utilities {
 
         return copy;
     }
+
+    /**
+     * Counts the amount of elements in a given queue
+     * <p>
+     * @param queue the queue whose elements will be counted
+     * @return The amount of elements in the given queue
+     * @param <ContentType> The type of the queue's content
+     */
     public static <ContentType> int countQueueElements(Queue<ContentType> queue) {
         int count = 0;
         Queue<ContentType> helpQueue = new Queue<>();
@@ -53,6 +75,13 @@ public class Utilities {
         return count;
     }
 
+    /**
+     * Copies a queue
+     * <p>
+     * @param queue the queue that is to be copied
+     * @return a copy of the queue
+     * @param <ContentType> The type of the queue's content
+     */
     public static <ContentType> Queue<ContentType> copyQueue(Queue<ContentType> queue) {
         Queue<ContentType> help = new Queue<>();
         Queue<ContentType> copy = new Queue<>();
@@ -68,6 +97,13 @@ public class Utilities {
         return copy;
     }
 
+    /**
+     * Counts the amount of elements in a given list
+     * <p>
+     * @param list the list whose elements will be counted
+     * @return The amount of elements in the given list
+     * @param <ContentType> The type of the list's content
+     */
     public static <ContentType> int countListElements(List<ContentType> list) {
         int count = 0;
         list.toFirst();
@@ -78,8 +114,14 @@ public class Utilities {
         return count;
     }
 
-
-    // Sorting algorithm for WorldObjects. I need it, don't you dare delete
+    /**
+     * Applies quicksort on the y positions of an array filled with WorldObjects
+     * Source: <a href="https://www.baeldung.com/java-quicksort"></a>
+     * <p>
+     * @param arr the array that is to be sorted
+     * @param begin Where to start sorting
+     * @param end Where to end sorting
+     */
     public static void quickSort(WorldObject[] arr, int begin, int end) {
         if (begin < end) {
             int partitionIndex = partition(arr, begin, end);
@@ -88,6 +130,16 @@ public class Utilities {
             quickSort(arr, partitionIndex+1, end);
         }
     }
+
+    /**
+     * Helper method for <br>quicksort</br>. This is where the real sorting happens
+     * Source: <a href="https://www.baeldung.com/java-quicksort"></a>
+     * <p>
+     * @param arr the array that is to be sorted
+     * @param begin Where to start sorting
+     * @param end Where to end sorting
+     * @return //TODO
+     */
     private static int partition(WorldObject[] arr, int begin, int end) {
         float pivot = arr[end].getPosition().y;
         int i = (begin-1);

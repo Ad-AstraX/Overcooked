@@ -11,6 +11,11 @@ public class RecipeController {
             new Recipe( new Ingredient[] { new Bun(), new Patty(), new Sauce(), new Tomato(), new Lettuce(), new Bun() })
     };
 
+    /**
+     * Chooses a random recipe and returns it
+     * <p>
+     * @return a random recipe
+     */
     public Recipe getRandomRecipe() {
         int index = (int)(Math.random() * ALL_RECIPES.length);
         return ALL_RECIPES[index];
