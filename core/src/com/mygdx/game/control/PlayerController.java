@@ -28,23 +28,29 @@ public class PlayerController {
      */
     public void UpdateInput(float dt, boolean pickup, boolean interact) {
         Vector2 move = Vector2.Zero;
+
         if (Gdx.input.isKeyPressed(controls[0])) {
             player.setTexture(textures[0]);
-            move = new Vector2(0, 1).scl(Player.MOVEMENT_SPEED).scl(dt);
+            move.add(new Vector2(0, 1));
         }
+
         if (Gdx.input.isKeyPressed(controls[1])) {
             player.setTexture(textures[1]);
-            move = new Vector2(-1, 0).scl(Player.MOVEMENT_SPEED).scl(dt);
+            move.add(new Vector2(-1, 0));
         }
+
         if (Gdx.input.isKeyPressed(controls[2])) {
             player.setTexture(textures[2]);
-            move = new Vector2(0, -1).scl(Player.MOVEMENT_SPEED).scl(dt);
+            move.add(new Vector2(0, -1));
         }
+
         if (Gdx.input.isKeyPressed(controls[3])) {
             player.setTexture(textures[3]);
-            move = new Vector2(1, 0).scl(Player.MOVEMENT_SPEED).scl(dt);
+            move.add(new Vector2(1, 0));
         }
-        player.position.add(move);
+
+        System.out.println(move);
+        player.position.add(move.nor().scl(Player.MOVEMENT_SPEED).scl(dt));
 
         // TODO: Player Input (Pickup, Interact)
     }

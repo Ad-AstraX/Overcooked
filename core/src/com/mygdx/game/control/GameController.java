@@ -22,8 +22,9 @@ public class GameController {
                         "Players/PlayerOne/playerOrangeFront.png",
                         "Players/PlayerOne/playerOrangeRight.png"},
                 new Vector2(400, 0),
-                new int[]{Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D}
+                new int[] { Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D }
         );
+
         playerController2 = new PlayerController(
                 new String[] {
                         "Players/PlayerTwo/playerGreenBehind.png",
@@ -31,7 +32,7 @@ public class GameController {
                         "Players/PlayerTwo/playerGreenFront.png",
                         "Players/PlayerTwo/playerGreenRight.png"},
                 new Vector2(600, 0),
-                new int[]{Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT}
+                new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT }
         );
 
         customerController = new CustomerController();
@@ -39,7 +40,7 @@ public class GameController {
 
         worldController = new WorldController();
         worldController.getCurrentWorld().getAllObjects().toFirst();
-        while(worldController.getCurrentWorld().getAllObjects().hasAccess()) {
+        while (worldController.getCurrentWorld().getAllObjects().hasAccess()) {
             Main.getWorldObjectList().append(worldController.getCurrentWorld().getAllObjects().getContent());
             worldController.getCurrentWorld().getAllObjects().next();
         }

@@ -25,9 +25,6 @@ public class Main extends ApplicationAdapter {
 	private static final List<WorldObject> worldObjectList = new List<>();
 	private GameController gameController;
 
-	public Main() {
-	}
-
 	@Override
 	public void create() {
 		camera = new OrthographicCamera();
