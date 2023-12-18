@@ -14,11 +14,13 @@ public class World {
      */
     public void generateKitchenScene() {
         // TODO FINISH DESIGN OF KITCHEN SOON
-        // back row
+        // back and front row
         for (int i = 0; i < 8; i++) {
             allObjects.append(new Workbench(new Vector2(990-i*130, 50)));
             allObjects.append(new Workbench(new Vector2(990-i*130, 475+145)));
         }
+
+        // rows on the sides
         WorldObject[] sideRow = new WorldObject[] {
                 new Grill(),
                 new Workbench(),
@@ -34,6 +36,8 @@ public class World {
             copy.setPosition(new Vector2(80, 145+i*95));
             allObjects.append(copy);
         }
+
+        // all Spawners would be in the middle but spawner class is not implemented yet
     }
 
     public List<WorldObject> getAllObjects() {

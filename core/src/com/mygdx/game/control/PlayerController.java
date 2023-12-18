@@ -27,11 +27,12 @@ public class PlayerController {
      * @param interact // TODO
      */
     public void UpdateInput(float dt, boolean pickup, boolean interact) {
-        Vector2 move = Vector2.Zero;
+        Vector2 move = new Vector2(0, 0);
 
         if (Gdx.input.isKeyPressed(controls[0])) {
             player.setTexture(textures[0]);
             move.add(new Vector2(0, 1));
+            //move = new Vector2(0, 1);
         }
 
         if (Gdx.input.isKeyPressed(controls[1])) {
@@ -49,9 +50,12 @@ public class PlayerController {
             move.add(new Vector2(1, 0));
         }
 
-        System.out.println(move);
-        player.position.add(move.nor().scl(Player.MOVEMENT_SPEED).scl(dt));
+        player.getPosition().add(move.nor().scl(Player.MOVEMENT_SPEED).scl(dt));
 
         // TODO: Player Input (Pickup, Interact)
+    }
+
+    public int[] getControls() {
+        return controls;
     }
 }
