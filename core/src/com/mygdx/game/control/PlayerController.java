@@ -32,17 +32,16 @@ public class PlayerController {
         if (Gdx.input.isKeyPressed(controls[0])) {
             player.setTexture(textures[0]);
             move.add(new Vector2(0, 1));
-            //move = new Vector2(0, 1);
-        }
-
-        if (Gdx.input.isKeyPressed(controls[1])) {
-            player.setTexture(textures[1]);
-            move.add(new Vector2(-1, 0));
         }
 
         if (Gdx.input.isKeyPressed(controls[2])) {
             player.setTexture(textures[2]);
             move.add(new Vector2(0, -1));
+        }
+
+        if (Gdx.input.isKeyPressed(controls[1])) {
+            player.setTexture(textures[1]);
+            move.add(new Vector2(-1, 0));
         }
 
         if (Gdx.input.isKeyPressed(controls[3])) {

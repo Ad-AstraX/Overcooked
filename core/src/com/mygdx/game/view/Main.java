@@ -28,13 +28,13 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1200, 1000);
-		viewport = new FitViewport(1200, 1000, camera);
+		camera.setToOrtho(false, 1920, 1080);
+		viewport = new FitViewport(1920, 1080, camera);
 
 		batch = new SpriteBatch();
 
 		worldObjectList.append(
-				new Floor("floorTiles.png", new Vector2(0, 0), new Vector2(1200, 1000)));
+				new Floor("floorTiles.png", new Vector2(0, 0), new Vector2(1920, 1080)));
 		gameController = new GameController(120f, 60, 1f);
 	}
 

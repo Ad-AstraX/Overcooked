@@ -8,7 +8,7 @@ public class Player extends WorldObject {
     private IHoldable hand;
 
     public Player(String path, Vector2 position) {
-        super(path, position, new Vector2(80, 140));
+        super(path, position, new Vector2(80 * 1.3f, 140 * 1.3f));
     }
 
     public IHoldable getHand() {

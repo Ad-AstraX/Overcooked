@@ -47,7 +47,7 @@ public class GameController {
     }
 
     /**
-     * The method that will be updated every frame
+     * Updates the game state each second
      * <p>
      * @param dt time
      */
@@ -72,7 +72,7 @@ public class GameController {
     }
 
     /**
-     * Creates a customer after a certain amount of time has passed
+     * Executes every second with a certain chance to generate a new customer
      */
     public void tickGenCustomer() {
         if (Math.floor(game.timeLeft) == Math.floor(game.timeLeftLastFrame))
