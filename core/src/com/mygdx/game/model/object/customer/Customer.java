@@ -8,6 +8,7 @@ public class Customer extends WorldObject {
     private int patience;
 
     public Customer(Vector2 position, Order order) {
+        // TODO MUST REPLACE WITH CUSTOMER TEXTURE NAME
         super("badlogic.jpg", position, new Vector2(20, 20));
         this.order = order;
     }
