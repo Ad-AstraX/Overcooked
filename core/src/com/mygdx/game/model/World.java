@@ -2,9 +2,8 @@ package com.mygdx.game.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.datastructures.List;
-import com.mygdx.game.model.object.workstation.Cuttingboard;
-import com.mygdx.game.model.object.workstation.Grill;
-import com.mygdx.game.model.object.workstation.Workbench;
+import com.mygdx.game.model.object.holdable.ingredient.*;
+import com.mygdx.game.model.object.workstation.*;
 
 /**
  * A representation of a singular scene
@@ -40,7 +39,8 @@ public class World {
             allObjects.append(copy);
         }
 
-        // all Spawners would be in the middle but spawner class is not implemented yet
+        // all Spawners
+        allObjects.append(new IngredientSpawner<>(Tomato.class, new Vector2(400, 145)));
     }
 
     public List<WorldObject> getAllObjects() {
