@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
-public class Trash extends WorldObject implements IInteractible {
+public class Trash extends KitchenCounter implements IInteractible {
     private IHoldable currentHoldable;
     public Trash(Vector2 position) {
         super("Interactables/trashCan.png", position, new Vector2(20, 20));
@@ -19,6 +19,15 @@ public class Trash extends WorldObject implements IInteractible {
     @Override
     public boolean interact(IHoldable holdable) {
         return false;
+    }
+
+    @Override
+    public void updateImage() {
+        if (isInteracting) {
+            this.setTexture("Interactables/trashCanSelected.png");
+        } else {
+            this.setTexture("Interactables/trashCan.png");
+        }
     }
 
     public IHoldable getCurrentHoldable() {

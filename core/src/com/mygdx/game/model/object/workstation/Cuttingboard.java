@@ -5,7 +5,7 @@ import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.ingredient.ICuttable;
 
-public class Cuttingboard extends WorldObject implements IInteractible {
+public class Cuttingboard extends KitchenCounter implements IInteractible {
     private ICuttable currentCuttable;
     public Cuttingboard() {
         super("Interactables/cuttingboard.png", Vector2.Zero, new Vector2(130, 160));
@@ -13,6 +13,14 @@ public class Cuttingboard extends WorldObject implements IInteractible {
 
     public Cuttingboard(Vector2 position) {
         super("Interactables/cuttingboard.png", position, new Vector2(130, 160));
+    }
+
+    public void updateImage() {
+        if (this.isInteracting) {
+            this.setTexture("Interactables/cuttingboardSelected.png");
+        } else {
+            this.setTexture("Interactables/cuttingboard.png");
+        }
     }
 
     /**

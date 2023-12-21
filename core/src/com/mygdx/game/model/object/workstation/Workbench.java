@@ -1,10 +1,11 @@
 package com.mygdx.game.model.object.workstation;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
-public class Workbench extends WorldObject implements IInteractible {
+public class Workbench extends KitchenCounter implements IInteractible {
     private IHoldable currentHoldable;
     public Workbench() {
         super("Interactables/workbench.png", Vector2.Zero, new Vector2(130, 160));
@@ -22,6 +23,14 @@ public class Workbench extends WorldObject implements IInteractible {
     @Override
     public boolean interact(IHoldable holdable) {
         return false;
+    }
+
+    public void updateImage() {
+        if (this.isInteracting) {
+            this.setTexture("Interactables/workbenchSelected.png");
+        } else {
+            this.setTexture("Interactables/workbench.png");
+        }
     }
 
     public IHoldable getCurrentHoldable() {

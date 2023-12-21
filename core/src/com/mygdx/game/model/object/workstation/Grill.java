@@ -5,13 +5,20 @@ import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.ingredient.ICookable;
 
-public class Grill extends WorldObject implements IInteractible {
+public class Grill extends KitchenCounter implements IInteractible {
     private ICookable currentCookable;
     public Grill() {
         super("Interactables/grill.png", Vector2.Zero, new Vector2(130, 160));
     }
     public Grill(Vector2 position) {
         super("Interactables/grill.png", position, new Vector2(130, 160));
+    }
+    public void updateImage() {
+        if (this.isInteracting) {
+            this.setTexture("Interactables/grillSelected.png");
+        } else {
+            this.setTexture("Interactables/grill.png");
+        }
     }
 
     /**
