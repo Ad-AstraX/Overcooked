@@ -2,6 +2,9 @@ package com.mygdx.game.model.datastructures;
 
 import com.mygdx.game.model.WorldObject;
 
+/**
+ * Methods that are / can be often reused by different classes
+ */
 public class Utilities {
     /**
      * Counts the amount of elements in a given stack

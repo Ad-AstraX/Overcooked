@@ -5,6 +5,9 @@ import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.ingredient.ICookable;
 
+/**
+ * This class represents a Grill which can cook cookable objects
+ */
 public class Grill extends KitchenCounter implements IInteractible {
     private ICookable currentCookable;
     public Grill() {

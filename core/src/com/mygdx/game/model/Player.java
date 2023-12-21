@@ -3,6 +3,9 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
+/**
+ * A representation of the player. It can move around, interact with objects and in some cases hold them
+ */
 public class Player extends WorldObject {
     public static final int MOVEMENT_SPEED = 200;
     private IHoldable hand;

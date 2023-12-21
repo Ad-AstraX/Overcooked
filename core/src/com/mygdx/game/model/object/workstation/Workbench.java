@@ -5,6 +5,9 @@ import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
+/**
+ * This class reoresents a regular workbench on which one can "store" an object / a plate
+ */
 public class Workbench extends KitchenCounter implements IInteractible {
     private IHoldable currentHoldable;
     public Workbench() {

@@ -6,6 +6,9 @@ import com.mygdx.game.model.object.workstation.Cuttingboard;
 import com.mygdx.game.model.object.workstation.Grill;
 import com.mygdx.game.model.object.workstation.Workbench;
 
+/**
+ * A representation of a singular scene
+ */
 public class World {
     private final List<WorldObject> allObjects = new List<>();
 

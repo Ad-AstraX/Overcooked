@@ -10,6 +10,9 @@ import com.mygdx.game.model.object.workstation.KitchenCounter;
 import com.mygdx.game.model.object.workstation.Workbench;
 import com.mygdx.game.view.Main;
 
+/**
+ * Controls the player's movement, interactions etc.
+ */
 public class PlayerController {
     private final Player player;
     private final int[] controls;

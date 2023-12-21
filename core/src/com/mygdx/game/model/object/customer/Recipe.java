@@ -5,6 +5,10 @@ import com.mygdx.game.model.datastructures.Utilities;
 import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.*;
 
+/**
+ * This class represents a recipe.
+ * It contains a stack of ingredients and can compare that stack to a given plate
+ */
 public class Recipe {
     private final Stack<Ingredient> ingredients;
 

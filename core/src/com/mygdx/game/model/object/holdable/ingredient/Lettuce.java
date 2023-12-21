@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 
+/**
+ * Class which represents Lettuce
+ */
 public class Lettuce extends Ingredient implements ICuttable {
    private boolean isCut;
 

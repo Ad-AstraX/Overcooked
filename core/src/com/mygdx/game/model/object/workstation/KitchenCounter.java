@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 
+/**
+ * Abstract parent class for all kitchenCounters. Checks for and reacts to interaction checks
+ */
 public abstract class KitchenCounter extends WorldObject {
     protected Player interactionPartner;
     protected boolean isInteracting;

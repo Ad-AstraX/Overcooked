@@ -3,6 +3,9 @@ package com.mygdx.game.model.object.customer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 
+/**
+ * This class represents a customer. It can order, get angry, pay the player etc.
+ */
 public class Customer extends WorldObject {
     private Order order;
     private int patience;

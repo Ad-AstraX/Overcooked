@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 
+/**
+ * This class represents a burger bun (top and bottom)
+ */
 public class Bun extends Ingredient{
     public Bun() {
         super("badlogic.jpg", Vector2.Zero, Vector2.Zero);

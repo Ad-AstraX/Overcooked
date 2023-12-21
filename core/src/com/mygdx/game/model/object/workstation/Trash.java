@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
+/**
+ * This class represents a trash can, that can remove an object from the plate or the player's hand
+ */
 public class Trash extends KitchenCounter implements IInteractible {
     private IHoldable currentHoldable;
     public Trash(Vector2 position) {

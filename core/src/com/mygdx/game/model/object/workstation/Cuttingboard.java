@@ -5,6 +5,9 @@ import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.ingredient.ICuttable;
 
+/**
+ * This class represents a cuttingboard which can cut cuttable Objects
+ */
 public class Cuttingboard extends KitchenCounter implements IInteractible {
     private ICuttable currentCuttable;
     public Cuttingboard() {

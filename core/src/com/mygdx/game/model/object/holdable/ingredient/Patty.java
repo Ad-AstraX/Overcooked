@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 
+/**
+ * Class which represents a Meat patty
+ */
 public class Patty extends Ingredient implements ICookable {
     private boolean isCooked;
     public Patty() {

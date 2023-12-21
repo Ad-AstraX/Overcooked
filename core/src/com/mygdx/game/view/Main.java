@@ -15,7 +15,7 @@ import com.mygdx.game.model.datastructures.List;
 import com.mygdx.game.model.datastructures.Utilities;
 
 /**
- * DON'T YOU DARE MAKE CHANGES TO THIS CLASS WITHOUT CONSULTING ME
+ * This class handles all of the graphics
  */
 public class Main extends ApplicationAdapter {
 	private Viewport viewport;

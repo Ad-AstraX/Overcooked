@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Game;
 import com.mygdx.game.view.Main;
 
+/**
+ * Controls the game - all other controllers are instantiated and used here
+ */
 public class GameController {
     private final Game game;
     private final PlayerController playerController1;

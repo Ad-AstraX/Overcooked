@@ -6,6 +6,9 @@ import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.Stack;
 import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 
+/**
+ * Class which represents a plate. One  can stack cut and cooked (if necessary) ingredients on it
+ */
 public class Plate extends WorldObject implements IHoldable {
     private Stack<Ingredient> ingredients;
     private boolean pickedUp;

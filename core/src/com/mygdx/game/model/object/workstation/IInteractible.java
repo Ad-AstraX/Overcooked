@@ -2,6 +2,9 @@ package com.mygdx.game.model.object.workstation;
 
 import com.mygdx.game.model.object.holdable.IHoldable;
 
+/**
+ * Interface for all Interactable classes / implementations
+ */
 public interface IInteractible {
     /**
      * A method that is implemented in every interactable realization.

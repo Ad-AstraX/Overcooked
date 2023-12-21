@@ -2,6 +2,9 @@ package com.mygdx.game.model;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * This class is used for the background
+ */
 public class Floor extends WorldObject{
     public Floor(String texturePath, Vector2 position, Vector2 size) {
         super(texturePath, position, size);

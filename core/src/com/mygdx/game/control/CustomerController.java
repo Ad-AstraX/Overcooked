@@ -5,6 +5,9 @@ import com.mygdx.game.model.datastructures.Queue;
 import com.mygdx.game.model.object.customer.Customer;
 import com.mygdx.game.view.Main;
 
+/**
+ * Controls all the customers and their orders
+ */
 public class CustomerController {
     private final Queue<Customer> customerQ;
 

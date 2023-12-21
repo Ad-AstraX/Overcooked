@@ -40,6 +40,7 @@ public abstract class WorldObject {
     // All Setters
     public void setTexture(String texture) {
         try {
+            this.texture.dispose();
             this.texture = new Texture(texture);
         } catch(GdxRuntimeException e) {
             this.texture = new Texture("fallbackTexture.png");

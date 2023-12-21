@@ -3,6 +3,9 @@ package com.mygdx.game.control;
 import com.mygdx.game.model.object.customer.Order;
 import com.mygdx.game.model.object.customer.Recipe;
 
+/**
+ * Generates the orders for the customers
+ */
 public class OrderController {
     private RecipeController recipeController;
 

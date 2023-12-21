@@ -1,5 +1,8 @@
 package com.mygdx.game.model;
 
+/**
+ * This class sets the game's goal and initial settings
+ */
 public class Game {
     public float timeLeft = 0;
     public float timeLeftLastFrame = 0;
