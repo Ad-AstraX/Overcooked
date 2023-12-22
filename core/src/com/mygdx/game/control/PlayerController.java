@@ -43,9 +43,9 @@ public class PlayerController {
         Main.getWorldObjectList().next();
         while (Main.getWorldObjectList().hasAccess()) {
             WorldObject currentObj = Main.getWorldObjectList().getContent();
-            if (!(currentObj instanceof Player)) {
+            if (currentObj instanceof KitchenCounter) {
                 handleCollision(currentObj, lastPos);
-                if (currentObj instanceof KitchenCounter) handleInteractionCheck((KitchenCounter) currentObj);
+                handleInteractionCheck((KitchenCounter) currentObj);
             }
             Main.getWorldObjectList().next();
         }
@@ -105,7 +105,7 @@ public class PlayerController {
     }
 
     /**
-     * Checks whether or not the player is close enough to interact with a given KitchenCounter object
+     * Checks whether the player is close enough to interact with a given KitchenCounter object
      * <p>
      * @param currentObj the KitchenCounter that is being used to check for possible interaction
      */

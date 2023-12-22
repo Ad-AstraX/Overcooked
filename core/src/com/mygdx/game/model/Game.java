@@ -4,13 +4,13 @@ package com.mygdx.game.model;
  * This class sets the game's goal and initial settings
  */
 public class Game {
-    private float timeLeft = 0;
+    private float timeLeft;
     private float timeLeftLastFrame = 0;
 
     private int payTotal = 0;
-    private int payGoal = 0;
+    private int payGoal;
 
-    private float customerSpawnChance = 0;
+    private float customerSpawnChance;
 
     public Game(float initialTime, int payGoal, float initialCustomerSpawnChance) {
         this.timeLeft = initialTime;
