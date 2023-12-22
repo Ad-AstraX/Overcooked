@@ -1,12 +1,11 @@
 package com.mygdx.game.model.object.workstation;
 
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
 /**
- * This class reoresents a regular workbench on which one can "store" an object / a plate
+ * This class represents a regular workbench on which one can "store" an object / a plate
  */
 public class Workbench extends KitchenCounter implements IInteractible {
     private IHoldable currentHoldable;
@@ -21,7 +20,7 @@ public class Workbench extends KitchenCounter implements IInteractible {
      * Method is called whenever player wishes to put or remove a Holdable object on this Workbench
      * <p>
      * @param holdable The ingredient or food to be stored on or removed from the kitchen counter
-     * @return Whether or not the Interaction was successful
+     * @return Whether the Interaction was successful
      */
     @Override
     public boolean interact(IHoldable holdable) {
@@ -36,10 +35,10 @@ public class Workbench extends KitchenCounter implements IInteractible {
         }
     }
 
+    // All Getters
     public IHoldable getCurrentHoldable() {
         return currentHoldable;
     }
-
     @Override
     public WorldObject getCopy() {
         return new Workbench(this.position);

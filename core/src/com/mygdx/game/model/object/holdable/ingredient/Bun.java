@@ -9,11 +9,11 @@ import com.mygdx.game.model.WorldObject;
  */
 public class Bun extends Ingredient{
     public Bun() {
-        super("badlogic.jpg", Vector2.Zero, Vector2.Zero);
+        super("Ingredients/bunTop.png", Vector2.Zero, Vector2.Zero);
     }
 
     public Bun(Vector2 position) {
-        super("badlogic.jpg", position, new Vector2(20, 20));
+        super("Ingredients/bunTop.png", position, new Vector2(20, 20));
     }
 
     @Override
@@ -21,11 +21,11 @@ public class Bun extends Ingredient{
         return false;
     }
 
+    // All Getters
     @Override
     public String getSubclassTypeName() {
         return this.getClass().getTypeName();
     }
-
     @Override
     public WorldObject getCopy() {
         return new Bun(this.position);

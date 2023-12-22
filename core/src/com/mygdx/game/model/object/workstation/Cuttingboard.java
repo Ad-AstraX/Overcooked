@@ -30,17 +30,17 @@ public class Cuttingboard extends KitchenCounter implements IInteractible {
      * Method is called whenever player wishes to cut an uncut Cuttable object on this Cuttingboard
      * <p>
      * @param holdable The Cuttable object to be cut on this kitchen counter
-     * @return Whether or not the Interaction was successful
+     * @return Whether the Interaction was successful
      */
     @Override
     public boolean interact(IHoldable holdable) {
         return false;
     }
 
+    // All Getters
     public ICuttable getCurrentCuttable() {
         return currentCuttable;
     }
-
     @Override
     public WorldObject getCopy() {
         return new Cuttingboard(this.position);

@@ -22,21 +22,19 @@ public class Tomato extends Ingredient implements ICuttable{
     public boolean pickup(Player player) {
         return false;
     }
-
-    @Override
-    public String getSubclassTypeName() {
-        return this.getClass().getTypeName();
-    }
-
     @Override
     public void cut() {
         isCut = true;
     }
 
+    // All Getters
     public boolean isCut() {
         return isCut;
     }
-
+    @Override
+    public String getSubclassTypeName() {
+        return this.getClass().getTypeName();
+    }
     @Override
     public WorldObject getCopy() {
         return new Tomato(this.position);

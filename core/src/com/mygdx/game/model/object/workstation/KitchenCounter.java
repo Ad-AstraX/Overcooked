@@ -15,18 +15,21 @@ public abstract class KitchenCounter extends WorldObject {
     }
 
     /**
-     * Updates image depending on whether or not the object is being interacted with
+     * Updates image depending on whether the object is being interacted with
      */
     public abstract void updateImage();
 
+    // All Getters
     public boolean isInteracting() {
         return isInteracting;
     }
-    public void setIsInteracting(boolean isInteracting) {
-        this.isInteracting = isInteracting;
-    }
     public Player getInteractionPartner() {
         return interactionPartner;
+    }
+
+    // All Setters
+    public void setIsInteracting(boolean isInteracting) {
+        this.isInteracting = isInteracting;
     }
     public void setInteractionPartner(Player interactionPartner) {
         this.interactionPartner = interactionPartner;

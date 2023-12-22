@@ -3,13 +3,11 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.mygdx.game.model.object.workstation.Grill;
 
 public abstract class WorldObject {
-    private Texture texture;
-    public Vector2 position;
-    public Vector2 size;
-    public Vector2 hitbox;
+    protected Texture texture;
+    protected Vector2 position;
+    protected Vector2 size;
 
     public WorldObject(String texturePath, Vector2 position, Vector2 size) {
         try {
@@ -19,7 +17,6 @@ public abstract class WorldObject {
         }
         this.position = position;
         this.size = size;
-        this.hitbox = size;
     }
 
     // All Getters
@@ -33,9 +30,6 @@ public abstract class WorldObject {
     public Vector2 getSize() {
         return size;
     }
-    public Vector2 getHitbox() {
-        return hitbox;
-    }
 
     // All Setters
     public void setTexture(String texture) {
@@ -46,14 +40,10 @@ public abstract class WorldObject {
             this.texture = new Texture("fallbackTexture.png");
         }
     }
-
     public void setPosition(Vector2 position) {
         this.position = position;
     }
     public void setSize(Vector2 size) {
         this.size = size;
-    }
-    public void setHitbox(Vector2 hitbox) {
-        this.hitbox = hitbox;
     }
 }

@@ -19,24 +19,22 @@ public class Lettuce extends Ingredient implements ICuttable {
    }
 
    @Override
+   public void cut() {
+      isCut = true;
+   }
+   @Override
    public boolean pickup(Player player) {
       return false;
    }
 
+   // All Getters
    @Override
    public String getSubclassTypeName() {
       return this.getClass().getTypeName();
    }
-
-   @Override
-   public void cut() {
-      isCut = true;
-   }
-
    public boolean isCut() {
       return isCut;
    }
-
    @Override
    public WorldObject getCopy() {
       return new Lettuce(this.position);

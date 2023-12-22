@@ -21,21 +21,19 @@ public class Patty extends Ingredient implements ICookable {
     public void cook() {
         isCooked = true;
     }
-
     @Override
     public boolean pickup(Player player) {
         return false;
     }
 
+    // All Getters
     @Override
     public String getSubclassTypeName() {
         return this.getClass().getTypeName();
     }
-
     public boolean isCooked() {
         return isCooked;
     }
-
     @Override
     public WorldObject getCopy() {
         return new Patty(this.position);

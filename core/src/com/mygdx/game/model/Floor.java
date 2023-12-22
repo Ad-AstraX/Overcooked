@@ -13,6 +13,6 @@ public class Floor extends WorldObject{
     // TODO I need this but still figuring out what I can do with it
     @Override
     public WorldObject getCopy() {
-        return null;
+        return new Floor(this.texture.toString(), this.position, this.size);
     }
 }

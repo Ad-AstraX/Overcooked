@@ -36,7 +36,7 @@ public class PlayerController {
      * @param interact // TODO
      */
     public void UpdateInput(float dt, boolean pickup, boolean interact) {
-        Vector2 lastPos = player.position.cpy();
+        Vector2 lastPos = player.getPosition().cpy();
         handleMovement(dt);
 
         Main.getWorldObjectList().toFirst();
@@ -95,11 +95,11 @@ public class PlayerController {
      * @param lastPos the position of the player before processing movement input
      */
     private void handleCollision(WorldObject currentObj, Vector2 lastPos) {
-        if (player.position.x > currentObj.getPosition().x - player.size.x &&
-            player.position.x <= currentObj.getPosition().x + currentObj.getHitbox().x) {
-            if (player.position.y > currentObj.getPosition().y - player.size.y/3 &&
-                player.position.y <= currentObj.getPosition().y - player.size.y/3 + currentObj.getHitbox().y) {
-                player.position = lastPos;
+        if (player.getPosition().x > currentObj.getPosition().x - player.getSize().x &&
+            player.getPosition().x <= currentObj.getPosition().x + currentObj.getSize().x) {
+            if (player.getPosition().y > currentObj.getPosition().y - player.getSize().y/3 &&
+                player.getPosition().y <= currentObj.getPosition().y - player.getSize().y/3 + currentObj.getSize().y) {
+                player.setPosition(lastPos);
             }
         }
     }
@@ -110,11 +110,11 @@ public class PlayerController {
      * @param currentObj the KitchenCounter that is being used to check for possible interaction
      */
     private void handleInteractionCheck(KitchenCounter currentObj) {
-        float pointX = player.position.x + player.size.x/2 + player.size.x * direction.x;
-        float pointY = player.position.y + player.size.y/2 * direction.y;
-        if (pointX > currentObj.getPosition().x && pointX < currentObj.getPosition().x + currentObj.getHitbox().x &&
-            pointY > currentObj.getPosition().y && pointY < currentObj.getPosition().y - player.size.y/3 + currentObj.getSize().y) {
-            if (!currentObj.isInteracting()) {
+        float pointX = player.getPosition().x + player.getSize().x/2 + player.getSize().x * direction.x;
+        float pointY = player.getPosition().y + player.getSize().y/2 * direction.y;
+        if (pointX > currentObj.getPosition().x && pointX < currentObj.getPosition().x + currentObj.getSize().x &&
+            pointY > currentObj.getPosition().y && pointY < currentObj.getPosition().y - player.getSize().y/3 + currentObj.getSize().y) {
+            if (!currentObj.isInteracting() && currentObj.getInteractionPartner() == null) {
                 currentObj.setIsInteracting(true);
                 currentObj.updateImage();
                 currentObj.setInteractionPartner(this.player);

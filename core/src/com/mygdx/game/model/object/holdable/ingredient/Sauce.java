@@ -21,11 +21,11 @@ public class Sauce extends Ingredient{
         return false;
     }
 
+    // All Getters
     @Override
     public String getSubclassTypeName() {
         return this.getClass().getTypeName();
     }
-
     @Override
     public WorldObject getCopy() {
         return new Sauce(this.position);

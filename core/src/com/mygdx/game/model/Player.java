@@ -20,6 +20,6 @@ public class Player extends WorldObject {
 
     @Override
     public WorldObject getCopy() {
-        return new Player("fallbackTexture.png", this.position);
+        return new Player(this.texture.toString(), this.position);
     }
 }

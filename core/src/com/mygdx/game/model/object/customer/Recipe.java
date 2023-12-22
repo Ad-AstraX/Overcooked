@@ -23,7 +23,7 @@ public class Recipe {
      * on the plate to the stack of ingredients in this recipe
      * <p>
      * @param plate the plate that this recipe will be compared to
-     * @return whether or not the recipe and given plate match
+     * @return whether the recipe and given plate match
      */
     public boolean compareToPlate(Plate plate) {
         if (plate == null)
@@ -43,6 +43,7 @@ public class Recipe {
         return true;
     }
 
+    // All Getters
     public Stack<Ingredient> getIngredients() {
         return ingredients;
     }

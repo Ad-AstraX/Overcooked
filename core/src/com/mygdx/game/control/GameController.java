@@ -70,18 +70,18 @@ public class GameController {
      * @param dt Time
      */
     public void tickTime(float dt) {
-        game.timeLeftLastFrame = game.timeLeft;
-        game.timeLeft -= dt;
+        game.setTimeLeftLastFrame(game.getTimeLeft());
+        game.setTimeLeft(game.getTimeLeft() - dt);
     }
 
     /**
      * Executes every second with a certain chance to generate a new customer
      */
     public void tickGenCustomer() {
-        if (Math.floor(game.timeLeft) == Math.floor(game.timeLeftLastFrame))
+        if (Math.floor(game.getTimeLeft()) == Math.floor(game.getTimeLeftLastFrame()))
             return;
 
-        if (Math.random() * 100 < game.customerSpawnChance)
+        if (Math.random() * 100 < game.getCustomerSpawnChance())
             return;
 
         System.out.println("Spawned Customer");

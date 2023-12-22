@@ -12,7 +12,7 @@ public interface IInteractible {
      * The object then fulfills its task upon interaction
      * <p>
      * @param holdable The ingredient or food to be "processed" by the kitchen counter
-     * @return Whether or not the Interaction was successful
+     * @return Whether the Interaction was successful
      */
     boolean interact(IHoldable holdable);
 }

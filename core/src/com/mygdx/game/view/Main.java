@@ -3,7 +3,6 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -15,7 +14,7 @@ import com.mygdx.game.model.datastructures.List;
 import com.mygdx.game.model.datastructures.Utilities;
 
 /**
- * This class handles all of the graphics
+ * This class handles all the graphics
  */
 public class Main extends ApplicationAdapter {
 	private Viewport viewport;

@@ -42,5 +42,4 @@ public class IngredientSpawner<IngredientType> extends KitchenCounter implements
             this.setTexture(textures[0]);
         }
     }
-    // TODO Have not yet looked into this, don't know what it can or must do
 }
