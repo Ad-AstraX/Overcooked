@@ -19,11 +19,24 @@ public class Workbench extends KitchenCounter implements IInteractible {
     /**
      * Method is called whenever player wishes to put or remove a Holdable object on this Workbench
      * <p>
-     * @param holdable The ingredient or food to be stored on or removed from the kitchen counter
      * @return Whether the Interaction was successful
      */
     @Override
-    public boolean interact(IHoldable holdable) {
+    public boolean interact() {
+        if (interactionPartner.getHand() != null && currentHoldable == null){
+            this.currentHoldable = interactionPartner.getHand();
+            currentHoldable.setInteractionPartner(null);
+            ((WorldObject) interactionPartner.getHand()).setPosition(
+                    new Vector2(this.position.x - ((WorldObject) interactionPartner.getHand()).getSize().x/2 + this.size.x/2, this.position.y)
+            );
+            interactionPartner.setHand(null);
+            return true;
+        } else if (interactionPartner.getHand() == null && currentHoldable != null) {
+            interactionPartner.setHand(this.currentHoldable);
+            currentHoldable.setInteractionPartner(interactionPartner);
+            this.currentHoldable = null;
+            return true;
+        }
         return false;
     }
 

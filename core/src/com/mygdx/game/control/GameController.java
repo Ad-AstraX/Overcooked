@@ -25,7 +25,7 @@ public class GameController {
                         "Players/PlayerOne/playerOrangeFront.png",
                         "Players/PlayerOne/playerOrangeRight.png"},
                 new Vector2(400, 300),
-                new int[] { Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D }
+                new int[] { Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D, Input.Keys.E }
         );
 
         playerController2 = new PlayerController(
@@ -35,7 +35,7 @@ public class GameController {
                         "Players/PlayerTwo/playerGreenFront.png",
                         "Players/PlayerTwo/playerGreenRight.png"},
                 new Vector2(600, 300),
-                new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT }
+                new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
         );
 
         customerController = new CustomerController();
@@ -58,8 +58,8 @@ public class GameController {
         tickTime(dt);
 
         // TODO: Get correct input for players
-        playerController1.UpdateInput(dt, false, false);
-        playerController2.UpdateInput(dt, false, false);
+        playerController1.updateInput(dt, false, false);
+        playerController2.updateInput(dt, false, false);
 
         tickGenCustomer();
     }
@@ -69,7 +69,7 @@ public class GameController {
      * <p>
      * @param dt Time
      */
-    public void tickTime(float dt) {
+    private void tickTime(float dt) {
         game.setTimeLeftLastFrame(game.getTimeLeft());
         game.setTimeLeft(game.getTimeLeft() - dt);
     }
@@ -77,7 +77,7 @@ public class GameController {
     /**
      * Executes every second with a certain chance to generate a new customer
      */
-    public void tickGenCustomer() {
+    private void tickGenCustomer() {
         if (Math.floor(game.getTimeLeft()) == Math.floor(game.getTimeLeftLastFrame()))
             return;
 

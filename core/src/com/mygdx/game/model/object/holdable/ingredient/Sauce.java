@@ -1,7 +1,6 @@
 package com.mygdx.game.model.object.holdable.ingredient;
 
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 
 /**
@@ -13,12 +12,7 @@ public class Sauce extends Ingredient{
     }
 
     public Sauce(Vector2 position) {
-        super("Ingredients/sauce.png", position, new Vector2(20, 20));
-    }
-
-    @Override
-    public boolean pickup(Player player) {
-        return false;
+        super("Ingredients/sauce.png", position, new Vector2(80, 150));
     }
 
     // All Getters

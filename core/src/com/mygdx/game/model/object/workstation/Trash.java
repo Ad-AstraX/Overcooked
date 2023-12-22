@@ -16,11 +16,11 @@ public class Trash extends KitchenCounter implements IInteractible {
     /**
      * Method is called whenever player wishes to dispose of a Holdable object
      * <p>
-     * @param holdable The Holdable object that is to be disposed of
+     * //@param holdable The Holdable object that is to be disposed of
      * @return Whether the Interaction was successful
      */
     @Override
-    public boolean interact(IHoldable holdable) {
+    public boolean interact(/*IHoldable holdable*/) {
         return false;
     }
 

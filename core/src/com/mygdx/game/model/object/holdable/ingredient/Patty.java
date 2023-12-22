@@ -1,7 +1,6 @@
 package com.mygdx.game.model.object.holdable.ingredient;
 
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 
 /**
@@ -14,16 +13,12 @@ public class Patty extends Ingredient implements ICookable {
     }
 
     public Patty(Vector2 position) {
-        super("Ingredients/patty.png", position, new Vector2(20, 20));
+        super("Ingredients/patty.png", position, new Vector2(75, 150));
     }
 
     @Override
     public void cook() {
         isCooked = true;
-    }
-    @Override
-    public boolean pickup(Player player) {
-        return false;
     }
 
     // All Getters

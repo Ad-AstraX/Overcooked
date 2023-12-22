@@ -1,13 +1,11 @@
 package com.mygdx.game.control;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
-import com.mygdx.game.model.object.workstation.IInteractible;
+import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 import com.mygdx.game.model.object.workstation.KitchenCounter;
-import com.mygdx.game.model.object.workstation.Workbench;
 import com.mygdx.game.view.Main;
 
 /**
@@ -35,7 +33,7 @@ public class PlayerController {
      * @param pickup // TODO
      * @param interact // TODO
      */
-    public void UpdateInput(float dt, boolean pickup, boolean interact) {
+    public void updateInput(float dt, boolean pickup, boolean interact) {
         Vector2 lastPos = player.getPosition().cpy();
         handleMovement(dt);
 
@@ -48,6 +46,10 @@ public class PlayerController {
                 handleInteractionCheck((KitchenCounter) currentObj);
             }
             Main.getWorldObjectList().next();
+        }
+
+        if (player.getHand() != null) {
+            player.getHand().beCarriedByPlayer(direction);
         }
 
         // TODO: Player Input (Pickup, Interact)
@@ -119,6 +121,9 @@ public class PlayerController {
                 currentObj.updateImage();
                 currentObj.setInteractionPartner(this.player);
             }
+            if (Gdx.input.isKeyJustPressed(controls[4]) && currentObj.getInteractionPartner().equals(this.player)) {
+                currentObj.interact();
+            }
         } else {
             if (currentObj.isInteracting() && currentObj.getInteractionPartner().equals(this.player)) {
                 currentObj.setIsInteracting(false);
@@ -128,7 +133,11 @@ public class PlayerController {
         }
     }
 
+    // All Getters
     public int[] getControls() {
         return controls;
+    }
+    public Player getPlayer() {
+        return player;
     }
 }

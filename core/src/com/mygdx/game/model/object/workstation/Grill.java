@@ -27,11 +27,11 @@ public class Grill extends KitchenCounter implements IInteractible {
     /**
      * Method is called whenever player wishes to cook an uncooked Cookable object on this grill
      * <p>
-     * @param holdable The Cookable object to be cooked by this grill
+     * //@param holdable The Cookable object to be cooked by this grill
      * @return Whether the Interaction was successful
      */
     @Override
-    public boolean interact(IHoldable holdable) {
+    public boolean interact(/*IHoldable holdable*/) {
         return false;
     }
 

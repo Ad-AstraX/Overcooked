@@ -1,5 +1,6 @@
 package com.mygdx.game.model.object.holdable;
 
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 
 /**
@@ -9,9 +10,11 @@ public interface IHoldable {
     /**
      * Allows a player to pick up or put down a certain object
      * <p>
-     * @param player the player that picks up or puts down
-     * @return Whether the interaction was successful
+     *
+     * @param direction the direction of the player
      */
-    boolean pickup(Player player);
+    void beCarriedByPlayer(Vector2 direction);
     String getSubclassTypeName();
+    Player getInteractionPartner();
+    void setInteractionPartner(Player interactionPartner);
 }

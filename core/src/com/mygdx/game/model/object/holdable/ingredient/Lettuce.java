@@ -1,7 +1,6 @@
 package com.mygdx.game.model.object.holdable.ingredient;
 
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 
 /**
@@ -15,16 +14,12 @@ public class Lettuce extends Ingredient implements ICuttable {
    }
 
    public Lettuce(Vector2 position) {
-      super("Ingredients/lettuce.png", position, new Vector2(20, 20));
+      super("Ingredients/lettuce.png", position, new Vector2(55, 150));
    }
 
    @Override
    public void cut() {
       isCut = true;
-   }
-   @Override
-   public boolean pickup(Player player) {
-      return false;
    }
 
    // All Getters

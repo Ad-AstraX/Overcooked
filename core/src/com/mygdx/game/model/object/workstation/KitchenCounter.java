@@ -7,7 +7,7 @@ import com.mygdx.game.model.WorldObject;
 /**
  * Abstract parent class for all kitchenCounters. Checks for and reacts to interaction checks
  */
-public abstract class KitchenCounter extends WorldObject {
+public abstract class KitchenCounter extends WorldObject implements IInteractible {
     protected Player interactionPartner;
     protected boolean isInteracting;
     public KitchenCounter(String texturePath, Vector2 position, Vector2 size) {

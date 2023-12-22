@@ -11,8 +11,7 @@ public interface IInteractible {
      * This method is called whenever the player wishes to interact with a certain object.
      * The object then fulfills its task upon interaction
      * <p>
-     * @param holdable The ingredient or food to be "processed" by the kitchen counter
      * @return Whether the Interaction was successful
      */
-    boolean interact(IHoldable holdable);
+    boolean interact();
 }

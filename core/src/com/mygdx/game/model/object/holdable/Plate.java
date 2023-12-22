@@ -11,7 +11,7 @@ import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
  */
 public class Plate extends WorldObject implements IHoldable {
     private Stack<Ingredient> ingredients;
-    private boolean pickedUp;
+    private Player interactionPartner;
     public Plate(Vector2 position) {
         super("plate.png", position, new Vector2(20, 20));
     }
@@ -28,19 +28,10 @@ public class Plate extends WorldObject implements IHoldable {
     }
 
     @Override
-    public boolean pickup(Player player) {
-        if (player != null){
-            pickedUp = true;
-            position.set(new Vector2(player.getPosition()).add(new Vector2(5, 5)));
-            return true;
-        }
-        return false;
+    public void beCarriedByPlayer(Vector2 direction) {
     }
 
     // All Getters
-    public boolean getPickedUp() {
-        return pickedUp;
-    }
     public Stack<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -51,5 +42,13 @@ public class Plate extends WorldObject implements IHoldable {
     @Override
     public WorldObject getCopy() {
         return new Plate(this.position);
+    }
+    public Player getInteractionPartner() {
+        return interactionPartner;
+    }
+
+    // All Setters
+    public void setInteractionPartner(Player interactionPartner) {
+        this.interactionPartner = interactionPartner;
     }
 }

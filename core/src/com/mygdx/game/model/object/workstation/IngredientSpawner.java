@@ -2,11 +2,12 @@ package com.mygdx.game.model.object.workstation;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
-import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.ingredient.*;
+import com.mygdx.game.view.Main;
 
 public class IngredientSpawner<IngredientType> extends KitchenCounter implements IInteractible {
     private String[] textures = new String[] {"fallbackTexture.png"};
+    private final Class<IngredientType> ingredientType;
 
     public IngredientSpawner(Class<IngredientType> type, Vector2 position) {
         super("fallbackTexture.png", position, new Vector2(130, 160));
@@ -21,6 +22,7 @@ public class IngredientSpawner<IngredientType> extends KitchenCounter implements
         }  else if (type.equals(Bun.class)) {
             textures = new String[] {"Interactables/Spawner/bunSpawner.png", "Interactables/Spawner/bunSpawnerSelected.png"};
         }
+        ingredientType = type;
         this.setTexture(textures[0]);
     }
 
@@ -29,8 +31,25 @@ public class IngredientSpawner<IngredientType> extends KitchenCounter implements
         return null;
     }
 
+    /**
+     * Method is called whenever player wishes to spawn an Ingredient of type
+     * IngredientType from this IngredientSpawner
+     * <p>
+     * @return Whether the Interaction was successful
+     */
     @Override
-    public boolean interact(IHoldable holdable) {
+    public boolean interact() {
+        if (this.interactionPartner.getHand() == null) {
+            Ingredient holdable;
+            try {
+                holdable = (Ingredient) ingredientType.getDeclaredConstructor(Vector2.class).newInstance(interactionPartner.getPosition());
+                holdable.setInteractionPartner(interactionPartner);
+                this.interactionPartner.setHand(holdable);
+                Main.getWorldObjectList().append(holdable);
+            } catch (Exception e) { return false; }
+
+            return true;
+        }
         return false;
     }
 
