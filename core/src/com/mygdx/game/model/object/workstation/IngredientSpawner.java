@@ -36,7 +36,6 @@ public class IngredientSpawner<IngredientType> extends KitchenCounter implements
             Ingredient holdable;
             try {
                 holdable = (Ingredient) ingredientType.getDeclaredConstructor(Vector2.class).newInstance(interactionPartner.getPosition());
-                holdable.setInteractionPartner(interactionPartner);
                 this.interactionPartner.setHand(holdable);
                 Main.getWorldObjectList().append(holdable);
             } catch (Exception e) { return false; }

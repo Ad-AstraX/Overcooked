@@ -27,9 +27,9 @@ public abstract class Ingredient extends WorldObject implements IHoldable {
         if (direction.equals(new Vector2(0, -1)) || direction.equals(new Vector2(0, 1))) {
             position.x = interactionPartner.getPosition().x - this.size.x/2 + interactionPartner.getSize().x/2;
         } else if (direction.equals(new Vector2(-1, 0))) {
-            position.x = interactionPartner.getPosition().x - this.getSize().x/3;
+            position.x = interactionPartner.getPosition().x - this.size.x/3;
         } else if (direction.equals(new Vector2(1, 0))) {
-            position.x = interactionPartner.getPosition().x + interactionPartner.getSize().x - this.getSize().x/2;
+            position.x = interactionPartner.getPosition().x + interactionPartner.getSize().x - this.size.x/2;
         }
 
         interactionPartner.setPosition(lastPlayerPos);

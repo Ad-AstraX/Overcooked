@@ -25,15 +25,14 @@ public class Workbench extends KitchenCounter implements IInteractible {
     public boolean interact() {
         if (interactionPartner.getHand() != null && currentHoldable == null){
             this.currentHoldable = interactionPartner.getHand();
-            currentHoldable.setInteractionPartner(null);
-            ((WorldObject) interactionPartner.getHand()).setPosition(
-                    new Vector2(this.position.x - ((WorldObject) interactionPartner.getHand()).getSize().x/2 + this.size.x/2, this.position.y)
-            );
             interactionPartner.setHand(null);
+            // TODO Take another look at this sorting issue, this.position.y-1 was simply a lazy fix
+            ((WorldObject) currentHoldable).setPosition(
+                    new Vector2(this.position.x - ((WorldObject) currentHoldable).getSize().x/2 + this.size.x/2, this.position.y-1)
+            );
             return true;
         } else if (interactionPartner.getHand() == null && currentHoldable != null) {
             interactionPartner.setHand(this.currentHoldable);
-            currentHoldable.setInteractionPartner(interactionPartner);
             this.currentHoldable = null;
             return true;
         }
