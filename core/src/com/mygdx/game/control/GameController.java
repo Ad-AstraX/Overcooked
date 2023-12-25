@@ -3,7 +3,6 @@ package com.mygdx.game.control;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Game;
-import com.mygdx.game.view.Main;
 
 /**
  * Controls the game - all other controllers are instantiated and used here
@@ -24,7 +23,7 @@ public class GameController {
                         "Players/PlayerOne/playerOrangeLeft.png",
                         "Players/PlayerOne/playerOrangeFront.png",
                         "Players/PlayerOne/playerOrangeRight.png"},
-                new Vector2(400, 300),
+                new Vector2(550, 500),
                 new int[] { Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D, Input.Keys.E }
         );
 
@@ -34,7 +33,7 @@ public class GameController {
                         "Players/PlayerTwo/playerGreenLeft.png",
                         "Players/PlayerTwo/playerGreenFront.png",
                         "Players/PlayerTwo/playerGreenRight.png"},
-                new Vector2(600, 300),
+                new Vector2(550, 300),
                 new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
         );
 
@@ -42,11 +41,6 @@ public class GameController {
         orderController = new OrderController(new RecipeController());
 
         worldController = new WorldController();
-        worldController.getCurrentWorld().getAllObjects().toFirst();
-        while (worldController.getCurrentWorld().getAllObjects().hasAccess()) {
-            Main.getWorldObjectList().append(worldController.getCurrentWorld().getAllObjects().getContent());
-            worldController.getCurrentWorld().getAllObjects().next();
-        }
     }
 
     /**
@@ -60,6 +54,12 @@ public class GameController {
         // TODO: Get correct input for players
         playerController1.updateInput(dt, false, false);
         playerController2.updateInput(dt, false, false);
+
+        worldController.getCurrentWorld().getAllProcessableObjects().toFirst();
+        while (worldController.getCurrentWorld().getAllProcessableObjects().hasAccess()) {
+            worldController.getCurrentWorld().getAllProcessableObjects().getContent().update(dt);
+            worldController.getCurrentWorld().getAllProcessableObjects().next();
+        }
 
         tickGenCustomer();
     }

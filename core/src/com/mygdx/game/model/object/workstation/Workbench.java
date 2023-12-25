@@ -16,13 +16,9 @@ public class Workbench extends KitchenCounter implements IInteractible {
         super("Interactables/workbench.png", position, new Vector2(130, 160));
     }
 
-    /**
-     * Method is called whenever player wishes to put or remove a Holdable object on this Workbench
-     * <p>
-     * @return Whether the Interaction was successful
-     */
+    /** Method is called whenever player wishes to put or remove a Holdable object on this Workbench */
     @Override
-    public boolean interact() {
+    public void interact() {
         if (interactionPartner.getHand() != null && currentHoldable == null){
             this.currentHoldable = interactionPartner.getHand();
             interactionPartner.setHand(null);
@@ -30,13 +26,10 @@ public class Workbench extends KitchenCounter implements IInteractible {
             ((WorldObject) currentHoldable).setPosition(
                     new Vector2(this.position.x - ((WorldObject) currentHoldable).getSize().x/2 + this.size.x/2, this.position.y-1)
             );
-            return true;
         } else if (interactionPartner.getHand() == null && currentHoldable != null) {
             interactionPartner.setHand(this.currentHoldable);
             this.currentHoldable = null;
-            return true;
         }
-        return false;
     }
 
     public void updateImage() {

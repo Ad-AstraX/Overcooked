@@ -1,15 +1,18 @@
 package com.mygdx.game.model.object.workstation;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.ingredient.ICookable;
+import com.mygdx.game.view.Main;
 
 /**
  * This class represents a Grill which can cook cookable objects
  */
-public class Grill extends KitchenCounter implements IInteractible {
+public class Grill extends KitchenCounter implements IProcessable {
     private ICookable currentCookable;
+    private Rectangle progressBar;
     public Grill() {
         super("Interactables/grill.png", Vector2.Zero, new Vector2(130, 160));
     }
@@ -24,15 +27,35 @@ public class Grill extends KitchenCounter implements IInteractible {
         }
     }
 
-    /**
-     * Method is called whenever player wishes to cook an uncooked Cookable object on this grill
-     * <p>
-     * //@param holdable The Cookable object to be cooked by this grill
-     * @return Whether the Interaction was successful
-     */
+    public void update(float dt) {
+        if (currentCookable != null && !currentCookable.isCooked()) {
+            currentCookable.cook(dt);
+            progressBar.width -= dt*((float) 100 /7);
+        } else if (currentCookable != null && currentCookable.isCooked() && progressBar != null) {
+            Main.getAllShapes().toFirst();
+            while (Main.getAllShapes().hasAccess() && !Main.getAllShapes().getContent().equals(progressBar)) {
+                Main.getAllShapes().next();
+            }
+            Main.getAllShapes().remove();
+        }
+    }
+
+    /** Method is called whenever player wishes to cook an uncooked Cookable object on this grill */
     @Override
-    public boolean interact(/*IHoldable holdable*/) {
-        return false;
+    public void interact() {
+        if (interactionPartner.getHand() != null && currentCookable == null &&
+                interactionPartner.getHand() instanceof ICookable && !((ICookable) interactionPartner.getHand()).isCooked()){
+            this.currentCookable = (ICookable) interactionPartner.getHand();
+            interactionPartner.setHand(null);
+            ((WorldObject) currentCookable).setPosition(
+                    new Vector2(this.position.x - ((WorldObject) currentCookable).getSize().x/2 + this.size.x/2, this.position.y-1)
+            );
+            progressBar = new Rectangle(position.x+size.x/2-50, position.y+size.y/2, 100, 10);
+            Main.getAllShapes().append(progressBar);
+        } else if (interactionPartner.getHand() == null && currentCookable != null && currentCookable.isCooked()) {
+            interactionPartner.setHand((IHoldable) this.currentCookable);
+            this.currentCookable = null;
+        }
     }
 
     // All Getters

@@ -10,11 +10,9 @@ public interface IHoldable {
     /**
      * Allows a player to pick up or put down a certain object
      * <p>
-     *
      * @param direction the direction of the player
      */
     void beCarriedByPlayer(Vector2 direction);
-    String getSubclassTypeName();
     Player getInteractionPartner();
     void setInteractionPartner(Player interactionPartner);
 }

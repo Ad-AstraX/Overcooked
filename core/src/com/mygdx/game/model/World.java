@@ -4,12 +4,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.datastructures.List;
 import com.mygdx.game.model.object.holdable.ingredient.*;
 import com.mygdx.game.model.object.workstation.*;
+import com.mygdx.game.view.Main;
 
 /**
  * A representation of a singular scene
  */
 public class World {
-    private final List<WorldObject> allObjects = new List<>();
+    private final List<IProcessable> allProcessableObjects = new List<>();
 
     /**
      * Allows user to position objects so that they can design a scene (here specifically the kitchen)
@@ -18,8 +19,8 @@ public class World {
         // TODO FINISH DESIGN OF KITCHEN SOON
         // back and front row
         for (int i = 0; i < 8; i++) {
-            allObjects.append(new Workbench(new Vector2(990-i*130, 50)));
-            allObjects.append(new Workbench(new Vector2(990-i*130, 475+145)));
+            Main.getWorldObjectList().append(new Workbench(new Vector2(990-i*130, 50)));
+            Main.getWorldObjectList().append(new Workbench(new Vector2(990-i*130, 475+145)));
         }
 
         // rows on the sides
@@ -32,18 +33,26 @@ public class World {
         };
         for (int i = 0; i < sideRow.length; i++) {
             sideRow[i].setPosition(new Vector2(990, 145+i*95));
-            allObjects.append(sideRow[i]);
+            Main.getWorldObjectList().append(sideRow[i]);
+            if (sideRow[i] instanceof IProcessable) allProcessableObjects.append((IProcessable) sideRow[i]);
 
             WorldObject copy = sideRow[i].getCopy();
             copy.setPosition(new Vector2(80, 145+i*95));
-            allObjects.append(copy);
+            Main.getWorldObjectList().append(copy);
+            if (copy instanceof IProcessable) allProcessableObjects.append((IProcessable) copy);
         }
 
         // all Spawners
-        allObjects.append(new IngredientSpawner<>(Tomato.class, new Vector2(400, 145)));
+        Main.getWorldObjectList().append(new IngredientSpawner<>(Tomato.class, new Vector2(340, 145)));
+        Main.getWorldObjectList().append(new IngredientSpawner<>(Lettuce.class, new Vector2(340, 240)));
+        Main.getWorldObjectList().append(new IngredientSpawner<>(Bun.class, new Vector2(340, 335)));
+
+        Main.getWorldObjectList().append(new IngredientSpawner<>(Patty.class, new Vector2(730, 145)));
+        Main.getWorldObjectList().append(new IngredientSpawner<>(Sauce.class, new Vector2(730, 245)));
+        Main.getWorldObjectList().append(new IngredientSpawner<>(Bun.class, new Vector2(730, 335)));
     }
 
-    public List<WorldObject> getAllObjects() {
-        return allObjects;
+    public List<IProcessable> getAllProcessableObjects() {
+        return allProcessableObjects;
     }
 }

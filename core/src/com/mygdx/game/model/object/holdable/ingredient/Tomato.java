@@ -7,7 +7,7 @@ import com.mygdx.game.model.WorldObject;
  * Class which represents Tomato
  */
 public class Tomato extends Ingredient implements ICuttable{
-    private boolean isCut;
+    private double cutTime;
 
     public Tomato() {
         super("Ingredients/tomato.png", Vector2.Zero, Vector2.Zero);
@@ -18,17 +18,19 @@ public class Tomato extends Ingredient implements ICuttable{
     }
 
     @Override
-    public void cut() {
-        isCut = true;
+    public void cut(float dt) {
+        cutTime += dt;
+        if (cutTime > 5) {
+            cutTime = 5;
+            this.setTexture("Ingredients/tomatoSlices.png");
+            this.size.x = 75;
+            this.position.x -= 10;
+        }
     }
 
     // All Getters
     public boolean isCut() {
-        return isCut;
-    }
-    @Override
-    public String getSubclassTypeName() {
-        return this.getClass().getTypeName();
+        return cutTime == 5;
     }
     @Override
     public WorldObject getCopy() {

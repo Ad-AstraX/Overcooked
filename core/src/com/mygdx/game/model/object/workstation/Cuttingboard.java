@@ -1,15 +1,18 @@
 package com.mygdx.game.model.object.workstation;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.ingredient.ICuttable;
+import com.mygdx.game.view.Main;
 
 /**
  * This class represents a cuttingboard which can cut cuttable Objects
  */
-public class Cuttingboard extends KitchenCounter implements IInteractible {
+public class Cuttingboard extends KitchenCounter implements IProcessable {
     private ICuttable currentCuttable;
+    private Rectangle progressBar;
     public Cuttingboard() {
         super("Interactables/cuttingboard.png", Vector2.Zero, new Vector2(130, 160));
     }
@@ -26,15 +29,35 @@ public class Cuttingboard extends KitchenCounter implements IInteractible {
         }
     }
 
-    /**
-     * Method is called whenever player wishes to cut an uncut Cuttable object on this Cuttingboard
-     * <p>
-     * //@param holdable The Cuttable object to be cut on this kitchen counter
-     * @return Whether the Interaction was successful
-     */
+    public void update(float dt) {
+        if (currentCuttable != null && !currentCuttable.isCut()) {
+            currentCuttable.cut(dt);
+            progressBar.width -= dt*20;
+        } else if (currentCuttable != null && currentCuttable.isCut() && progressBar != null) {
+            Main.getAllShapes().toFirst();
+            while (Main.getAllShapes().hasAccess() && !Main.getAllShapes().getContent().equals(progressBar)) {
+                Main.getAllShapes().next();
+            }
+            Main.getAllShapes().remove();
+        }
+    }
+
+    /** Method is called whenever player wishes to cut an uncut Cuttable object on this Cuttingboard */
     @Override
-    public boolean interact(/*IHoldable holdable*/) {
-        return false;
+    public void interact() {
+        if (interactionPartner.getHand() != null && currentCuttable == null &&
+            interactionPartner.getHand() instanceof ICuttable && !((ICuttable) interactionPartner.getHand()).isCut()){
+            this.currentCuttable = (ICuttable) interactionPartner.getHand();
+            interactionPartner.setHand(null);
+            ((WorldObject) currentCuttable).setPosition(
+                    new Vector2(this.position.x - ((WorldObject) currentCuttable).getSize().x/2 + this.size.x/2, this.position.y-1)
+            );
+            progressBar = new Rectangle(position.x+size.x/2-50, position.y+size.y/2, 100, 10);
+            Main.getAllShapes().append(progressBar);
+        } else if (interactionPartner.getHand() == null && currentCuttable != null && currentCuttable.isCut()) {
+            interactionPartner.setHand((IHoldable) this.currentCuttable);
+            this.currentCuttable = null;
+        }
     }
 
     // All Getters

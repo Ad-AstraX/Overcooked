@@ -7,7 +7,7 @@ import com.mygdx.game.model.WorldObject;
  * Class which represents a Meat patty
  */
 public class Patty extends Ingredient implements ICookable {
-    private boolean isCooked;
+    private double cookTime;
     public Patty() {
         super("Ingredients/patty.png", Vector2.Zero, Vector2.Zero);
     }
@@ -17,17 +17,17 @@ public class Patty extends Ingredient implements ICookable {
     }
 
     @Override
-    public void cook() {
-        isCooked = true;
+    public void cook(float dt) {
+        cookTime += dt;
+        if (cookTime > 7) {
+            cookTime = 7;
+            this.setTexture("Ingredients/pattyCooked.png");
+        }
     }
 
     // All Getters
-    @Override
-    public String getSubclassTypeName() {
-        return this.getClass().getTypeName();
-    }
     public boolean isCooked() {
-        return isCooked;
+        return cookTime == 7;
     }
     @Override
     public WorldObject getCopy() {

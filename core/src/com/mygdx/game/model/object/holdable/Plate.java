@@ -36,10 +36,6 @@ public class Plate extends WorldObject implements IHoldable {
         return ingredients;
     }
     @Override
-    public String getSubclassTypeName() {
-        return this.getClass().getTypeName();
-    }
-    @Override
     public WorldObject getCopy() {
         return new Plate(this.position);
     }

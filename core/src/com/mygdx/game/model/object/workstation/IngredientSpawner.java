@@ -24,25 +24,17 @@ public class IngredientSpawner<IngredientType> extends KitchenCounter implements
         return new IngredientSpawner<>(ingredientType, position);
     }
 
-    /**
-     * Method is called whenever player wishes to spawn an Ingredient of type
-     * IngredientType from this IngredientSpawner
-     * <p>
-     * @return Whether the Interaction was successful
-     */
+    /** Method is called whenever player wishes to spawn an Ingredient of type IngredientType from this IngredientSpawner */
     @Override
-    public boolean interact() {
+    public void interact() {
         if (this.interactionPartner.getHand() == null) {
             Ingredient holdable;
             try {
                 holdable = (Ingredient) ingredientType.getDeclaredConstructor(Vector2.class).newInstance(interactionPartner.getPosition());
                 this.interactionPartner.setHand(holdable);
                 Main.getWorldObjectList().append(holdable);
-            } catch (Exception e) { return false; }
-
-            return true;
+            } catch (Exception ignored) {  }
         }
-        return false;
     }
 
     @Override

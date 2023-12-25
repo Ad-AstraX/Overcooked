@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
-import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 import com.mygdx.game.model.object.workstation.KitchenCounter;
 import com.mygdx.game.view.Main;
 
@@ -134,9 +133,6 @@ public class PlayerController {
     }
 
     // All Getters
-    public int[] getControls() {
-        return controls;
-    }
     public Player getPlayer() {
         return player;
     }

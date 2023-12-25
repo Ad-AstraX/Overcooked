@@ -7,28 +7,32 @@ import com.mygdx.game.model.WorldObject;
  * Class which represents Lettuce
  */
 public class Lettuce extends Ingredient implements ICuttable {
-   private boolean isCut;
+   private double cutTime;
 
    public Lettuce() {
       super("Ingredients/lettuce.png", Vector2.Zero, Vector2.Zero);
    }
 
    public Lettuce(Vector2 position) {
-      super("Ingredients/lettuce.png", position, new Vector2(55, 150));
+      super("Ingredients/lettuce.png", position, new Vector2(55, 165));
    }
 
    @Override
-   public void cut() {
-      isCut = true;
+   public void cut(float dt) {
+      cutTime += dt;
+      if (cutTime > 5) {
+         cutTime = 5;
+         this.setTexture("Ingredients/lettuceSlices.png");
+         this.size.x += 30;
+         this.size.y = 150;
+         this.position.x -= 20;
+         this.position.y -= 15;
+      }
    }
 
    // All Getters
-   @Override
-   public String getSubclassTypeName() {
-      return this.getClass().getTypeName();
-   }
    public boolean isCut() {
-      return isCut;
+      return cutTime == 5;
    }
    @Override
    public WorldObject getCopy() {

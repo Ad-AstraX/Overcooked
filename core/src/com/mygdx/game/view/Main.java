@@ -2,8 +2,11 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
@@ -20,8 +23,10 @@ public class Main extends ApplicationAdapter {
 	private Viewport viewport;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
+	private ShapeRenderer shapeRenderer;
 
 	private static final List<WorldObject> worldObjectList = new List<>();
+	private static final List<Rectangle> allShapes = new List<>();
 	private GameController gameController;
 
 	@Override
@@ -31,6 +36,7 @@ public class Main extends ApplicationAdapter {
 		viewport = new FitViewport(1920, 1080, camera);
 
 		batch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
 
 		worldObjectList.append(
 				new Floor("floorTiles.png", new Vector2(0, 0), new Vector2(1920, 1080)));
@@ -63,11 +69,47 @@ public class Main extends ApplicationAdapter {
                     worldObject.getSize().y);
 		}
 		batch.end();
+
+		allShapes.toFirst();
+		while (allShapes.hasAccess()) {
+			shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+			shapeRenderer.setProjectionMatrix(camera.combined);
+
+			shapeRenderer.setColor(Color.WHITE);
+			shapeRenderer.rect(
+					allShapes.getContent().x,
+					allShapes.getContent().y,
+					100,
+					allShapes.getContent().height
+			);
+
+			shapeRenderer.setColor(Color.RED);
+			shapeRenderer.rect(
+					allShapes.getContent().x,
+					allShapes.getContent().y,
+					allShapes.getContent().width,
+					allShapes.getContent().height
+			);
+			shapeRenderer.end();
+
+			shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+			shapeRenderer.setProjectionMatrix(camera.combined);
+			shapeRenderer.setColor(Color.BLACK);
+			shapeRenderer.rect(
+					allShapes.getContent().x,
+					allShapes.getContent().y,
+					100,
+					allShapes.getContent().height
+			);
+			shapeRenderer.end();
+			allShapes.next();
+		}
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
+		shapeRenderer.dispose();
 		while (worldObjectList.hasAccess()) {
 			worldObjectList.getContent().getTexture().dispose();
 			worldObjectList.next();
@@ -80,5 +122,9 @@ public class Main extends ApplicationAdapter {
 
 	public static List<WorldObject> getWorldObjectList() {
 		return worldObjectList;
+	}
+
+	public static List<Rectangle> getAllShapes() {
+		return allShapes;
 	}
 }
