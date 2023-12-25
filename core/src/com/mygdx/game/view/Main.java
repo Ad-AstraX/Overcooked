@@ -26,7 +26,7 @@ public class Main extends ApplicationAdapter {
 	private ShapeRenderer shapeRenderer;
 
 	private static final List<WorldObject> worldObjectList = new List<>();
-	private static final List<Rectangle> allShapes = new List<>();
+	private static final List<Rectangle> allRectangles = new List<>();
 	private GameController gameController;
 
 	@Override
@@ -70,25 +70,25 @@ public class Main extends ApplicationAdapter {
 		}
 		batch.end();
 
-		allShapes.toFirst();
-		while (allShapes.hasAccess()) {
+		allRectangles.toFirst();
+		while (allRectangles.hasAccess()) {
 			shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 			shapeRenderer.setProjectionMatrix(camera.combined);
 
 			shapeRenderer.setColor(Color.WHITE);
 			shapeRenderer.rect(
-					allShapes.getContent().x,
-					allShapes.getContent().y,
+					allRectangles.getContent().x,
+					allRectangles.getContent().y,
 					100,
-					allShapes.getContent().height
+					allRectangles.getContent().height
 			);
 
-			shapeRenderer.setColor(Color.RED);
+			shapeRenderer.setColor(allRectangles.getContent().width/100f, 1-allRectangles.getContent().width/100f, 0, 1);
 			shapeRenderer.rect(
-					allShapes.getContent().x,
-					allShapes.getContent().y,
-					allShapes.getContent().width,
-					allShapes.getContent().height
+					allRectangles.getContent().x,
+					allRectangles.getContent().y,
+					allRectangles.getContent().width,
+					allRectangles.getContent().height
 			);
 			shapeRenderer.end();
 
@@ -96,13 +96,13 @@ public class Main extends ApplicationAdapter {
 			shapeRenderer.setProjectionMatrix(camera.combined);
 			shapeRenderer.setColor(Color.BLACK);
 			shapeRenderer.rect(
-					allShapes.getContent().x,
-					allShapes.getContent().y,
+					allRectangles.getContent().x,
+					allRectangles.getContent().y,
 					100,
-					allShapes.getContent().height
+					allRectangles.getContent().height
 			);
 			shapeRenderer.end();
-			allShapes.next();
+			allRectangles.next();
 		}
 	}
 
@@ -124,7 +124,7 @@ public class Main extends ApplicationAdapter {
 		return worldObjectList;
 	}
 
-	public static List<Rectangle> getAllShapes() {
-		return allShapes;
+	public static List<Rectangle> getAllRectangles() {
+		return allRectangles;
 	}
 }

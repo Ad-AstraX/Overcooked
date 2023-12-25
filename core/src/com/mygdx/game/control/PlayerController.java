@@ -99,7 +99,7 @@ public class PlayerController {
         if (player.getPosition().x > currentObj.getPosition().x - player.getSize().x &&
             player.getPosition().x <= currentObj.getPosition().x + currentObj.getSize().x) {
             if (player.getPosition().y > currentObj.getPosition().y - player.getSize().y/3 &&
-                player.getPosition().y <= currentObj.getPosition().y - player.getSize().y/3 + currentObj.getSize().y) {
+                player.getPosition().y <= currentObj.getPosition().y - player.getSize().y/4 + currentObj.getSize().y) {
                 player.setPosition(lastPos);
             }
         }

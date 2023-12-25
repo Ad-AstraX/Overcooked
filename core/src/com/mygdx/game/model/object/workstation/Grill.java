@@ -32,11 +32,11 @@ public class Grill extends KitchenCounter implements IProcessable {
             currentCookable.cook(dt);
             progressBar.width -= dt*((float) 100 /7);
         } else if (currentCookable != null && currentCookable.isCooked() && progressBar != null) {
-            Main.getAllShapes().toFirst();
-            while (Main.getAllShapes().hasAccess() && !Main.getAllShapes().getContent().equals(progressBar)) {
-                Main.getAllShapes().next();
+            Main.getAllRectangles().toFirst();
+            while (Main.getAllRectangles().hasAccess() && !Main.getAllRectangles().getContent().equals(progressBar)) {
+                Main.getAllRectangles().next();
             }
-            Main.getAllShapes().remove();
+            Main.getAllRectangles().remove();
         }
     }
 
@@ -51,7 +51,7 @@ public class Grill extends KitchenCounter implements IProcessable {
                     new Vector2(this.position.x - ((WorldObject) currentCookable).getSize().x/2 + this.size.x/2, this.position.y-1)
             );
             progressBar = new Rectangle(position.x+size.x/2-50, position.y+size.y/2, 100, 10);
-            Main.getAllShapes().append(progressBar);
+            Main.getAllRectangles().append(progressBar);
         } else if (interactionPartner.getHand() == null && currentCookable != null && currentCookable.isCooked()) {
             interactionPartner.setHand((IHoldable) this.currentCookable);
             this.currentCookable = null;

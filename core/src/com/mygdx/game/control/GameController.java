@@ -23,7 +23,7 @@ public class GameController {
                         "Players/PlayerOne/playerOrangeLeft.png",
                         "Players/PlayerOne/playerOrangeFront.png",
                         "Players/PlayerOne/playerOrangeRight.png"},
-                new Vector2(550, 500),
+                new Vector2(650, 500),
                 new int[] { Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D, Input.Keys.E }
         );
 
@@ -33,7 +33,7 @@ public class GameController {
                         "Players/PlayerTwo/playerGreenLeft.png",
                         "Players/PlayerTwo/playerGreenFront.png",
                         "Players/PlayerTwo/playerGreenRight.png"},
-                new Vector2(550, 300),
+                new Vector2(650, 300),
                 new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
         );
 
