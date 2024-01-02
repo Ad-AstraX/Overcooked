@@ -15,29 +15,24 @@ public abstract class Ingredient extends WorldObject implements IHoldable {
     }
 
     public void beCarriedByPlayer(Vector2 direction) {
-        // TODO PLAYER POSITION GETS CHANGED HERE I DON'T KNOW THE FUCK WHY
-        Vector2 lastPlayerPos = interactionPartner.getPosition().cpy();
-
         if (!direction.equals(new Vector2(0, 1))) {
-            position.y = interactionPartner.getPosition().y - 90;
+            if (getSize().x == 0) this.setSize(new Vector2(getTexture().getWidth(), getTexture().getHeight()));
+            this.setPosition(new Vector2(
+                    interactionPartner.getPosition().x - this.size.x / 2 + interactionPartner.getSize().x / 2 * (1 + direction.x),
+                    interactionPartner.getPosition().y
+            ));
         } else {
-            position.y = interactionPartner.getPosition().y + 1;
+            this.setSize(new Vector2(0, 0));
         }
-
-        if (direction.equals(new Vector2(0, -1)) || direction.equals(new Vector2(0, 1))) {
-            position.x = interactionPartner.getPosition().x - this.size.x/2 + interactionPartner.getSize().x/2;
-        } else if (direction.equals(new Vector2(-1, 0))) {
-            position.x = interactionPartner.getPosition().x - this.size.x/3;
-        } else if (direction.equals(new Vector2(1, 0))) {
-            position.x = interactionPartner.getPosition().x + interactionPartner.getSize().x - this.size.x/2;
-        }
-
-        interactionPartner.setPosition(lastPlayerPos);
     }
 
     // All Getters
     public Player getInteractionPartner() {
         return interactionPartner;
+    }
+    @Override
+    public WorldObject getCopy() {
+        return new Sauce(this.position);
     }
 
     // All Setters

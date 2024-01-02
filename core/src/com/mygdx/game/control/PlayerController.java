@@ -21,37 +21,32 @@ public class PlayerController {
         this.controls = controls;
         this.textures = textures;
         direction = new Vector2(0, 0);
-
-        Main.getWorldObjectList().append(player);
     }
 
     /**
      * Updates the player's input for interaction (movement, interaction etc.)
      * <p>
      * @param dt Time
-     * @param pickup // TODO
-     * @param interact // TODO
      */
-    public void updateInput(float dt, boolean pickup, boolean interact) {
+    public void updateInput(float dt) {
         Vector2 lastPos = player.getPosition().cpy();
         handleMovement(dt);
 
-        Main.getWorldObjectList().toFirst();
-        Main.getWorldObjectList().next();
-        while (Main.getWorldObjectList().hasAccess()) {
-            WorldObject currentObj = Main.getWorldObjectList().getContent();
-            if (currentObj instanceof KitchenCounter) {
-                handleCollision(currentObj, lastPos);
-                handleInteractionCheck((KitchenCounter) currentObj);
+        for (int i = 0; i < 2; i++) {
+            Main.getStaticObjectLists()[i].toFirst();
+            while (Main.getStaticObjectLists()[i].hasAccess()) {
+                WorldObject currentObj = Main.getStaticObjectLists()[i].getContent();
+                if (currentObj instanceof KitchenCounter) {
+                    handleCollision(currentObj, lastPos);
+                    handleInteractionCheck((KitchenCounter) currentObj);
+                }
+                Main.getStaticObjectLists()[i].next();
             }
-            Main.getWorldObjectList().next();
         }
 
         if (player.getHand() != null) {
             player.getHand().beCarriedByPlayer(direction);
         }
-
-        // TODO: Player Input (Pickup, Interact)
     }
 
     /**

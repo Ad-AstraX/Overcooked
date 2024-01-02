@@ -3,6 +3,7 @@ package com.mygdx.game.control;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Game;
+import com.mygdx.game.view.Main;
 
 /**
  * Controls the game - all other controllers are instantiated and used here
@@ -13,7 +14,7 @@ public class GameController {
     private final PlayerController playerController2;
     private final CustomerController customerController;
     private final OrderController orderController;
-    private final WorldController worldController;
+private final WorldController worldController;
 
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
         game = new Game(roundLength, payGoal, customerSpawnChance);
@@ -23,7 +24,7 @@ public class GameController {
                         "Players/PlayerOne/playerOrangeLeft.png",
                         "Players/PlayerOne/playerOrangeFront.png",
                         "Players/PlayerOne/playerOrangeRight.png"},
-                new Vector2(650, 500),
+                new Vector2(750, 500),
                 new int[] { Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D, Input.Keys.E }
         );
 
@@ -33,9 +34,11 @@ public class GameController {
                         "Players/PlayerTwo/playerGreenLeft.png",
                         "Players/PlayerTwo/playerGreenFront.png",
                         "Players/PlayerTwo/playerGreenRight.png"},
-                new Vector2(650, 300),
+                new Vector2(750, 300),
                 new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
         );
+        Main.getPlayers()[0] = playerController1.getPlayer();
+        Main.getPlayers()[1] = playerController2.getPlayer();
 
         customerController = new CustomerController();
         orderController = new OrderController(new RecipeController());
@@ -51,9 +54,8 @@ public class GameController {
     public void mainLoop(float dt) {
         tickTime(dt);
 
-        // TODO: Get correct input for players
-        playerController1.updateInput(dt, false, false);
-        playerController2.updateInput(dt, false, false);
+        playerController1.updateInput(dt);
+        playerController2.updateInput(dt);
 
         worldController.getCurrentWorld().getAllProcessableObjects().toFirst();
         while (worldController.getCurrentWorld().getAllProcessableObjects().hasAccess()) {

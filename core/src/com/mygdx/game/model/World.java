@@ -10,49 +10,57 @@ import com.mygdx.game.view.Main;
  * A representation of a singular scene
  */
 public class World {
-    private final List<IProcessable> allProcessableObjects = new List<>();
+    private final List<Processable> allProcessableObjects = new List<>();
 
     /**
      * Allows user to position objects so that they can design a scene (here specifically the kitchen)
      */
     public void generateKitchenScene() {
-        // TODO FINISH DESIGN OF KITCHEN SOON
-        // back and front row
-        for (int i = 0; i < 10; i++) {
-            Main.getWorldObjectList().append(new Workbench(new Vector2(1250-i*130, 50)));
-            Main.getWorldObjectList().append(new Workbench(new Vector2(1250-i*130, 475+145)));
-        }
+        Main.getStaticObjectLists()[0].append(new BackgroundObject("floorTiles.png", new Vector2(0, 0), new Vector2(1950, 1425)));
 
-        // rows on the sides
-        WorldObject[] sideRow = new WorldObject[] {
-                new Grill(),
-                new Workbench(),
-                new Cuttingboard(),
-                new Workbench(),
-                new Grill(),
+        int[][] kitchenScene = new int[][] {
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
+            {0, 1, 0, 0, 2, 0, 0, 0, 4, 0, 0, 1, 0, 0, 0},
+            {0, 8, 0, 0, 3, 0, 0, 0, 5, 0, 0, 9, 0, 0, 0},
+            {0, 1, 0, 0, 6, 0, 0, 0, 6, 0, 0, 1, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+            {0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        for (int i = 0; i < sideRow.length; i++) {
-            sideRow[i].setPosition(new Vector2(1250, 145+i*95));
-            Main.getWorldObjectList().append(sideRow[i]);
-            if (sideRow[i] instanceof IProcessable) allProcessableObjects.append((IProcessable) sideRow[i]);
-
-            WorldObject copy = sideRow[i].getCopy();
-            copy.setPosition(new Vector2(80, 145+i*95));
-            Main.getWorldObjectList().append(copy);
-            if (copy instanceof IProcessable) allProcessableObjects.append((IProcessable) copy);
-        }
-
-        // all Spawners
-        Main.getWorldObjectList().append(new IngredientSpawner<>(Tomato.class, new Vector2(470, 145)));
-        Main.getWorldObjectList().append(new IngredientSpawner<>(Lettuce.class, new Vector2(470, 240)));
-        Main.getWorldObjectList().append(new IngredientSpawner<>(Bun.class, new Vector2(470, 335)));
-
-        Main.getWorldObjectList().append(new IngredientSpawner<>(Patty.class, new Vector2(860, 145)));
-        Main.getWorldObjectList().append(new IngredientSpawner<>(Sauce.class, new Vector2(860, 245)));
-        Main.getWorldObjectList().append(new IngredientSpawner<>(Bun.class, new Vector2(860, 335)));
+        createScene(kitchenScene);
     }
 
-    public List<IProcessable> getAllProcessableObjects() {
+    private void createScene(int[][] scene) {
+        for (int i = scene.length-1; i > 0; i--) {
+            List<WorldObject> currentList = Main.getStaticObjectLists()[1];
+            if (i > 4) currentList = Main.getStaticObjectLists()[0];
+            for (int j = 0; j < scene[i].length; j++) {
+                Vector2 position = new Vector2(j*130, i*95);
+                if (scene[i][j] == 1) currentList.append(new Workbench(position));
+                else if (scene[i][j] == 2) currentList.append(new IngredientSpawner<>(Tomato.class, position));
+                else if (scene[i][j] == 3) currentList.append(new IngredientSpawner<>(Lettuce.class, position));
+                else if (scene[i][j] == 4) currentList.append(new IngredientSpawner<>(Sauce.class, position));
+                else if (scene[i][j] == 5) currentList.append(new IngredientSpawner<>(Patty.class, position));
+                else if (scene[i][j] == 6) currentList.append(new IngredientSpawner<>(Bun.class, position));
+                else if (scene[i][j] == 7) currentList.append(new Trash(position));
+                else if (scene[i][j] == 8) {
+                    Cuttingboard cuttingboard = new Cuttingboard(position);
+                    currentList.append(cuttingboard);
+                    allProcessableObjects.append(cuttingboard);
+                } else if (scene[i][j] == 9) {
+                    Grill grill = new Grill(position);
+                    currentList.append(grill);
+                    allProcessableObjects.append(grill);
+                }
+            }
+        }
+    }
+
+    public List<Processable> getAllProcessableObjects() {
         return allProcessableObjects;
     }
 }

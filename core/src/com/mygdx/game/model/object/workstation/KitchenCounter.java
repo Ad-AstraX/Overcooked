@@ -8,16 +8,24 @@ import com.mygdx.game.model.WorldObject;
  * Abstract parent class for all kitchenCounters. Checks for and reacts to interaction checks
  */
 public abstract class KitchenCounter extends WorldObject implements IInteractible {
+    protected String[] textures;
     protected Player interactionPartner;
     protected boolean isInteracting;
-    public KitchenCounter(String texturePath, Vector2 position, Vector2 size) {
-        super(texturePath, position, size);
+    public KitchenCounter(String[] textures, Vector2 position, Vector2 size) {
+        super(textures[0], position, size);
+        this.textures = textures;
     }
 
     /**
      * Updates image depending on whether the object is being interacted with
      */
-    public abstract void updateImage();
+    public void updateImage() {
+        if (this.isInteracting) {
+            this.setTexture(textures[1]);
+        } else {
+            this.setTexture(textures[0]);
+        }
+    }
 
     // All Getters
     public boolean isInteracting() {
@@ -26,6 +34,10 @@ public abstract class KitchenCounter extends WorldObject implements IInteractibl
     public Player getInteractionPartner() {
         return interactionPartner;
     }
+    @Override
+    public WorldObject getCopy() {
+        return new Grill(this.position);
+    }
 
     // All Setters
     public void setIsInteracting(boolean isInteracting) {
@@ -33,5 +45,8 @@ public abstract class KitchenCounter extends WorldObject implements IInteractibl
     }
     public void setInteractionPartner(Player interactionPartner) {
         this.interactionPartner = interactionPartner;
+    }
+    public void setTextures(String[] textures) {
+        this.textures = textures;
     }
 }
