@@ -38,11 +38,11 @@ public abstract class Processable extends KitchenCounter {
                 currentIngredient.setPosition(positionObject(currentIngredient, this));
 
                 this.setTexture(textures[isInteracting ? 1 : 0]);
-                Main.getAllRectangles().toFirst();
-                while (Main.getAllRectangles().hasAccess() && !Main.getAllRectangles().getContent().equals(progressBar)) {
-                    Main.getAllRectangles().next();
+                Main.getAllProgressBars().toFirst();
+                while (Main.getAllProgressBars().hasAccess() && !Main.getAllProgressBars().getContent().equals(progressBar)) {
+                    Main.getAllProgressBars().next();
                 }
-                Main.getAllRectangles().remove();
+                Main.getAllProgressBars().remove();
                 progressBar = null;
             }
         }
@@ -55,7 +55,7 @@ public abstract class Processable extends KitchenCounter {
             currentIngredient.setPosition(positionObject(currentIngredient, this));
 
             progressBar = new Rectangle(position.x+size.x/2-50, position.y+size.y/2, 100, 10);
-            Main.getAllRectangles().append(progressBar);
+            Main.getAllProgressBars().append(progressBar);
             try { this.setTexture(textures[2 + (isInteracting ? 1 : 0)]); } catch (Exception ignore){}
 
         } else if (interactionPartner.getHand() == null || interactionPartner.getHand() instanceof Plate) {

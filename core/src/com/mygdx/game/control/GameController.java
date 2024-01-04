@@ -9,12 +9,12 @@ import com.mygdx.game.view.Main;
  * Controls the game - all other controllers are instantiated and used here
  */
 public class GameController {
-    private final Game game;
+    private static Game game;
     private final PlayerController playerController1;
     private final PlayerController playerController2;
     private final CustomerController customerController;
     private final OrderController orderController;
-private final WorldController worldController;
+    private final WorldController worldController;
 
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
         game = new Game(roundLength, payGoal, customerSpawnChance);
@@ -87,5 +87,9 @@ private final WorldController worldController;
             return;
 
         System.out.println("Spawned Customer");
+    }
+
+    public static Game getGame() {
+        return game;
     }
 }

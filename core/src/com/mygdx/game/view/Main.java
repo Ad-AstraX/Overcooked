@@ -5,7 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -33,9 +36,13 @@ public class Main extends ApplicationAdapter {
 
 	private static final Player[] players = new Player[2];
 	private static final List<WorldObject>[] staticObjectLists = new List[] {new List<WorldObject>(), new List<WorldObject>()};
-	private static final List<Rectangle> allRectangles = new List<>();
+	private static final List<Rectangle> allProgressBars = new List<>();
 	private GameController gameController;
 	private Music music;
+	private BitmapFont font;
+
+	float stateTime;
+
 	@Override
 	public void create() {
 		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/Lynn Music Boulangerie - Gaming Background Music (HD).mp3"));
@@ -46,12 +53,15 @@ public class Main extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
+		font = new BitmapFont();
 
 		gameController = new GameController(120f, 60, 1f);
+		stateTime = 0f;
 	}
 
 	@Override
 	public void render() {
+		stateTime += Gdx.graphics.getDeltaTime();
 		gameController.mainLoop(Gdx.graphics.getDeltaTime());
 
 		ScreenUtils.clear(0, 0, 0, 1);
@@ -68,16 +78,20 @@ public class Main extends ApplicationAdapter {
 		drawFromWorldObjectList(staticObjectLists[0]);
 		drawFromPlayersArray();
 		drawFromWorldObjectList(staticObjectLists[1]);
+
+
+		font.getData().setScale(5f);
+		font.draw(batch, GameController.getGame().getPayTotal() + " $", 200 - (float) (GameController.getGame().getPayGoal() + "$").length()/2 * 50f,1375);
 		batch.end();
 
-		allRectangles.toFirst();
-		while (allRectangles.hasAccess()) {
-			Rectangle current = allRectangles.getContent();
+		allProgressBars.toFirst();
+		while (allProgressBars.hasAccess()) {
+			Rectangle current = allProgressBars.getContent();
 			drawRectangle(ShapeRenderer.ShapeType.Filled, Color.WHITE, current.x, current.y, 100, current.height);
 			drawRectangle(ShapeRenderer.ShapeType.Filled, new Color(current.width/100f, 1-current.width/100f, 0, 1),
 						  current.x, current.y, current.width, current.height);
 			drawRectangle(ShapeRenderer.ShapeType.Line, Color.BLACK, current.x, current.y, 100, current.height);
-			allRectangles.next();
+			allProgressBars.next();
 		}
 	}
 
@@ -130,11 +144,16 @@ public class Main extends ApplicationAdapter {
 	 * @param object the WorldObject that is to be drawn
 	 */
 	private void drawWorldObject(WorldObject object) {
-		batch.draw(
-				object.getTexture(),
-				object.getPosition().x, object.getPosition().y,
-				object.getSize().x, object.getSize().y
-		);
+		if (object.isAnimation()) {
+			TextureRegion currentFrame = object.getAnimation().getKeyFrame(stateTime, true);
+			batch.draw(currentFrame, object.getPosition().x, object.getPosition().y);
+		} else {
+			batch.draw(
+					object.getTexture(),
+					object.getPosition().x, object.getPosition().y,
+					object.getSize().x, object.getSize().y
+			);
+		}
 	}
 
 	/**
@@ -219,8 +238,8 @@ public class Main extends ApplicationAdapter {
 	public static List<WorldObject>[] getStaticObjectLists() {
 		return staticObjectLists;
 	}
-	public static List<Rectangle> getAllRectangles() {
-		return allRectangles;
+	public static List<Rectangle> getAllProgressBars() {
+		return allProgressBars;
 	}
 	public static Player[] getPlayers() {
 		return players;

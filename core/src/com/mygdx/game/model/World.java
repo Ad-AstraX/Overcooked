@@ -17,11 +17,12 @@ public class World {
      */
     public void generateKitchenScene() {
         Main.getStaticObjectLists()[0].append(new BackgroundObject("floorTiles.png", new Vector2(0, 0), new Vector2(1950, 1425)));
+        Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/coinAnimTextures.png", 1, 6, 0.2f, new Vector2(30, 1300)));
 
         int[][] kitchenScene = new int[][] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
-            {0, 1, 0, 0, 2, 0, 0, 0, 4, 0, 0, 1, 0, 0, 0},
+            {0, 1, 7, 0, 2, 0, 0, 0, 4, 0, 7, 1, 0, 0, 0},
             {0, 8, 0, 0, 3, 0, 0, 0, 5, 0, 0, 9, 0, 0, 0},
             {0, 1, 0, 0, 6, 0, 0, 0, 6, 0, 0, 1, 0, 0, 0},
             {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},

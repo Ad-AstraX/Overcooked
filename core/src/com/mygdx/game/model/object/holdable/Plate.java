@@ -8,9 +8,7 @@ import com.mygdx.game.model.datastructures.Utilities;
 import com.mygdx.game.model.object.holdable.ingredient.Bun;
 import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 
-/**
- * Class which represents a plate. One can stack cut and cooked (if necessary) ingredients on it
- */
+/** Class which represents a plate. One can stack cut and cooked (if necessary) ingredients on it */
 public class Plate extends WorldObject implements IHoldable {
     private final Stack<Ingredient> ingredients = new Stack<>();
     private Player interactionPartner;
@@ -30,6 +28,22 @@ public class Plate extends WorldObject implements IHoldable {
                 ingredients.top().setSize(new Vector2(ingredients.top().getTexture().getWidth(), ingredients.top().getTexture().getHeight()));
             }
             ingredients.push(ingredient);
+        }
+    }
+
+    /** Removes the top ingredient on the plate (if there is any) */
+    public void removeTop(){
+        if (!ingredients.isEmpty()) {
+            ingredients.top().getTexture().dispose();
+            ingredients.pop();
+            if (ingredients.top() instanceof Bun) {
+                ingredients.top().setTexture("Ingredients/bunTop.png");
+                ingredients.top().setSize(new Vector2(ingredients.top().getTexture().getWidth(), ingredients.top().getTexture().getHeight()));
+            }
+            if (ingredients.isEmpty()) {
+                this.getTexture().dispose();
+                interactionPartner.setHand(null);
+            }
         }
     }
 
