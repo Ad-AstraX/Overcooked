@@ -1,8 +1,8 @@
 package com.mygdx.game.model.object.workstation;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.*;
-import com.mygdx.game.view.Main;
 
 public class IngredientSpawner<IngredientType> extends KitchenCounter implements IInteractible {
     private final Class<IngredientType> ingredientType;
@@ -20,12 +20,17 @@ public class IngredientSpawner<IngredientType> extends KitchenCounter implements
     /** Method is called whenever player wishes to spawn an Ingredient of type IngredientType from this IngredientSpawner */
     @Override
     public void interact() {
-        if (this.interactionPartner.getHand() == null) {
+        if (this.interactionPartner.getHand() == null || this.interactionPartner.getHand() instanceof Plate) {
             Ingredient holdable;
             try {
                 holdable = (Ingredient) ingredientType.getDeclaredConstructor(Vector2.class).newInstance(interactionPartner.getPosition());
-                this.interactionPartner.setHand(holdable);
-                Main.getDynamicObjectList().append(holdable);
+                if ((holdable instanceof Cuttable && !((Cuttable) holdable).isCut()) ||
+                    (holdable instanceof Cookable && !((Cookable) holdable).isCooked())) {
+                    this.interactionPartner.setHand(holdable);
+                } else {
+                    if (this.interactionPartner.getHand() == null) this.interactionPartner.setHand(new Plate(interactionPartner.getPosition()));
+                    ((Plate) this.interactionPartner.getHand()).addIngredient(holdable);
+                }
             } catch (Exception ignored) {  }
         }
     }

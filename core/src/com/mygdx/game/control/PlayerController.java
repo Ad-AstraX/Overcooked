@@ -61,24 +61,28 @@ public class PlayerController {
             player.setTexture(textures[0]);
             move.add(new Vector2(0, 1));
             direction = new Vector2(0, 1);
+            player.setDirection(direction);
         }
 
         if (Gdx.input.isKeyPressed(controls[2])) {
             player.setTexture(textures[2]);
             move.add(new Vector2(0, -1));
             direction = new Vector2(0, -1);
+            player.setDirection(direction);
         }
 
         if (Gdx.input.isKeyPressed(controls[1])) {
             player.setTexture(textures[1]);
             move.add(new Vector2(-1, 0));
             direction = new Vector2(-1, 0);
+            player.setDirection(direction);
         }
 
         if (Gdx.input.isKeyPressed(controls[3])) {
             player.setTexture(textures[3]);
             move.add(new Vector2(1, 0));
             direction = new Vector2(1, 0);
+            player.setDirection(direction);
         }
 
         player.getPosition().add(move.nor().scl(Player.MOVEMENT_SPEED).scl(dt));

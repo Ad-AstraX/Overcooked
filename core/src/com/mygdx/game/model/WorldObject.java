@@ -11,16 +11,15 @@ public abstract class WorldObject {
 
     public WorldObject(String texturePath, Vector2 position, Vector2 size) {
         try {
-            this.texture = new Texture(texturePath);
+            this.texture = new Texture("Textures/" + texturePath);
         } catch(GdxRuntimeException e) {
-            this.texture = new Texture("fallbackTexture.png");
+            this.texture = new Texture("Textures/fallbackTexture.png");
         }
         this.position = position;
         this.size = size;
     }
 
     // All Getters
-    public abstract WorldObject getCopy();
     public Texture getTexture() {
         return texture;
     }
@@ -35,9 +34,9 @@ public abstract class WorldObject {
     public void setTexture(String texture) {
         try {
             this.texture.dispose();
-            this.texture = new Texture(texture);
+            this.texture = new Texture("Textures/" + texture);
         } catch(GdxRuntimeException e) {
-            this.texture = new Texture("fallbackTexture.png");
+            this.texture = new Texture("Textures/fallbackTexture.png");
         }
     }
     public void setPosition(Vector2 position) {

@@ -3,6 +3,7 @@ package com.mygdx.game.model.object.workstation;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
+import com.mygdx.game.model.object.holdable.ingredient.Cookable;
 
 /**
  * Abstract parent class for all kitchenCounters. Checks for and reacts to interaction checks
@@ -27,16 +28,25 @@ public abstract class KitchenCounter extends WorldObject implements IInteractibl
         }
     }
 
+
+    /**
+     * Position an object on a KitchenCounter
+     * @param object the object that is to be positioned
+     * @param relativeTo the kitchenCounter
+     * @return the new Vector of the object
+     */
+    public Vector2 positionObject(WorldObject object, WorldObject relativeTo) {
+       return  new Vector2(
+                relativeTo.getPosition().x - object.getSize().x/2 + relativeTo.getSize().x/2,
+                relativeTo.getPosition().y + relativeTo.getSize().y*0.6f + (object instanceof Cookable ? 20 : 0));
+    }
+
     // All Getters
     public boolean isInteracting() {
         return isInteracting;
     }
     public Player getInteractionPartner() {
         return interactionPartner;
-    }
-    @Override
-    public WorldObject getCopy() {
-        return new Grill(this.position);
     }
 
     // All Setters

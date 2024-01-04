@@ -11,8 +11,4 @@ public class BackgroundObject extends WorldObject{
     }
 
     // TODO I need this but still figuring out what I can do with it
-    @Override
-    public WorldObject getCopy() {
-        return new BackgroundObject(this.texture.toString(), this.position, this.size);
-    }
 }

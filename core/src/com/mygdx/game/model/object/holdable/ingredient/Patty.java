@@ -11,6 +11,6 @@ public class Patty extends Cookable {
     }
 
     public Patty(Vector2 position) {
-        super(new String[] {"Ingredients/patty.png", "Ingredients/pattyCooked.png"}, position, new Vector2(75, 50), 7);
+        super(new String[] {"Ingredients/patty.png", "Ingredients/pattyCooked.png"}, position, new Vector2(75, 30), 7);
     }
 }

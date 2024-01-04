@@ -8,7 +8,7 @@ import com.mygdx.game.model.Player;
  */
 public interface IHoldable {
     /**
-     * Allows a player to pick up or put down a certain object
+     * Allows a player to carry a certain object
      * <p>
      * @param direction the direction of the player
      */

@@ -15,24 +15,15 @@ public abstract class Ingredient extends WorldObject implements IHoldable {
     }
 
     public void beCarriedByPlayer(Vector2 direction) {
-        if (!direction.equals(new Vector2(0, 1))) {
-            if (getSize().x == 0) this.setSize(new Vector2(getTexture().getWidth(), getTexture().getHeight()));
-            this.setPosition(new Vector2(
-                    interactionPartner.getPosition().x - this.size.x / 2 + interactionPartner.getSize().x / 2 * (1 + direction.x),
-                    interactionPartner.getPosition().y
-            ));
-        } else {
-            this.setSize(new Vector2(0, 0));
-        }
+        this.setPosition(new Vector2(
+            interactionPartner.getPosition().x - this.size.x / 2 + interactionPartner.getSize().x / 2 * (1 + direction.x),
+            interactionPartner.getPosition().y + 10
+        ));
     }
 
     // All Getters
     public Player getInteractionPartner() {
         return interactionPartner;
-    }
-    @Override
-    public WorldObject getCopy() {
-        return new Sauce(this.position);
     }
 
     // All Setters

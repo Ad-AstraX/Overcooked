@@ -1,6 +1,8 @@
 package com.mygdx.game.model.object.workstation;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.model.object.holdable.IHoldable;
+import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.Cuttable;
 
 /**
@@ -15,9 +17,9 @@ public class Cuttingboard extends Processable {
     /** Method is called whenever player wishes to cut an uncut Cuttable object on this Cuttingboard */
     @Override
     public void interact() {
-        if ((interactionPartner.getHand() != null && currentIngredient == null &&
-            interactionPartner.getHand() instanceof Cuttable && !((Cuttable) interactionPartner.getHand()).isCut()) ||
-            (interactionPartner.getHand() == null && currentIngredient != null && ((Cuttable) currentIngredient).isCut())){
+        IHoldable playerHand = interactionPartner.getHand();
+        if ((currentIngredient == null && playerHand instanceof Cuttable && !((Cuttable) playerHand).isCut()) ||
+                ((playerHand == null || playerHand instanceof Plate) && currentIngredient != null && progressBar == null)){
             super.interact();
         }
     }

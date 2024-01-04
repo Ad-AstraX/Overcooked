@@ -1,5 +1,6 @@
 package com.mygdx.game.model.datastructures;
 
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 
 /**
@@ -50,6 +51,31 @@ public class Utilities {
         while (!help.isEmpty()) {
             stack.push(help.top());
             copy.push(help.top());
+            help.pop();
+        }
+
+        return copy;
+    }
+
+    /**
+     * Inverts a stack
+     * <p>
+     * @param stack the stack that is to be inverted
+     * @return a copy of the inverted stack
+     * @param <ContentType> The type of the stack's content
+     */
+    public static <ContentType> Stack<ContentType> invertStack(Stack<ContentType> stack) {
+        Stack<ContentType> help = new Stack<>();
+        Stack<ContentType> copy = new Stack<>();
+
+        while (!stack.isEmpty()) {
+            help.push(stack.top());
+            copy.push(stack.top());
+            stack.pop();
+        }
+
+        while (!help.isEmpty()) {
+            stack.push(help.top());
             help.pop();
         }
 
@@ -115,52 +141,5 @@ public class Utilities {
             list.next();
         }
         return count;
-    }
-
-    /**
-     * Applies quicksort on the y positions of an array filled with WorldObjects
-     * Source: <a href="https://www.baeldung.com/java-quicksort"></a>
-     * <p>
-     * @param arr the array that is to be sorted
-     * @param begin Where to start sorting
-     * @param end Where to end sorting
-     */
-    public static void quickSort(WorldObject[] arr, int begin, int end) {
-        if (begin < end) {
-            int partitionIndex = partition(arr, begin, end);
-
-            quickSort(arr, begin, partitionIndex-1);
-            quickSort(arr, partitionIndex+1, end);
-        }
-    }
-
-    /**
-     * Helper method for <br>quicksort</br>. This is where the real sorting happens
-     * Source: <a href="https://www.baeldung.com/java-quicksort"></a>
-     * <p>
-     * @param arr the array that is to be sorted
-     * @param begin Where to start sorting
-     * @param end Where to end sorting
-     * @return //TODO
-     */
-    private static int partition(WorldObject[] arr, int begin, int end) {
-        float pivot = arr[end].getPosition().y;
-        int i = (begin-1);
-
-        for (int j = begin; j < end; j++) {
-            if (arr[j].getPosition().y >= pivot) {
-                i++;
-
-                WorldObject swapTemp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = swapTemp;
-            }
-        }
-
-        WorldObject swapTemp = arr[i+1];
-        arr[i+1] = arr[end];
-        arr[end] = swapTemp;
-
-        return i+1;
     }
 }
