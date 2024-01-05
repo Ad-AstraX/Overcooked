@@ -1,7 +1,10 @@
 package com.mygdx.game.model.object.workstation;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.model.datastructures.RectangleColored;
 import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.Cookable;
 import com.mygdx.game.model.object.holdable.ingredient.Cuttable;
@@ -13,7 +16,9 @@ import com.mygdx.game.view.Main;
  */
 public abstract class Processable extends KitchenCounter {
     protected Ingredient currentIngredient;
-    protected Rectangle progressBar;
+    protected RectangleColored progressBar;
+    private RectangleColored progressBarOutline;
+    private RectangleColored progressBarInside;
     protected float timeTillFinish;
 
     public Processable(String[] textures, Vector2 position, Vector2 size, float timeTillFinish) {
@@ -38,12 +43,17 @@ public abstract class Processable extends KitchenCounter {
                 currentIngredient.setPosition(positionObject(currentIngredient, this));
 
                 this.setTexture(textures[isInteracting ? 1 : 0]);
-                Main.getAllProgressBars().toFirst();
-                while (Main.getAllProgressBars().hasAccess() && !Main.getAllProgressBars().getContent().equals(progressBar)) {
-                    Main.getAllProgressBars().next();
+                Main.getAllRectangles().toFirst();
+                while (Main.getAllRectangles().hasAccess()) {
+                    RectangleColored current = Main.getAllRectangles().getContent();
+                    if (current.equals(progressBar) || current.equals(progressBarInside) || current.equals(progressBarOutline)) {
+                        Main.getAllRectangles().remove();
+                    }
+                    Main.getAllRectangles().next();
                 }
-                Main.getAllProgressBars().remove();
                 progressBar = null;
+                progressBarInside = null;
+                progressBarOutline = null;
             }
         }
     }
@@ -54,8 +64,14 @@ public abstract class Processable extends KitchenCounter {
             interactionPartner.setHand(null);
             currentIngredient.setPosition(positionObject(currentIngredient, this));
 
-            progressBar = new Rectangle(position.x+size.x/2-50, position.y+size.y/2, 100, 10);
-            Main.getAllProgressBars().append(progressBar);
+            float progressBarX = position.x+size.x/2-50;
+            float progressBarY = position.y+size.y/2;
+            progressBarInside = new RectangleColored(ShapeRenderer.ShapeType.Filled, progressBarX, progressBarY, 100, 10, 1, 1, 1, 1);
+            progressBar = new RectangleColored(ShapeRenderer.ShapeType.Filled, progressBarX, progressBarY, 100, 10, 1, 0, 0, 1);
+            progressBarOutline = new RectangleColored(ShapeRenderer.ShapeType.Line, progressBarX, progressBarY, 100, 10, 0, 0, 0, 1);
+            Main.getAllRectangles().append(progressBarInside);
+            Main.getAllRectangles().append(progressBar);
+            Main.getAllRectangles().append(progressBarOutline);
             try { this.setTexture(textures[2 + (isInteracting ? 1 : 0)]); } catch (Exception ignore){}
 
         } else if (interactionPartner.getHand() == null || interactionPartner.getHand() instanceof Plate) {

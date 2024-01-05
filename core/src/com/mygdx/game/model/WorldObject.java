@@ -36,7 +36,7 @@ public abstract class WorldObject {
 
         this.position = position;
         this.size = new Vector2(animation.getKeyFrames()[0].getRegionWidth(), animation.getKeyFrames()[0].getRegionHeight());
-        System.out.println(size.x);
+        System.out.println(size.y);
     }
 
     // All Getters

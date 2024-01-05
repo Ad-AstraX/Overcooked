@@ -9,6 +9,7 @@ import com.mygdx.game.model.object.holdable.IHoldable;
  * Abstract parent class for all ingredients
  */
 public abstract class Ingredient extends WorldObject implements IHoldable {
+    protected int price;
     protected Player interactionPartner;
     public Ingredient(String texturePath, Vector2 position, Vector2 size) {
         super(texturePath, position, size);
@@ -25,9 +26,15 @@ public abstract class Ingredient extends WorldObject implements IHoldable {
     public Player getInteractionPartner() {
         return interactionPartner;
     }
+    public int getPrice() {
+        return price;
+    }
 
     // All Setters
     public void setInteractionPartner(Player interactionPartner) {
         this.interactionPartner = interactionPartner;
+    }
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

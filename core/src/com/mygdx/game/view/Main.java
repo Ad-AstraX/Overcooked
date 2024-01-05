@@ -4,26 +4,30 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.control.GameController;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
+import com.mygdx.game.model.datastructures.RectangleColored;
 import com.mygdx.game.model.datastructures.Stack;
 import com.mygdx.game.model.datastructures.Utilities;
 import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 import com.mygdx.game.model.object.workstation.Processable;
 import com.mygdx.game.model.object.workstation.Workbench;
+
+import java.awt.*;
 
 /**
  * This class handles all the graphics
@@ -36,10 +40,11 @@ public class Main extends ApplicationAdapter {
 
 	private static final Player[] players = new Player[2];
 	private static final List<WorldObject>[] staticObjectLists = new List[] {new List<WorldObject>(), new List<WorldObject>()};
-	private static final List<Rectangle> allProgressBars = new List<>();
+	private static final List<RectangleColored> allRectangles = new List<>();
 	private GameController gameController;
 	private Music music;
 	private BitmapFont font;
+	private static Vector3 mousePosition = new Vector3(0, 0, 0);
 
 	float stateTime;
 
@@ -53,10 +58,9 @@ public class Main extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
-		font = new BitmapFont();
+		font = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
 
 		gameController = new GameController(120f, 60, 1f);
-		stateTime = 0f;
 	}
 
 	@Override
@@ -67,32 +71,46 @@ public class Main extends ApplicationAdapter {
 		ScreenUtils.clear(0, 0, 0, 1);
 		camera.update();
 
-		if (players[0].getPosition().y < players[1].getPosition().y) {
-			Player help = players[1];
-			players[1] = players[0];
-			players[0] = help;
+		mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+		camera.unproject(mousePosition);
+
+		if (gameController.getWorldController().getSceneID() == 0) {
+			drawRectanglesFromList(allRectangles);
+
+			batch.begin();
+			batch.setProjectionMatrix(camera.combined);
+			drawFromWorldObjectList(staticObjectLists[0]);
+			drawFromWorldObjectList(staticObjectLists[1]);
+			batch.end();
+		} else if (gameController.getWorldController().getSceneID() == 1) {
+			if (players[0].getPosition().y < players[1].getPosition().y) {
+				Player help = players[1];
+				players[1] = players[0];
+				players[0] = help;
+			}
+
+			batch.begin();
+			batch.setProjectionMatrix(camera.combined);
+			drawFromWorldObjectList(staticObjectLists[0]);
+			drawFromPlayersArray();
+			drawFromWorldObjectList(staticObjectLists[1]);
+
+			font.getData().setScale(2.5f);
+			font.draw(batch, GameController.getGame().getPayTotal() + " $", 250 - (float) (GameController.getGame().getPayGoal() + "$").length() / 2 * 80f, 1380);
+			batch.end();
+
+			drawRectanglesFromList(allRectangles);
 		}
 
-		batch.begin();
-		batch.setProjectionMatrix(camera.combined);
-		drawFromWorldObjectList(staticObjectLists[0]);
-		drawFromPlayersArray();
-		drawFromWorldObjectList(staticObjectLists[1]);
-
-
-		font.getData().setScale(5f);
-		font.draw(batch, GameController.getGame().getPayTotal() + " $", 200 - (float) (GameController.getGame().getPayGoal() + "$").length()/2 * 50f,1375);
-		batch.end();
-
-		allProgressBars.toFirst();
-		while (allProgressBars.hasAccess()) {
-			Rectangle current = allProgressBars.getContent();
-			drawRectangle(ShapeRenderer.ShapeType.Filled, Color.WHITE, current.x, current.y, 100, current.height);
-			drawRectangle(ShapeRenderer.ShapeType.Filled, new Color(current.width/100f, 1-current.width/100f, 0, 1),
-						  current.x, current.y, current.width, current.height);
-			drawRectangle(ShapeRenderer.ShapeType.Line, Color.BLACK, current.x, current.y, 100, current.height);
-			allProgressBars.next();
-		}
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		RectangleColored current = gameController.getWorldController().getTransitionRect();
+		shapeRenderer.begin(current.getShapeType());
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		shapeRenderer.setColor(current.getColor());
+		shapeRenderer.rect(current.x, current.y, current.width, current.height);
+		shapeRenderer.end();
+		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 
 	/**
@@ -157,27 +175,30 @@ public class Main extends ApplicationAdapter {
 	}
 
 	/**
-	 * Draw a rectangle
-	 * @param type Filled or line
-	 * @param color the color
-	 * @param x x position
-	 * @param y y position
-	 * @param width width
-	 * @param height height
+	 * Draws all rectangles in a list of type List<RectangleColored>
+	 * @param list the list that is to be drawn from
 	 */
-	private void drawRectangle(ShapeRenderer.ShapeType type, Color color, float x, float y, float width, float height) {
-		shapeRenderer.begin(type);
-		shapeRenderer.setProjectionMatrix(camera.combined);
-		shapeRenderer.setColor(color);
-		shapeRenderer.rect(x, y, width, height);
-		shapeRenderer.end();
+	private void drawRectanglesFromList(List<RectangleColored> list) {
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		list.toFirst();
+		while (list.hasAccess()) {
+			RectangleColored current = list.getContent();
+			shapeRenderer.begin(current.getShapeType());
+			shapeRenderer.setProjectionMatrix(camera.combined);
+			shapeRenderer.setColor(current.getColor());
+			shapeRenderer.rect(current.x, current.y, current.width, current.height);
+			shapeRenderer.end();
+			list.next();
+		}
+		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 
 	/**
 	 * Takes a list of type List<WorldObject> and disposes of all textures inside
 	 * @param list the given list
 	 */
-	private void disposeOfTexturesInList(List<WorldObject> list) {
+	public static void disposeOfTexturesInList(List<WorldObject> list) {
 		list.toFirst();
 		while (list.hasAccess()) {
 			list.getContent().getTexture().dispose();
@@ -195,7 +216,7 @@ public class Main extends ApplicationAdapter {
 					}
 				}
 			}
-			list.next();
+			list.remove();
 		}
 	}
 
@@ -223,6 +244,7 @@ public class Main extends ApplicationAdapter {
 		batch.dispose();
 		music.dispose();
 		shapeRenderer.dispose();
+		font.dispose();
 
 		// Dispose of all Textures
 		disposeOfTexturesInList(staticObjectLists[0]);
@@ -238,10 +260,13 @@ public class Main extends ApplicationAdapter {
 	public static List<WorldObject>[] getStaticObjectLists() {
 		return staticObjectLists;
 	}
-	public static List<Rectangle> getAllProgressBars() {
-		return allProgressBars;
+	public static List<RectangleColored> getAllRectangles() {
+		return allRectangles;
 	}
 	public static Player[] getPlayers() {
 		return players;
+	}
+	public static Vector3 getMousePosition() {
+		return mousePosition;
 	}
 }

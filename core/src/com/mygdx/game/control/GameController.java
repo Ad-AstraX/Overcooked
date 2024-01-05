@@ -44,6 +44,7 @@ public class GameController {
         orderController = new OrderController(new RecipeController());
 
         worldController = new WorldController();
+        worldController.showStart();
     }
 
     /**
@@ -57,11 +58,7 @@ public class GameController {
         playerController1.updateInput(dt);
         playerController2.updateInput(dt);
 
-        worldController.getCurrentWorld().getAllProcessableObjects().toFirst();
-        while (worldController.getCurrentWorld().getAllProcessableObjects().hasAccess()) {
-            worldController.getCurrentWorld().getAllProcessableObjects().getContent().update(dt);
-            worldController.getCurrentWorld().getAllProcessableObjects().next();
-        }
+        worldController.update(dt);
 
         tickGenCustomer();
     }
@@ -91,5 +88,8 @@ public class GameController {
 
     public static Game getGame() {
         return game;
+    }
+    public WorldController getWorldController() {
+        return worldController;
     }
 }
