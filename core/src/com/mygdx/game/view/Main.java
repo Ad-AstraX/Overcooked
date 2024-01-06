@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.control.GameController;
+import com.mygdx.game.control.WorldController;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
@@ -33,20 +34,20 @@ import java.awt.*;
  * This class handles all the graphics
  */
 public class Main extends ApplicationAdapter {
-	private Viewport viewport;
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private ShapeRenderer shapeRenderer;
+	private static Viewport viewport;
+	private static OrthographicCamera camera;
+	private static SpriteBatch batch;
+	private static ShapeRenderer shapeRenderer;
 
 	private static final Player[] players = new Player[2];
 	private static final List<WorldObject>[] staticObjectLists = new List[] {new List<WorldObject>(), new List<WorldObject>()};
 	private static final List<RectangleColored> allRectangles = new List<>();
-	private GameController gameController;
-	private Music music;
-	private BitmapFont font;
-	private static Vector3 mousePosition = new Vector3(0, 0, 0);
+	private static GameController gameController;
+	private static Music music;
+	private static BitmapFont font;
+	private static final Vector3 mousePosition = new Vector3(0, 0, 0);
 
-	float stateTime;
+	private static float stateTime;
 
 	@Override
 	public void create() {
@@ -65,52 +66,54 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void render() {
-		stateTime += Gdx.graphics.getDeltaTime();
-		gameController.mainLoop(Gdx.graphics.getDeltaTime());
+		if (Gdx.graphics.getDeltaTime() < 0.02f) {
+			stateTime += Gdx.graphics.getDeltaTime();
+			gameController.mainLoop(Gdx.graphics.getDeltaTime());
 
-		ScreenUtils.clear(0, 0, 0, 1);
-		camera.update();
+			ScreenUtils.clear(0, 0, 0, 1);
+			camera.update();
 
-		mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-		camera.unproject(mousePosition);
+			mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(mousePosition);
 
-		if (gameController.getWorldController().getSceneID() == 0) {
-			drawRectanglesFromList(allRectangles);
+			if (gameController.getWorldController().getSceneID() == 0) {
+				drawRectanglesFromList(allRectangles);
 
-			batch.begin();
-			batch.setProjectionMatrix(camera.combined);
-			drawFromWorldObjectList(staticObjectLists[0]);
-			drawFromWorldObjectList(staticObjectLists[1]);
-			batch.end();
-		} else if (gameController.getWorldController().getSceneID() == 1) {
-			if (players[0].getPosition().y < players[1].getPosition().y) {
-				Player help = players[1];
-				players[1] = players[0];
-				players[0] = help;
+				batch.begin();
+				batch.setProjectionMatrix(camera.combined);
+				drawFromWorldObjectList(staticObjectLists[0]);
+				drawFromWorldObjectList(staticObjectLists[1]);
+				batch.end();
+			} else if (gameController.getWorldController().getSceneID() == 1) {
+				if (WorldController.isMultiplayerOn() && players[0].getPosition().y < players[1].getPosition().y) {
+					Player help = players[1];
+					players[1] = players[0];
+					players[0] = help;
+				}
+
+				batch.begin();
+				batch.setProjectionMatrix(camera.combined);
+				drawFromWorldObjectList(staticObjectLists[0]);
+				drawFromPlayersArray();
+				drawFromWorldObjectList(staticObjectLists[1]);
+
+				font.getData().setScale(2.5f);
+				font.draw(batch, GameController.getGame().getPayTotal() + " $", 250 - (float) (GameController.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);
+				batch.end();
+
+				drawRectanglesFromList(allRectangles);
 			}
 
-			batch.begin();
-			batch.setProjectionMatrix(camera.combined);
-			drawFromWorldObjectList(staticObjectLists[0]);
-			drawFromPlayersArray();
-			drawFromWorldObjectList(staticObjectLists[1]);
-
-			font.getData().setScale(2.5f);
-			font.draw(batch, GameController.getGame().getPayTotal() + " $", 250 - (float) (GameController.getGame().getPayGoal() + "$").length() / 2 * 80f, 1380);
-			batch.end();
-
-			drawRectanglesFromList(allRectangles);
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			RectangleColored current = gameController.getWorldController().getTransitionRect();
+			shapeRenderer.begin(current.getShapeType());
+			shapeRenderer.setProjectionMatrix(camera.combined);
+			shapeRenderer.setColor(current.getColor());
+			shapeRenderer.rect(current.x, current.y, current.width, current.height);
+			shapeRenderer.end();
+			Gdx.gl.glDisable(GL20.GL_BLEND);
 		}
-
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		RectangleColored current = gameController.getWorldController().getTransitionRect();
-		shapeRenderer.begin(current.getShapeType());
-		shapeRenderer.setProjectionMatrix(camera.combined);
-		shapeRenderer.setColor(current.getColor());
-		shapeRenderer.rect(current.x, current.y, current.width, current.height);
-		shapeRenderer.end();
-		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 
 	/**
@@ -144,16 +147,18 @@ public class Main extends ApplicationAdapter {
 	/** Iterates over the players and draws them as well as the object they are holding */
 	private void drawFromPlayersArray() {
 		for (Player worldObject : Main.players) {
-			if (!worldObject.getDirection().equals(new Vector2(0, 1))) drawWorldObject(worldObject);
-			if (worldObject.getHand() != null) drawWorldObject((WorldObject) worldObject.getHand());
-			if (worldObject.getHand() instanceof Plate) {
-				Stack<Ingredient> copy = Utilities.invertStack(((Plate) worldObject.getHand()).getIngredients());
-				while (!copy.isEmpty()) {
-					drawWorldObject(copy.top());
-					copy.pop();
+			if (worldObject != null) {
+				if (!worldObject.getDirection().equals(new Vector2(0, 1))) drawWorldObject(worldObject);
+				if (worldObject.getHand() != null) drawWorldObject((WorldObject) worldObject.getHand());
+				if (worldObject.getHand() instanceof Plate) {
+					Stack<Ingredient> copy = Utilities.invertStack(((Plate) worldObject.getHand()).getIngredients());
+					while (!copy.isEmpty()) {
+						drawWorldObject(copy.top());
+						copy.pop();
+					}
 				}
+				if (worldObject.getDirection().equals(new Vector2(0, 1))) drawWorldObject(worldObject);
 			}
-			if (worldObject.getDirection().equals(new Vector2(0, 1))) drawWorldObject(worldObject);
 		}
 	}
 
@@ -226,13 +231,15 @@ public class Main extends ApplicationAdapter {
 	 */
 	private void disposeOfTexturesFromPlayers(Player[] players) {
 		for (Player player : players) {
-			player.getTexture().dispose();
-			if (player.getHand() != null) {
-				((WorldObject) player.getHand()).getTexture().dispose();
-				if (player.getHand() instanceof Plate) {
-					while (!((Plate) player.getHand()).getIngredients().isEmpty()) {
-						((Plate) player.getHand()).getIngredients().top().getTexture().dispose();
-						((Plate) player.getHand()).getIngredients().pop();
+			if (player != null) {
+				player.getTexture().dispose();
+				if (player.getHand() != null) {
+					((WorldObject) player.getHand()).getTexture().dispose();
+					if (player.getHand() instanceof Plate) {
+						while (!((Plate) player.getHand()).getIngredients().isEmpty()) {
+							((Plate) player.getHand()).getIngredients().top().getTexture().dispose();
+							((Plate) player.getHand()).getIngredients().pop();
+						}
 					}
 				}
 			}
@@ -266,7 +273,16 @@ public class Main extends ApplicationAdapter {
 	public static Player[] getPlayers() {
 		return players;
 	}
+	public static GameController getGameController() {
+		return gameController;
+	}
 	public static Vector3 getMousePosition() {
 		return mousePosition;
+	}
+	public static OrthographicCamera getCamera() {
+		return camera;
+	}
+	public static Music getMusic() {
+		return music;
 	}
 }

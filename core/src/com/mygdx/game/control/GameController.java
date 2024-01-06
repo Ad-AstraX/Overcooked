@@ -11,7 +11,7 @@ import com.mygdx.game.view.Main;
 public class GameController {
     private static Game game;
     private final PlayerController playerController1;
-    private final PlayerController playerController2;
+    private PlayerController playerController2 = null;
     private final CustomerController customerController;
     private final OrderController orderController;
     private final WorldController worldController;
@@ -19,16 +19,6 @@ public class GameController {
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
         game = new Game(roundLength, payGoal, customerSpawnChance);
         playerController1 = new PlayerController(
-                new String[] {
-                        "Players/PlayerOne/playerOrangeBehind.png",
-                        "Players/PlayerOne/playerOrangeLeft.png",
-                        "Players/PlayerOne/playerOrangeFront.png",
-                        "Players/PlayerOne/playerOrangeRight.png"},
-                new Vector2(750, 500),
-                new int[] { Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D, Input.Keys.E }
-        );
-
-        playerController2 = new PlayerController(
                 new String[] {
                         "Players/PlayerTwo/playerGreenBehind.png",
                         "Players/PlayerTwo/playerGreenLeft.png",
@@ -38,7 +28,6 @@ public class GameController {
                 new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
         );
         Main.getPlayers()[0] = playerController1.getPlayer();
-        Main.getPlayers()[1] = playerController2.getPlayer();
 
         customerController = new CustomerController();
         orderController = new OrderController(new RecipeController());
@@ -55,8 +44,10 @@ public class GameController {
     public void mainLoop(float dt) {
         tickTime(dt);
 
-        playerController1.updateInput(dt);
-        playerController2.updateInput(dt);
+        if (worldController.getSceneID() == 1) {
+            playerController1.updateInput(dt);
+            if (WorldController.isMultiplayerOn()) playerController2.updateInput(dt);
+        }
 
         worldController.update(dt);
 
@@ -64,7 +55,7 @@ public class GameController {
     }
 
     /**
-     * Calculates the time since and left since the last frame
+     * // TODO NEED TO LOOK INTO THAT
      * <p>
      * @param dt Time
      */
@@ -73,9 +64,7 @@ public class GameController {
         game.setTimeLeft(game.getTimeLeft() - dt);
     }
 
-    /**
-     * Executes every second with a certain chance to generate a new customer
-     */
+    /** Executes every second with a certain chance to generate a new customer */
     private void tickGenCustomer() {
         if (Math.floor(game.getTimeLeft()) == Math.floor(game.getTimeLeftLastFrame()))
             return;
@@ -91,5 +80,12 @@ public class GameController {
     }
     public WorldController getWorldController() {
         return worldController;
+    }
+    public PlayerController getPlayerController2() {
+        return playerController2;
+    }
+
+    public void setPlayerController2(PlayerController playerController) {
+        playerController2 = playerController;
     }
 }

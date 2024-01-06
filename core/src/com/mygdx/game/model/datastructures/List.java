@@ -5,7 +5,6 @@ package com.mygdx.game.model.datastructures;
  */
 public class List<ContentType> {
 
-    //TODO 01: Fertigstellen der Liste
     /* --------- Anfang der privaten inneren Klasse -------------- */
 
     private class ListNode {
@@ -89,7 +88,6 @@ public class List<ContentType> {
      * @return true, wenn die Liste leer ist, sonst false
      */
     public boolean isEmpty() {
-        //TODO 01a: Die Liste ist leer, wenn es kein erstes Element gibt.
         return first == null;
     }
 
@@ -100,7 +98,6 @@ public class List<ContentType> {
      * @return true, falls Zugriff moeglich, sonst false
      */
     public boolean hasAccess() {
-        //TODO 01b: Es gibt keinen Zugriff, wenn current auf kein Element verweist.
         return current != null;
     }
 
@@ -112,7 +109,6 @@ public class List<ContentType> {
      * den Wert false.
      */
     public void next() {
-        //TODO 01c: Wechsel auf die nächste Node
         if (hasAccess()) {
             current = current.getNextNode();
         }
@@ -123,7 +119,6 @@ public class List<ContentType> {
      * Objekt. Ist die Liste leer, geschieht nichts.
      */
     public void toFirst() {
-        //TODO 01d: Sprung zur ersten Node
         if (!isEmpty()) {
             current = first;
         }
@@ -134,7 +129,6 @@ public class List<ContentType> {
      * aktuelles Objekt. Ist die Liste leer, geschieht nichts.
      */
     public void toLast() {
-        //TODO 01e: Sprung auf die letzte Node
         if (!isEmpty()) {
             current = last;
         }
@@ -149,7 +143,6 @@ public class List<ContentType> {
      *         kein aktuelles Objekt gibt
      */
     public ContentType getContent() {
-        //TODO 01f: Element zurückgeben
         if (hasAccess()) {
             return current.getContentObject();
         }
@@ -166,7 +159,6 @@ public class List<ContentType> {
      */
     public void setContent(ContentType pContent) {
         // Nichts tun, wenn es keinen Inhalt oder kein aktuelles Element gibt.
-        //TODO 01g: Inhaltsobjekt ersetzen
         if (hasAccess() && pContent != null) {
             current.setContentObject(pContent);
         }
@@ -185,7 +177,6 @@ public class List<ContentType> {
      *            das einzufuegende Objekt vom Typ ContentType
      */
     public void insert(ContentType pContent) {
-        //TODO 01h: Inhaltsobjekt einfügen
         if (pContent != null) {
             ListNode newNode = new ListNode(pContent);
             if (hasAccess()) {
@@ -214,7 +205,6 @@ public class List<ContentType> {
      *            das anzuhaengende Objekt vom Typ ContentType
      */
     public void append(ContentType pContent) {
-        //TODO 01i: Inhaltsobjekt anhängen
         if (pContent != null) {
             ListNode newNode = new ListNode(pContent);
             if (isEmpty()) {
@@ -237,7 +227,6 @@ public class List<ContentType> {
      *            die am Ende anzuhaengende Liste vom Typ List<ContentType>
      */
     public void concat(List<ContentType> pList) {
-        //TODO 01j: eine Liste an eine andere anhängen
         if (pList != this && pList != null && !pList.isEmpty()) {
             if (isEmpty()) {
                 this.first = pList.first;
@@ -263,7 +252,6 @@ public class List<ContentType> {
      */
     public void remove() {
         // Nichts tun, wenn es kein aktuelles Element gibt oder die Liste leer ist.
-        //TODO 01k: eine Node samt Inhaltsobjekt entfernen
         if (!isEmpty() && hasAccess()) {
             if (current != first) {
                 ListNode previousNode = getPrevious(current);
@@ -294,7 +282,6 @@ public class List<ContentType> {
      *         der Liste ist
      */
     private ListNode getPrevious(ListNode pNode) {
-        //TODO 01l: Vorgänger-Node der aktuellen Node liefern.
         if (!isEmpty() && pNode != null && first != pNode) {
             ListNode targetNode = first;
             while (targetNode != null && targetNode.getNextNode() != pNode) {

@@ -18,9 +18,6 @@ package com.mygdx.game.model.datastructures;
  * @author Qualitaets- und UnterstuetzungsAgentur - Landesinstitut fuer Schule
  * @version Generisch_02 2014-02-21
  */
-//TODO 1: Ändere die Klasse Stack derart, dass sie eine generische Klasse ist. Nenne den Typparameter "ContentType".
-// Hinweis: Auch die innere Klasse muss an einer Stelle angepasst werden.
-
 public class Stack<ContentType> {
 
     /* --------- Anfang der privaten inneren Klasse -------------- */
@@ -37,7 +34,6 @@ public class Stack<ContentType> {
          * @param pContent der Inhalt des Knotens
          */
         public StackNode(ContentType pContent) {
-            //TODO 2: Implementiere den Konstruktor der inneren Klasse StackNode
             this.content = pContent;
         }
 
@@ -48,7 +44,6 @@ public class Stack<ContentType> {
          * @param pNext der Nachfolger des Knotens
          */
         public void setNext(StackNode pNext) {
-            //TODO 3: Implementiere die Methode, wie sie im Kommentar beschrieben ist.
             if (pNext != null) {
                 this.nextNode = pNext;
             }
@@ -89,7 +84,6 @@ public class Stack<ContentType> {
      * @return true, falls der Stapel leer ist, sonst false
      */
     public boolean isEmpty() {
-        //TODO 4: Implementiere die Methode wie im Kommentar beschrieben
         return head == null;
     }
 
@@ -101,7 +95,6 @@ public class Stack<ContentType> {
      *        das einzufuegende Objekt vom Typ ContentType
      */
     public void push(ContentType pContent) {
-        //TODO 5: Implementiere die Methode push(). Wenn pContent nicht null ist, wird das Objekt auf den Stapel gelegt
         if (pContent != null) {
             StackNode node = new StackNode(pContent);
             node.setNext(head);
@@ -114,7 +107,6 @@ public class Stack<ContentType> {
      * Stapel leer ist, bleibt er unveraendert.
      */
     public void pop() {
-        //TODO 6: Implementiere die Methode pop(). Achtung! Es gibt keine RÜckgabe, wenn ein Objekt aus dem Stapel entfernt wird.
         if (!isEmpty()) {
             head = head.getNext();
         }
@@ -128,7 +120,6 @@ public class Stack<ContentType> {
      *         der Stack leer ist
      */
     public ContentType top() {
-        //TODO 7: Implementiere die Methode top(). Achtung! Der Stapel bleibt dabei unverändert!
         if (!isEmpty()) {
             return head.getContent();
         }

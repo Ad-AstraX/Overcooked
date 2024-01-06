@@ -16,15 +16,21 @@ public abstract class KitchenCounter extends WorldObject implements IInteractibl
         super(textures[0], position, size);
         this.textures = textures;
     }
+    public KitchenCounter(String[] textures, int cols, int rows, float frameDuration, Vector2 position) {
+        super(textures[0], cols, rows, frameDuration, position);
+        this.textures = textures;
+    }
 
     /**
      * Updates image depending on whether the object is being interacted with
      */
     public void updateImage() {
         if (this.isInteracting) {
-            this.setTexture(textures[1]);
+            if (!isAnimation) this.setTexture(textures[1]);
+            else this.setAnimation(this.textures[1], (int) colsAndRows.x, (int) colsAndRows.y, animation.getFrameDuration());
         } else {
-            this.setTexture(textures[0]);
+            if (!isAnimation) this.setTexture(textures[0]);
+            else this.setAnimation(this.textures[0], (int) colsAndRows.x, (int) colsAndRows.y, animation.getFrameDuration());
         }
     }
 

@@ -24,10 +24,10 @@ public class IngredientSpawner<IngredientType> extends KitchenCounter implements
             Ingredient holdable;
             try {
                 holdable = (Ingredient) ingredientType.getDeclaredConstructor(Vector2.class).newInstance(interactionPartner.getPosition());
-                if ((holdable instanceof Cuttable && !((Cuttable) holdable).isCut()) ||
-                    (holdable instanceof Cookable && !((Cookable) holdable).isCooked())) {
+                if (((holdable instanceof Cuttable && !((Cuttable) holdable).isCut()) ||
+                    (holdable instanceof Cookable && !((Cookable) holdable).isCooked())) && this.interactionPartner.getHand() == null) {
                     this.interactionPartner.setHand(holdable);
-                } else {
+                } else if (!(holdable instanceof Cookable) && !(holdable instanceof Cuttable)) {
                     if (this.interactionPartner.getHand() == null) this.interactionPartner.setHand(new Plate(interactionPartner.getPosition()));
                     ((Plate) this.interactionPartner.getHand()).addIngredient(holdable);
                 }

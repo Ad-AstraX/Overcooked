@@ -8,7 +8,8 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public abstract class WorldObject {
     protected boolean isAnimation;
-    Animation<TextureRegion> animation;
+    protected Animation<TextureRegion> animation = new Animation<>(1);
+    protected Vector2 colsAndRows = new Vector2(1, 1);
     protected Texture texture;
     protected Vector2 position;
     protected Vector2 size;
@@ -32,11 +33,11 @@ public abstract class WorldObject {
             }
         }
         animation = new Animation<>(frameDuration, frames);
+        colsAndRows = new Vector2(cols, rows);
         isAnimation = true;
 
         this.position = position;
         this.size = new Vector2(animation.getKeyFrames()[0].getRegionWidth(), animation.getKeyFrames()[0].getRegionHeight());
-        System.out.println(size.y);
     }
 
     // All Getters
@@ -52,7 +53,6 @@ public abstract class WorldObject {
     public boolean isAnimation() {
         return isAnimation;
     }
-
     public Animation<TextureRegion> getAnimation() {
         return animation;
     }
@@ -74,5 +74,22 @@ public abstract class WorldObject {
     }
     public void setIsAnimation(boolean animation) {
         isAnimation = animation;
+    }
+    public void setAnimation(String texture, int cols, int rows, float frameDuration) {
+        setTexture(texture);
+
+        TextureRegion[][] tmp = TextureRegion.split(this.texture, this.texture.getWidth()/cols,this.texture.getHeight()/rows);
+        TextureRegion[] frames = new TextureRegion[cols * rows];
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                frames[index++] = tmp[i][j];
+            }
+        }
+        animation = new Animation<>(frameDuration, frames);
+        colsAndRows = new Vector2(cols, rows);
+        isAnimation = true;
+
+        this.size = new Vector2(animation.getKeyFrames()[0].getRegionWidth(), animation.getKeyFrames()[0].getRegionHeight());
     }
 }
