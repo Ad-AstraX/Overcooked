@@ -3,14 +3,12 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -27,8 +25,6 @@ import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 import com.mygdx.game.model.object.workstation.Processable;
 import com.mygdx.game.model.object.workstation.Workbench;
-
-import java.awt.*;
 
 /**
  * This class handles all the graphics
@@ -52,7 +48,10 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/Lynn Music Boulangerie - Gaming Background Music (HD).mp3"));
+		music.setLooping(true);
+		music.setVolume(0.6f);
 		music.play();
+
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1950, 1425);
 		viewport = new FitViewport(1950, 1425, camera);
@@ -61,7 +60,7 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
 
-		gameController = new GameController(120f, 60, 1f);
+		gameController = new GameController(120f, 60, 10f);
 	}
 
 	@Override

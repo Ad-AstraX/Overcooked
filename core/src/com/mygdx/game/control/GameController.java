@@ -18,6 +18,7 @@ public class GameController {
 
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
         game = new Game(roundLength, payGoal, customerSpawnChance);
+
         playerController1 = new PlayerController(
                 new String[] {
                         "Players/PlayerTwo/playerGreenBehind.png",
@@ -69,7 +70,7 @@ public class GameController {
         if (Math.floor(game.getTimeLeft()) == Math.floor(game.getTimeLeftLastFrame()))
             return;
 
-        if (Math.random() * 100 < game.getCustomerSpawnChance())
+        if ((float)Math.random() * 100f > game.getCustomerSpawnChance())
             return;
 
         System.out.println("Spawned Customer");
