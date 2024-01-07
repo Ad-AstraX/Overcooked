@@ -27,7 +27,7 @@ import com.mygdx.game.model.object.workstation.Processable;
 import com.mygdx.game.model.object.workstation.Workbench;
 
 /**
- * <p>This class handles all the graphics. Since the Main class is unique in the whole program, all its attributes are static </p> <br>
+ * <p> This class handles all the graphics. Since the Main class is unique in the whole program, all its attributes are static </p> <br>
  *
  * <p> It "collects" all the objects that need to be drawn in the staticObjectLists / players array. Since ingredients
  * cannot exist independently of either the players or the kitchenCounters (e.g. it can't just lie around, it must
@@ -71,7 +71,7 @@ public class Main extends ApplicationAdapter {
 	public void create() {
 		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/Lynn Music Boulangerie - Gaming Background Music (HD).mp3"));
 		music.setLooping(true);
-		music.setVolume(0.6f);
+		music.setVolume(0.2f);
 		music.play();
 
 		camera = new OrthographicCamera();

@@ -84,6 +84,7 @@ public class GameController {
         if ((float)Math.random() * 100f > game.getCustomerSpawnChance())
             return;
 
+
         System.out.println("Spawned Customer");
     }
 
