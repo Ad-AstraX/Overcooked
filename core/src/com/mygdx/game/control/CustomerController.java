@@ -4,10 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.datastructures.Queue;
 import com.mygdx.game.model.object.customer.Customer;
 
-/**
- * Controls all the customers and their orders
- */
+/** Controls all the customers and their orders */
 public class CustomerController {
+    /** The Queue of customers */
     private final Queue<Customer> customerQ;
 
     public CustomerController() {
@@ -28,6 +27,7 @@ public class CustomerController {
         customerQ.enqueue(customer);
     }
 
+    // All Getters
     public Queue<Customer> getCustomerQ() {
         return customerQ;
     }

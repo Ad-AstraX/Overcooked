@@ -5,7 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.view.Main;
 
+/**
+ * The abstract parent class for all Buttons. It can check if the mouse is hovering over the button and if the button
+ * was clicked.
+ */
 public abstract class Button extends WorldObject {
+    /** The textures that the buttons switch between */
     protected String[] textures;
     public Button(String[] textures, Vector2 position, Vector2 size) {
         super(textures[0], position, size);

@@ -6,19 +6,30 @@ import com.mygdx.game.model.Game;
 import com.mygdx.game.view.Main;
 
 /**
- * Controls the game - all other controllers are instantiated and used here
+ * This class controls the game as all other controllers are instantiated, used and updated here. <br>
+ * Just like the Main class, there is only one gameController Object, which is unique in the whole program
  */
 public class GameController {
-    private static Game game;
+    /** The PlayerController for the first player */
     private final PlayerController playerController1;
-    private PlayerController playerController2 = null;
+    /** The PlayerController for the second player. This one will only be instantiated if the player chose "multiplayer" */
+    private PlayerController playerController2;
+
+    /** Controls the customers */
     private final CustomerController customerController;
+    /** Controls the customers' orders */
     private final OrderController orderController;
+
+    /** The controller that controls the scenes and the objects visible on them */
     private final WorldController worldController;
+
+    // TODO
+    private static Game game;
 
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
         game = new Game(roundLength, payGoal, customerSpawnChance);
 
+        // Right now, only the first player is instantiated. Whether the second one will be too, depends on the game mode that the player chooses
         playerController1 = new PlayerController(
                 new String[] {
                         "Players/PlayerTwo/playerGreenBehind.png",
@@ -29,6 +40,7 @@ public class GameController {
                 new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
         );
         Main.getPlayers()[0] = playerController1.getPlayer();
+        playerController2 = null;
 
         customerController = new CustomerController();
         orderController = new OrderController(new RecipeController());
@@ -38,21 +50,20 @@ public class GameController {
     }
 
     /**
-     * Updates the game state each second
+     * Updates the game state for every frame
      * <p>
      * @param dt time
      */
     public void mainLoop(float dt) {
-        tickTime(dt);
-
         if (worldController.getSceneID() == 1) {
             playerController1.updateInput(dt);
             if (WorldController.isMultiplayerOn()) playerController2.updateInput(dt);
+
+            tickTime(dt);
+            tickGenCustomer();
         }
 
         worldController.update(dt);
-
-        tickGenCustomer();
     }
 
     /**
@@ -76,6 +87,7 @@ public class GameController {
         System.out.println("Spawned Customer");
     }
 
+    // All Getters
     public static Game getGame() {
         return game;
     }
@@ -86,6 +98,7 @@ public class GameController {
         return playerController2;
     }
 
+    // All Setters
     public void setPlayerController2(PlayerController playerController) {
         playerController2 = playerController;
     }

@@ -7,25 +7,41 @@ import com.mygdx.game.model.BackgroundObject;
 import com.mygdx.game.model.object.button.*;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
-import com.mygdx.game.model.datastructures.RectangleColored;
+import com.mygdx.game.model.utilities.RectangleColored;
 import com.mygdx.game.model.object.holdable.ingredient.*;
 import com.mygdx.game.model.object.workstation.*;
 import com.mygdx.game.view.Main;
 
-/** Controls all world scenes and can generate them whenever */
+/**
+ * This class controls all the scenes can display them whenever. It too, is unique. <br>
+ * Additionally, the rectangle used for transition is controlled from here.
+ */
 public class WorldController {
-    private int sceneID;
-    private final RectangleColored transitionRect;
-    private boolean transitionDarker;
+    /** The list with the background rectangles that keep moving at the beginning of the project */
     private final RectangleColored[] backgroundRects = new RectangleColored[10];
+    /**
+     * All Processable Objects that are currently in the scene are stored in here, so they can be updated in case
+     * they are holding an object that is to be cut or cooked
+     */
     private final List<Processable> allProcessableObjects = new List<>();
+    /** The list with all the buttons currently visible */
     private final List<Button> allButtons = new List<>();
+
+    /** The rectangle that is used to transition between the scenes */
+    private final RectangleColored transitionRect;
+    /** Dictates whether the transitionRect is supposed to get lighter or darker for the transition */
+    private boolean transitionDarker;
+
+    /** The button that toggles between multiplayer and single-player */
     private static boolean multiplayerOn = true;
+    /** The Number of the current scene */
+    private int sceneID;
 
     public WorldController() {
         transitionRect = new RectangleColored(ShapeRenderer.ShapeType.Filled, 0, 0, 1950, 1425, 0, 0, 0, 1);
     }
 
+    /** This method creates the Game UI with all its buttons etc. */
     public void showStart() {
         sceneID = 0;
         Main.getAllRectangles().append(new RectangleColored(ShapeRenderer.ShapeType.Filled, 0, 0, 1950, 1425, 46/255f, 139/255f, 87/255f, 0.4f));
@@ -59,6 +75,7 @@ public class WorldController {
         Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/floorTiles.png", new Vector2(0, 0), new Vector2(1950, 1425)));
         Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/coinAnimTextures.png", 1, 6, 0.2f, new Vector2(30, 1300)));
 
+        // The layout of the kitchen. These numbers will be converted into objects in the next step
         int[][] kitchenScene = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 1, 7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 0, 0, 0},
@@ -151,6 +168,9 @@ public class WorldController {
     private void discard() {
         Main.getAllRectangles().toFirst();
         while (!Main.getAllRectangles().isEmpty()) Main.getAllRectangles().remove();
+
+        allProcessableObjects.toFirst();
+        while (!allProcessableObjects.isEmpty()) allProcessableObjects.remove();
 
         allButtons.toFirst();
         while (!allButtons.isEmpty()) allButtons.remove();

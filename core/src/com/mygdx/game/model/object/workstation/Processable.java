@@ -1,10 +1,8 @@
 package com.mygdx.game.model.object.workstation;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.model.datastructures.RectangleColored;
+import com.mygdx.game.model.utilities.RectangleColored;
 import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.Cookable;
 import com.mygdx.game.model.object.holdable.ingredient.Cuttable;

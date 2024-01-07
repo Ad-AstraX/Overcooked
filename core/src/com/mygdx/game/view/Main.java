@@ -18,33 +18,55 @@ import com.mygdx.game.control.WorldController;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
-import com.mygdx.game.model.datastructures.RectangleColored;
+import com.mygdx.game.model.utilities.RectangleColored;
 import com.mygdx.game.model.datastructures.Stack;
-import com.mygdx.game.model.datastructures.Utilities;
+import com.mygdx.game.model.utilities.Utilities;
 import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 import com.mygdx.game.model.object.workstation.Processable;
 import com.mygdx.game.model.object.workstation.Workbench;
 
 /**
- * This class handles all the graphics
+ * <p>This class handles all the graphics. Since the Main class is unique in the whole program, all its attributes are static </p> <br>
+ *
+ * <p> It "collects" all the objects that need to be drawn in the staticObjectLists / players array. Since ingredients
+ * cannot exist independently of either the players or the kitchenCounters (e.g. it can't just lie around, it must
+ * be held by someone or something) they are accessed through the player that is holding the ingredient. </p> <br>
+ *
+ * <p> Once the project has finished execution, all Objects are deleted and the textures as well as the camera, viewport
+ * and font are disposed of </p>
  */
 public class Main extends ApplicationAdapter {
-	private static Viewport viewport;
+	// Attributes regarding graphics and sound
 	private static OrthographicCamera camera;
-	private static SpriteBatch batch;
+	private static Viewport viewport;
 	private static ShapeRenderer shapeRenderer;
-
-	private static final Player[] players = new Player[2];
-	private static final List<WorldObject>[] staticObjectLists = new List[] {new List<WorldObject>(), new List<WorldObject>()};
-	private static final List<RectangleColored> allRectangles = new List<>();
-	private static GameController gameController;
-	private static Music music;
+	private static SpriteBatch batch;
 	private static BitmapFont font;
-	private static final Vector3 mousePosition = new Vector3(0, 0, 0);
+	private static Music music;
 
+	// Lists / Array that store(s) the objects which need to be drawn
+	/** The array which stores the two players (if there are two) */
+	private static final Player[] players = new Player[2];
+	/**
+	 * This array stores two lists - one with all the objects that are <b>always</b> in the background and one with the
+	 * objects that are <b>always</b> in the foreground
+	 */
+	private static final List<WorldObject>[] staticObjectLists = new List[] {new List<WorldObject>(), new List<WorldObject>()};
+	/** All Rectangles that need to be drawn */
+	private static final List<RectangleColored> allRectangles = new List<>();
+
+	/** The gameController of this class */
+	private static GameController gameController;
+	/** Position of the mouse */
+	private static final Vector3 mousePosition = new Vector3(0, 0, 0);
+	/** Time that has passed since the creation of the project */
 	private static float stateTime;
 
+	/**
+	 * This method is called when the application is first created.
+	 * As such, it is only called once in the whole program, meaning that relevant attributes are instantiated here.
+	 */
 	@Override
 	public void create() {
 		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/Lynn Music Boulangerie - Gaming Background Music (HD).mp3"));
@@ -63,9 +85,12 @@ public class Main extends ApplicationAdapter {
 		gameController = new GameController(120f, 60, 10f);
 	}
 
+	/** This method is called once every frame and updates the graphics on the screen */
 	@Override
 	public void render() {
+		// If condition that stops program from updating when it is being resized or dragged
 		if (Gdx.graphics.getDeltaTime() < 0.02f) {
+			// updating the stateTime, camera and mousePosition to prepare for the next frame
 			stateTime += Gdx.graphics.getDeltaTime();
 			gameController.mainLoop(Gdx.graphics.getDeltaTime());
 
@@ -75,15 +100,19 @@ public class Main extends ApplicationAdapter {
 			mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(mousePosition);
 
+			// First scene - Game UI
 			if (gameController.getWorldController().getSceneID() == 0) {
-				drawRectanglesFromList(allRectangles);
+				drawFromRectanglesList();
 
 				batch.begin();
 				batch.setProjectionMatrix(camera.combined);
 				drawFromWorldObjectList(staticObjectLists[0]);
 				drawFromWorldObjectList(staticObjectLists[1]);
 				batch.end();
+
+			// Second scene - actual game, kitchenscene
 			} else if (gameController.getWorldController().getSceneID() == 1) {
+				// Switches the places of the players in the array (if multiplayer mode is on) so that their drawing order is updated
 				if (WorldController.isMultiplayerOn() && players[0].getPosition().y < players[1].getPosition().y) {
 					Player help = players[1];
 					players[1] = players[0];
@@ -100,9 +129,10 @@ public class Main extends ApplicationAdapter {
 				font.draw(batch, GameController.getGame().getPayTotal() + " $", 250 - (float) (GameController.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);
 				batch.end();
 
-				drawRectanglesFromList(allRectangles);
+				drawFromRectanglesList();
 			}
 
+			// The "transitionRectangle" of the worldController is drawn last as it has to be in front of all other objects
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 			RectangleColored current = gameController.getWorldController().getTransitionRect();
@@ -116,7 +146,9 @@ public class Main extends ApplicationAdapter {
 	}
 
 	/**
-	 * Iterates over all elements in a list of type List<WorldObject> and draws them
+	 * Iterates over all elements in a list of type List<WorldObject> and draws them.
+	 * If they are currently holding an object, that object is drawn as well.
+	 * <p>
 	 * @param list the list whose elements are to be drawn
 	 */
 	private void drawFromWorldObjectList(List<WorldObject> list) {
@@ -125,10 +157,12 @@ public class Main extends ApplicationAdapter {
 			WorldObject current = list.getContent();
 			drawWorldObject(current);
 
+			// Retrieve the possible Holdable object that the current kitchenCounter may have
 			WorldObject ingredientOnCurrent = null;
 			if (current instanceof Workbench) ingredientOnCurrent = (WorldObject) ((Workbench) current).getCurrentHoldable();
 			else if (current instanceof Processable) ingredientOnCurrent = ((Processable) current).getCurrentIngredient();
 
+			// if the kitchenCounter possesses a current Holdable then it is drawn
 			if (ingredientOnCurrent != null) {
 				drawWorldObject(ingredientOnCurrent);
 				if (ingredientOnCurrent instanceof Plate)  {
@@ -143,10 +177,11 @@ public class Main extends ApplicationAdapter {
 		}
 	}
 
-	/** Iterates over the players and draws them as well as the object they are holding */
+	/** Iterates over the players int the players array and draws them as well as the object they are holding */
 	private void drawFromPlayersArray() {
 		for (Player worldObject : Main.players) {
 			if (worldObject != null) {
+				// If the player texture is looking at the screen then the object they are holding is drawn after the player
 				if (!worldObject.getDirection().equals(new Vector2(0, 1))) drawWorldObject(worldObject);
 				if (worldObject.getHand() != null) drawWorldObject((WorldObject) worldObject.getHand());
 				if (worldObject.getHand() instanceof Plate) {
@@ -156,13 +191,15 @@ public class Main extends ApplicationAdapter {
 						copy.pop();
 					}
 				}
+				// If the player texture is looking away from the screen then the object they are holding is drawn before the player
 				if (worldObject.getDirection().equals(new Vector2(0, 1))) drawWorldObject(worldObject);
 			}
 		}
 	}
 
 	/**
-	 * Draws a given WorldObject
+	 * Draws a given WorldObject using either its texture or its animation
+	 * <p>
 	 * @param object the WorldObject that is to be drawn
 	 */
 	private void drawWorldObject(WorldObject object) {
@@ -179,27 +216,28 @@ public class Main extends ApplicationAdapter {
 	}
 
 	/**
-	 * Draws all rectangles in a list of type List<RectangleColored>
-	 * @param list the list that is to be drawn from
+	 * Draws all coloured rectangles in the list allRectangles
 	 */
-	private void drawRectanglesFromList(List<RectangleColored> list) {
+	private void drawFromRectanglesList() {
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		list.toFirst();
-		while (list.hasAccess()) {
-			RectangleColored current = list.getContent();
+		Main.allRectangles.toFirst();
+		while (Main.allRectangles.hasAccess()) {
+			RectangleColored current = Main.allRectangles.getContent();
 			shapeRenderer.begin(current.getShapeType());
 			shapeRenderer.setProjectionMatrix(camera.combined);
 			shapeRenderer.setColor(current.getColor());
 			shapeRenderer.rect(current.x, current.y, current.width, current.height);
 			shapeRenderer.end();
-			list.next();
+			Main.allRectangles.next();
 		}
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 
 	/**
-	 * Takes a list of type List<WorldObject> and disposes of all textures inside
+	 * Takes a list of type List<WorldObject> and disposes of all textures inside the object as well as the
+	 * holdable Object they may be currently holding
+	 * <p>
 	 * @param list the given list
 	 */
 	public static void disposeOfTexturesInList(List<WorldObject> list) {
@@ -225,11 +263,11 @@ public class Main extends ApplicationAdapter {
 	}
 
 	/**
-	 * Takes an Array of Player objects and disposes of all textures inside
-	 * @param players the given array of players
+	 * Takes the players Array and disposes of the object's texture as well as the texture(s) of the object(s)
+	 * it may be holding
 	 */
-	private void disposeOfTexturesFromPlayers(Player[] players) {
-		for (Player player : players) {
+	private void disposeOfTexturesFromPlayers() {
+		for (Player player : Main.players) {
 			if (player != null) {
 				player.getTexture().dispose();
 				if (player.getHand() != null) {
@@ -245,6 +283,10 @@ public class Main extends ApplicationAdapter {
 		}
 	}
 
+	/**
+	 * This method is called once after the program has finished executing. It makes sure that every object
+	 * that was created throughout the game, as well as their textures are being properly discarded
+	 */
 	@Override
 	public void dispose() {
 		batch.dispose();
@@ -252,12 +294,21 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer.dispose();
 		font.dispose();
 
+		Main.getAllRectangles().toFirst();
+		while (!Main.getAllRectangles().isEmpty()) Main.getAllRectangles().remove();
+
 		// Dispose of all Textures
 		disposeOfTexturesInList(staticObjectLists[0]);
 		disposeOfTexturesInList(staticObjectLists[1]);
-		disposeOfTexturesFromPlayers(players);
+		disposeOfTexturesFromPlayers();
 	}
 
+	/**
+	 * This method is called whenever the window is being resized. It updates the viewport's size
+	 * <p>
+	 * @param width the new width in pixels
+	 * @param height the new height in pixels
+	 */
 	public void resize(int width, int height) {
 		viewport.update(width, height);
 	}

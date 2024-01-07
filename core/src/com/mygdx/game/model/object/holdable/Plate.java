@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.Stack;
-import com.mygdx.game.model.datastructures.Utilities;
+import com.mygdx.game.model.utilities.Utilities;
 import com.mygdx.game.model.object.holdable.ingredient.Bun;
 import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 

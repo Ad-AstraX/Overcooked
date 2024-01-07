@@ -3,7 +3,7 @@ package com.mygdx.game.model.object.workstation;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.Stack;
-import com.mygdx.game.model.datastructures.Utilities;
+import com.mygdx.game.model.utilities.Utilities;
 import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.Cookable;
