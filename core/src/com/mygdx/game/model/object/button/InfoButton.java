@@ -2,6 +2,10 @@ package com.mygdx.game.model.object.button;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * The button which prompts the instructions to the game to show up.
+ * It is also instantiated once during the creation of the Game UI
+ */
 public class InfoButton extends Button {
     public InfoButton(Vector2 position, Vector2 size) {
         super(new String[]{"Buttons/infoButton.png", "Buttons/infoButtonSelected.png"}, position, size);

@@ -2,6 +2,7 @@ package com.mygdx.game.model.object.workstation;
 
 import com.badlogic.gdx.math.Vector2;
 
+/** This class represents a cash register. Customers queue here so they can put their order. */
 public class CashRegister extends KitchenCounter {
 
     public CashRegister(Vector2 position) {

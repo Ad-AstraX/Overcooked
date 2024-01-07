@@ -6,13 +6,21 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+/** The base class for every single object visible on the screen */
 public abstract class WorldObject {
-    protected boolean isAnimation;
+    /** The animation of this object (if it has any) */
     protected Animation<TextureRegion> animation = new Animation<>(1);
+    /** The rows and columns used to seperate each frame in the texture */
     protected Vector2 colsAndRows = new Vector2(1, 1);
+    /** Dictates whether the current Object is animated or simply static */
+    protected boolean isAnimation;
+    /** Stores the texture */
     protected Texture texture;
+    /** Stores the position of this object */
     protected Vector2 position;
+    /** Stores the size of this object */
     protected Vector2 size;
+
 
     public WorldObject(String texturePath, Vector2 position, Vector2 size) {
         try { this.texture = new Texture("Textures/" + texturePath); }
@@ -20,6 +28,7 @@ public abstract class WorldObject {
         this.position = position;
         this.size = size;
     }
+
     public WorldObject(String texturePath, int cols, int rows, float frameDuration, Vector2 position) {
         try { this.texture = new Texture("Textures/" + texturePath); }
         catch(GdxRuntimeException e) { this.texture = new Texture("Textures/fallbackTexture.png"); }

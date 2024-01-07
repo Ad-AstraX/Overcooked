@@ -1,14 +1,10 @@
 package com.mygdx.game.model.utilities;
 
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
 import com.mygdx.game.model.datastructures.Queue;
 import com.mygdx.game.model.datastructures.Stack;
 
-/**
- * Methods that are / can be often reused by different classes
- */
+/**  Methods regarding the datastructures used in this project, that are / can be often reused by different classes */
 public class Utilities {
     /**
      * Counts the amount of elements in a given stack

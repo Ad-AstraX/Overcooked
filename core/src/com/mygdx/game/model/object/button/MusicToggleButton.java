@@ -3,7 +3,12 @@ package com.mygdx.game.model.object.button;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.view.Main;
 
+/**
+ * This button toggles between the music being on and off.
+ * It is instantiated once during the creation of the GameUI
+ */
 public class MusicToggleButton extends Button {
+    /** Attribute that stores whether the button is "on" or "off" */
     private boolean toggleOn = true;
     public MusicToggleButton(Vector2 position, Vector2 size) {
         super(new String[] {"Buttons/musicOn.png", "Buttons/musicOnSelected.png", "Buttons/musicOff.png", "Buttons/musicOffSelected.png"}, position, size);

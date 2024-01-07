@@ -6,10 +6,12 @@ import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.*;
 
 /**
- * This class represents a recipe.
- * It contains a stack of ingredients and can compare that stack to a given plate
+ * <p>This class represents a recipe. </p> <br>
+ * It contains a stack of ingredients and can compare that stack to a given plate. The recipe is contained
+ * within an order that the customer places. All recipes are hardcoded.
  */
 public class Recipe {
+    /** The ingredients that this recipe consists of */
     private final Stack<Ingredient> ingredients;
 
     public Recipe(Ingredient[] ingredientsBottomToTop) {

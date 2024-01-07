@@ -3,7 +3,12 @@ package com.mygdx.game.model.object.button;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.control.WorldController;
 
+/**
+ * The class that allows the user to toggle between the modes single-player and multiplayer.
+ * It is instantiated once during the creation of the GameUI
+ */
 public class GamemodeToggleButton extends Button {
+    /** Attribute that stores whether the button is "on" or "off" */
     private boolean toggleOn = true;
     public GamemodeToggleButton(Vector2 position, Vector2 size) {
         super(new String[] {"Buttons/multiplayerButton.png", "Buttons/multiplayerButtonSelected.png", "Buttons/singleplayerButton.png", "Buttons/singleplayerButtonSelected.png"},

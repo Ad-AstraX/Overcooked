@@ -4,10 +4,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 
 /**
- * This class represents a customer. It can order, get angry, pay the player etc.
+ * <p>This class represents a customer. </p> <br>
+ * The customer can place an order and waits in a line until it is their turn. Once that has happened
+ * the customer's patience starts to gradually decrease until their order has been finished and given to them.
+ * He then pays the Player for the burger and tips him according to how quick the player was.
  */
 public class Customer extends WorldObject {
-    private Order order;
+    /** The order that the customer placed. It consist of one burger */
+    private final Order order;
+    /** The patience of the customer. Decreases while waiting */
     private int patience;
 
     public Customer(Vector2 position, Order order) {
@@ -16,6 +21,7 @@ public class Customer extends WorldObject {
         this.order = order;
     }
 
+    // All Getters
     public Order getOrder() {
         return order;
     }

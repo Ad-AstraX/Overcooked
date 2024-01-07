@@ -5,12 +5,13 @@ import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.ingredient.Cookable;
 
-/**
- * Abstract parent class for all kitchenCounters. Checks for and reacts to interaction checks
- */
+/** The abstract parent class for all kitchenCounters. Checks for and reacts to interaction checks */
 public abstract class KitchenCounter extends WorldObject implements IInteractible {
+    /** The textures that the kitchenCounters switch between */
     protected String[] textures;
+    /** The player this object is currently interacting with */
     protected Player interactionPartner;
+    /** Dictates whether this object is currently being interacted with */
     protected boolean isInteracting;
     public KitchenCounter(String[] textures, Vector2 position, Vector2 size) {
         super(textures[0], position, size);
@@ -22,7 +23,8 @@ public abstract class KitchenCounter extends WorldObject implements IInteractibl
     }
 
     /**
-     * Updates image depending on whether the object is being interacted with
+     * Updates image depending on whether the object is being interacted with.
+     * If the player is close enough, this object switches to a lighter texture.
      */
     public void updateImage() {
         if (this.isInteracting) {
@@ -37,6 +39,7 @@ public abstract class KitchenCounter extends WorldObject implements IInteractibl
 
     /**
      * Position an object on a KitchenCounter
+     * <p>
      * @param object the object that is to be positioned
      * @param relativeTo the kitchenCounter
      * @return the new Vector of the object

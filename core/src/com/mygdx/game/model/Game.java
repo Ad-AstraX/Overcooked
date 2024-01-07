@@ -2,6 +2,7 @@ package com.mygdx.game.model;
 
 /**
  * This class sets the game's goal and initial settings
+ * TODO look into this too, will not comment anything here
  */
 public class Game {
     private float timeLeft;

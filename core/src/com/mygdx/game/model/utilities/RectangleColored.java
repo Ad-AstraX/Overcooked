@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * This class extends the regular Rectangle class that is given by libGdx. This one also takes parameters for Color
+ * as well as the shapeType to allow more efficient rendering.
+ */
 public class RectangleColored extends Rectangle {
     ShapeRenderer.ShapeType shapeType;
     private Color color;
@@ -18,6 +22,7 @@ public class RectangleColored extends Rectangle {
         this.shapeType = shapeType;
     }
 
+    // All Getters
     public Color getColor() {
         return color;
     }
@@ -25,6 +30,7 @@ public class RectangleColored extends Rectangle {
         return shapeType;
     }
 
+    // All Setters
     public void setColor(Color color) {
         this.color = color;
     }

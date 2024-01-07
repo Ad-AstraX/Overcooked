@@ -47,19 +47,19 @@ public class Main extends ApplicationAdapter {
 
 	// Lists / Array that store(s) the objects which need to be drawn
 	/** The array which stores the two players (if there are two) */
-	private static final Player[] players = new Player[2];
+	private static final Player[] PLAYERS = new Player[2];
 	/**
 	 * This array stores two lists - one with all the objects that are <b>always</b> in the background and one with the
 	 * objects that are <b>always</b> in the foreground
 	 */
-	private static final List<WorldObject>[] staticObjectLists = new List[] {new List<WorldObject>(), new List<WorldObject>()};
+	private static final List<WorldObject>[] STATIC_OBJECT_LISTS = new List[] {new List<WorldObject>(), new List<WorldObject>()};
 	/** All Rectangles that need to be drawn */
-	private static final List<RectangleColored> allRectangles = new List<>();
+	private static final List<RectangleColored> ALL_RECTANGLES = new List<>();
 
 	/** The gameController of this class */
 	private static GameController gameController;
 	/** Position of the mouse */
-	private static final Vector3 mousePosition = new Vector3(0, 0, 0);
+	private static final Vector3 MOUSE_POSITION = new Vector3(0, 0, 0);
 	/** Time that has passed since the creation of the project */
 	private static float stateTime;
 
@@ -97,8 +97,8 @@ public class Main extends ApplicationAdapter {
 			ScreenUtils.clear(0, 0, 0, 1);
 			camera.update();
 
-			mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			camera.unproject(mousePosition);
+			MOUSE_POSITION.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(MOUSE_POSITION);
 
 			// First scene - Game UI
 			if (gameController.getWorldController().getSceneID() == 0) {
@@ -106,24 +106,24 @@ public class Main extends ApplicationAdapter {
 
 				batch.begin();
 				batch.setProjectionMatrix(camera.combined);
-				drawFromWorldObjectList(staticObjectLists[0]);
-				drawFromWorldObjectList(staticObjectLists[1]);
+				drawFromWorldObjectList(STATIC_OBJECT_LISTS[0]);
+				drawFromWorldObjectList(STATIC_OBJECT_LISTS[1]);
 				batch.end();
 
 			// Second scene - actual game, kitchenscene
 			} else if (gameController.getWorldController().getSceneID() == 1) {
 				// Switches the places of the players in the array (if multiplayer mode is on) so that their drawing order is updated
-				if (WorldController.isMultiplayerOn() && players[0].getPosition().y < players[1].getPosition().y) {
-					Player help = players[1];
-					players[1] = players[0];
-					players[0] = help;
+				if (WorldController.isMultiplayerOn() && PLAYERS[0].getPosition().y < PLAYERS[1].getPosition().y) {
+					Player help = PLAYERS[1];
+					PLAYERS[1] = PLAYERS[0];
+					PLAYERS[0] = help;
 				}
 
 				batch.begin();
 				batch.setProjectionMatrix(camera.combined);
-				drawFromWorldObjectList(staticObjectLists[0]);
+				drawFromWorldObjectList(STATIC_OBJECT_LISTS[0]);
 				drawFromPlayersArray();
-				drawFromWorldObjectList(staticObjectLists[1]);
+				drawFromWorldObjectList(STATIC_OBJECT_LISTS[1]);
 
 				font.getData().setScale(2.5f);
 				font.draw(batch, GameController.getGame().getPayTotal() + " $", 250 - (float) (GameController.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);
@@ -165,6 +165,7 @@ public class Main extends ApplicationAdapter {
 			// if the kitchenCounter possesses a current Holdable then it is drawn
 			if (ingredientOnCurrent != null) {
 				drawWorldObject(ingredientOnCurrent);
+				// checks if the current Holdable is a plate. And if so, then all the objects are drawn in reverse order
 				if (ingredientOnCurrent instanceof Plate)  {
 					Stack<Ingredient> copy = Utilities.invertStack(((Plate) ingredientOnCurrent).getIngredients());
 					while (!copy.isEmpty()) {
@@ -179,11 +180,12 @@ public class Main extends ApplicationAdapter {
 
 	/** Iterates over the players int the players array and draws them as well as the object they are holding */
 	private void drawFromPlayersArray() {
-		for (Player worldObject : Main.players) {
+		for (Player worldObject : Main.PLAYERS) {
 			if (worldObject != null) {
 				// If the player texture is looking at the screen then the object they are holding is drawn after the player
 				if (!worldObject.getDirection().equals(new Vector2(0, 1))) drawWorldObject(worldObject);
 				if (worldObject.getHand() != null) drawWorldObject((WorldObject) worldObject.getHand());
+				// checks if the current Holdable is a plate. And if so, then all the objects are drawn in reverse order
 				if (worldObject.getHand() instanceof Plate) {
 					Stack<Ingredient> copy = Utilities.invertStack(((Plate) worldObject.getHand()).getIngredients());
 					while (!copy.isEmpty()) {
@@ -221,15 +223,15 @@ public class Main extends ApplicationAdapter {
 	private void drawFromRectanglesList() {
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		Main.allRectangles.toFirst();
-		while (Main.allRectangles.hasAccess()) {
-			RectangleColored current = Main.allRectangles.getContent();
+		Main.ALL_RECTANGLES.toFirst();
+		while (Main.ALL_RECTANGLES.hasAccess()) {
+			RectangleColored current = Main.ALL_RECTANGLES.getContent();
 			shapeRenderer.begin(current.getShapeType());
 			shapeRenderer.setProjectionMatrix(camera.combined);
 			shapeRenderer.setColor(current.getColor());
 			shapeRenderer.rect(current.x, current.y, current.width, current.height);
 			shapeRenderer.end();
-			Main.allRectangles.next();
+			Main.ALL_RECTANGLES.next();
 		}
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
@@ -251,6 +253,7 @@ public class Main extends ApplicationAdapter {
 
 			if (ingredientOnCurrent != null) {
 				ingredientOnCurrent.getTexture().dispose();
+				// checks if the current Holdable is a plate. And if so, then all the objects as well as their Textures are deleted
 				if (ingredientOnCurrent instanceof Plate)  {
 					while (!((Plate) ingredientOnCurrent).getIngredients().isEmpty()) {
 						((Plate) ingredientOnCurrent).getIngredients().top().getTexture().dispose();
@@ -267,11 +270,12 @@ public class Main extends ApplicationAdapter {
 	 * it may be holding
 	 */
 	private void disposeOfTexturesFromPlayers() {
-		for (Player player : Main.players) {
+		for (Player player : Main.PLAYERS) {
 			if (player != null) {
 				player.getTexture().dispose();
 				if (player.getHand() != null) {
 					((WorldObject) player.getHand()).getTexture().dispose();
+					// checks if the current Holdable is a plate. And if so, then all the objects as well as their Textures are deleted
 					if (player.getHand() instanceof Plate) {
 						while (!((Plate) player.getHand()).getIngredients().isEmpty()) {
 							((Plate) player.getHand()).getIngredients().top().getTexture().dispose();
@@ -298,8 +302,8 @@ public class Main extends ApplicationAdapter {
 		while (!Main.getAllRectangles().isEmpty()) Main.getAllRectangles().remove();
 
 		// Dispose of all Textures
-		disposeOfTexturesInList(staticObjectLists[0]);
-		disposeOfTexturesInList(staticObjectLists[1]);
+		disposeOfTexturesInList(STATIC_OBJECT_LISTS[0]);
+		disposeOfTexturesInList(STATIC_OBJECT_LISTS[1]);
 		disposeOfTexturesFromPlayers();
 	}
 
@@ -315,19 +319,19 @@ public class Main extends ApplicationAdapter {
 
 	// All Getters
 	public static List<WorldObject>[] getStaticObjectLists() {
-		return staticObjectLists;
+		return STATIC_OBJECT_LISTS;
 	}
 	public static List<RectangleColored> getAllRectangles() {
-		return allRectangles;
+		return ALL_RECTANGLES;
 	}
 	public static Player[] getPlayers() {
-		return players;
+		return PLAYERS;
 	}
 	public static GameController getGameController() {
 		return gameController;
 	}
 	public static Vector3 getMousePosition() {
-		return mousePosition;
+		return MOUSE_POSITION;
 	}
 	public static OrthographicCamera getCamera() {
 		return camera;

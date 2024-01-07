@@ -6,13 +6,13 @@ import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 
-/** This class represents a trash can, that can remove an object from the plate or the player's hand */
+/** This class represents a trash can, which can remove an object from the plate or the player's hand and delete it*/
 public class Trash extends KitchenCounter {
     public Trash(Vector2 position) {
         super(new String[]{"Interactables/trashCan.png", "Interactables/trashCanSelected.png"}, position, new Vector2(130, 160));
     }
 
-    /** Method is called whenever player wishes to dispose of a Holdable object */
+    /** Method is called whenever player wishes to dispose of a Holdable object in his hand. The money of the player is changed accordingly */
     @Override
     public void interact() {
         if (this.interactionPartner.getHand() != null) {

@@ -3,12 +3,13 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
-/**
- * A representation of the player. It can move around, interact with objects and in some cases hold them
- */
+/** A representation of the player. It can move around, interact with objects and in some cases hold them */
 public class Player extends WorldObject {
+    /** The maximum moveent speed of the player */
     public static final int MOVEMENT_SPEED = 265;
+    /** The player's hand, which can hold and carry Objects */
     private IHoldable hand;
+    /** The direction the player is currently facing */
     private Vector2 direction;
 
     public Player(String path, Vector2 position) {

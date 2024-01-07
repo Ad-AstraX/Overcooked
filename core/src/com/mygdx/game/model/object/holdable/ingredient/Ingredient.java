@@ -6,10 +6,13 @@ import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
 /**
- * Abstract parent class for all ingredients
+ * The abstract parent class for all ingredients. Ingredients can be carried around by the player (or more like
+ * this object follows them) and stacked onto a plate.
  */
 public abstract class Ingredient extends WorldObject implements IHoldable {
+    /** The price of this ingredient */
     protected int price;
+    /** The player that this ingredient is meant to follow around */
     protected Player interactionPartner;
     public Ingredient(String texturePath, Vector2 position, Vector2 size) {
         super(texturePath, position, size);

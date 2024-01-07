@@ -8,10 +8,18 @@ import com.mygdx.game.model.utilities.Utilities;
 import com.mygdx.game.model.object.holdable.ingredient.Bun;
 import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 
-/** Class which represents a plate. One can stack cut and cooked (if necessary) ingredients on it */
+/**
+ * Class which represents a plate. The player cannot choose when to instantiate it, rather one is created
+ * wherever it is needed. One can stack ingredients on it as well as delete them by using the trash can.
+ * If the ingredient that is to be stacked is an instance of Cuttable or Cookable, then it cannot be
+ * stacked until it is cut or cooked.
+ */
 public class Plate extends WorldObject implements IHoldable {
+    /** The stack of ingredients on the plate */
     private final Stack<Ingredient> ingredients = new Stack<>();
+    /** The player that this plate is meant to follow around */
     private Player interactionPartner;
+
     public Plate(Vector2 position) {
         super("plate.png", position, new Vector2(100, 60));
     }
@@ -23,6 +31,7 @@ public class Plate extends WorldObject implements IHoldable {
      */
     public void addIngredient(Ingredient ingredient){
         if (ingredient != null) {
+            // Matches the texture of the bun if it had been the top element up until now
             if (ingredients.top() instanceof Bun) {
                 ingredients.top().setTexture("Ingredients/bunBottom.png");
                 ingredients.top().setSize(new Vector2(ingredients.top().getTexture().getWidth(), ingredients.top().getTexture().getHeight()));
@@ -31,15 +40,17 @@ public class Plate extends WorldObject implements IHoldable {
         }
     }
 
-    /** Removes the top ingredient on the plate (if there is any) */
+    /** Removes the top ingredient on the plate (if there is any). Is activated by using the trash can */
     public void removeTop(){
         if (!ingredients.isEmpty()) {
             ingredients.top().getTexture().dispose();
             ingredients.pop();
+            // If the bun is the new top ingredient then its texture is changed
             if (ingredients.top() instanceof Bun) {
                 ingredients.top().setTexture("Ingredients/bunTop.png");
                 ingredients.top().setSize(new Vector2(ingredients.top().getTexture().getWidth(), ingredients.top().getTexture().getHeight()));
             }
+            // If the plate is now empty then it is no longer needed and disposed of
             if (ingredients.isEmpty()) {
                 this.getTexture().dispose();
                 interactionPartner.setHand(null);
@@ -53,6 +64,8 @@ public class Plate extends WorldObject implements IHoldable {
                 interactionPartner.getPosition().x - this.size.x/2 + interactionPartner.getSize().x/2 * (1 + direction.x),
                 interactionPartner.getPosition().y + 10
         ));
+
+        // Changes the position for each element in the ingredients stack
         Stack<Ingredient> copy = Utilities.copyStack(ingredients);
         int placeinStack = Utilities.countStackElements(copy);
         while (!copy.isEmpty()) {
