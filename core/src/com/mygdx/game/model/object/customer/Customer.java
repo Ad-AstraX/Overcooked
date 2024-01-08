@@ -1,7 +1,6 @@
 package com.mygdx.game.model.object.customer;
 
 import com.badlogic.gdx.math.Vector2;
-import com.ibm.j9ddr.vm29.structure._s_ThrowInfo;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.view.Main;
 

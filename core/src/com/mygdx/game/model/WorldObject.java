@@ -101,7 +101,5 @@ public abstract class WorldObject {
         animation = new Animation<>(frameDuration, frames);
         colsAndRows = new Vector2(cols, rows);
         isAnimation = true;
-
-        this.size = new Vector2(animation.getKeyFrames()[0].getRegionWidth(), animation.getKeyFrames()[0].getRegionHeight());
     }
 }
