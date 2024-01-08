@@ -57,12 +57,14 @@ public class GameController {
     public void mainLoop(float dt) {
         if (worldController.getSceneID() == 1) {
             playerController1.updateInput(dt);
-            if (WorldController.isMultiplayerOn()) playerController2.updateInput(dt);
+            if (WorldController.isMultiplayerOn())
+                playerController2.updateInput(dt);
 
             tickTime(dt);
             tickGenCustomer();
         }
 
+        customerController.UpdateCustomerMovement(dt);
         worldController.update(dt);
     }
 
@@ -84,8 +86,8 @@ public class GameController {
         if ((float)Math.random() * 100f > game.getCustomerSpawnChance())
             return;
 
-
         System.out.println("Spawned Customer");
+        customerController.generateNewCustomer(orderController);
     }
 
     // All Getters

@@ -82,7 +82,7 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
 
-		gameController = new GameController(120f, 60, 10f);
+		gameController = new GameController(120f, 60, 20f);
 	}
 
 	/** This method is called once every frame and updates the graphics on the screen */
@@ -100,7 +100,7 @@ public class Main extends ApplicationAdapter {
 			MOUSE_POSITION.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(MOUSE_POSITION);
 
-			// First scene - Game UI
+			// First scene - Main Menu
 			if (gameController.getWorldController().getSceneID() == 0) {
 				drawFromRectanglesList();
 
@@ -110,7 +110,7 @@ public class Main extends ApplicationAdapter {
 				drawFromWorldObjectList(STATIC_OBJECT_LISTS[1]);
 				batch.end();
 
-			// Second scene - actual game, kitchenscene
+			// Second scene - actual game, kitchen scene
 			} else if (gameController.getWorldController().getSceneID() == 1) {
 				// Switches the places of the players in the array (if multiplayer mode is on) so that their drawing order is updated
 				if (WorldController.isMultiplayerOn() && PLAYERS[0].getPosition().y < PLAYERS[1].getPosition().y) {

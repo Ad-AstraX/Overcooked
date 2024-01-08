@@ -1,7 +1,6 @@
 package com.mygdx.game.control;
 
 import com.mygdx.game.model.object.customer.Order;
-import com.mygdx.game.model.object.customer.Recipe;
 
 /** Generates the orders for the customers  */
 public class OrderController {
@@ -12,20 +11,11 @@ public class OrderController {
     }
 
     /**
-     * Generates a new Order which contains 1-3 recipes
+     * Generates a new Order which contains 1 recipe
      * <p>
-     * @param recipeCount the amount of recipes this order has
      * @return the finished order
      */
-    public Order generateNewOrder(int recipeCount) {
-        if (recipeCount > 3)
-            recipeCount = 3;
-
-        Recipe[] recipes = new Recipe[recipeCount];
-
-        for (int i = 0; i < recipeCount; i++)
-            recipes[i] = recipeController.getRandomRecipe();
-
-        return new Order(recipes);
+    public Order generateNewOrder() {
+        return new Order(recipeController.getRandomRecipe());
     }
 }

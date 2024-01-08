@@ -35,7 +35,7 @@ public class Recipe {
         Stack<Ingredient> plateStackCopy = Utilities.copyStack(plate.getIngredients());
 
         while (!recipeStackCopy.isEmpty() || !plateStackCopy.isEmpty()) {
-            if (recipeStackCopy.top() != plateStackCopy.top())
+            if (recipeStackCopy.top().getClass() != plateStackCopy.top().getClass())
                 return false;
 
             recipeStackCopy.pop();

@@ -1,7 +1,9 @@
 package com.mygdx.game.model.object.customer;
 
 import com.badlogic.gdx.math.Vector2;
+import com.ibm.j9ddr.vm29.structure._s_ThrowInfo;
 import com.mygdx.game.model.WorldObject;
+import com.mygdx.game.view.Main;
 
 /**
  * <p>This class represents a customer. </p> <br>
@@ -10,14 +12,17 @@ import com.mygdx.game.model.WorldObject;
  * He then pays the Player for the burger and tips him according to how quick the player was.
  */
 public class Customer extends WorldObject {
-    /** The order that the customer placed. It consist of one burger */
+    /** The order that the customer placed. It consists of one burger */
     private final Order order;
     /** The patience of the customer. Decreases while waiting */
     private int patience;
 
-    public Customer(Vector2 position, Order order) {
-        // TODO MUST REPLACE WITH CUSTOMER TEXTURE NAME
-        super("badlogic.jpg", position, new Vector2(20, 20));
+    public Customer(String texturePath, Vector2 position, Order order) {
+        super(texturePath, position, new Vector2(120, 180));
+        Main.getStaticObjectLists()[0].toFirst();
+        Main.getStaticObjectLists()[0].next();
+        Main.getStaticObjectLists()[0].next(); // 💀💀 Darüber reden wir lieber nicht TODO neues layer anlegen
+        Main.getStaticObjectLists()[0].insert(this);
         this.order = order;
     }
 
