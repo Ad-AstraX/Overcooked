@@ -53,7 +53,7 @@ public class Workbench extends KitchenCounter {
     }
 
     private void playerPlaceIngredientsOnWorkbenchPlate() {
-        if (currentHoldable instanceof Plate)
+        if (!(currentHoldable instanceof Plate))
             return;
 
         Stack<Ingredient> reversedPlayerStack = Utilities.invertStack(((Plate) currentHoldable).getIngredients());

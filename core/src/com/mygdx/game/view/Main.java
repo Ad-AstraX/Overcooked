@@ -74,7 +74,7 @@ public class Main extends ApplicationAdapter {
 		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/Lynn Music Boulangerie - Gaming Background Music (HD).mp3"));
 		music.setLooping(true);
 		music.setVolume(0.2f);
-		// music.play();
+		music.play();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1950, 1425);
