@@ -17,8 +17,8 @@ public abstract class KitchenCounter extends WorldObject implements IInteractibl
         super(textures[0], position, size);
         this.textures = textures;
     }
-    public KitchenCounter(String[] textures, int cols, int rows, float frameDuration, Vector2 position) {
-        super(textures[0], cols, rows, frameDuration, position);
+    public KitchenCounter(String[] textures, int cols, int rows, float frameDuration, Vector2 position, Vector2 size) {
+        super(textures[0], cols, rows, frameDuration, position, size);
         this.textures = textures;
     }
 

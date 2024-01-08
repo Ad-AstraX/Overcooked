@@ -29,7 +29,7 @@ public abstract class WorldObject {
         this.size = size;
     }
 
-    public WorldObject(String texturePath, int cols, int rows, float frameDuration, Vector2 position) {
+    public WorldObject(String texturePath, int cols, int rows, float frameDuration, Vector2 position, Vector2 size) {
         try { this.texture = new Texture("Textures/" + texturePath); }
         catch(GdxRuntimeException e) { this.texture = new Texture("Textures/fallbackTexture.png"); }
 
@@ -46,7 +46,7 @@ public abstract class WorldObject {
         isAnimation = true;
 
         this.position = position;
-        this.size = new Vector2(animation.getKeyFrames()[0].getRegionWidth(), animation.getKeyFrames()[0].getRegionHeight());
+        this.size = size;
     }
 
     // All Getters
@@ -64,6 +64,9 @@ public abstract class WorldObject {
     }
     public Animation<TextureRegion> getAnimation() {
         return animation;
+    }
+    public Vector2 getColsAndRows() {
+        return colsAndRows;
     }
 
     // All Setters

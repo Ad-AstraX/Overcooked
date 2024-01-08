@@ -13,7 +13,7 @@ public class Player extends WorldObject {
     private Vector2 direction;
 
     public Player(String path, Vector2 position) {
-        super(path, position, new Vector2(80 * 1.3f, 140 * 1.3f));
+        super(path, 4, 1, 0.2f, position, new Vector2(80 * 1.35f, 140 * 1.35f));
         direction = new Vector2(0, 0);
     }
 
