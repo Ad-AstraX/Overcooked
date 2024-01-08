@@ -32,10 +32,10 @@ public class GameController {
         // Right now, only the first player is instantiated. Whether the second one will be too, depends on the game mode that the player chooses
         playerController1 = new PlayerController(
                 new String[] {
-                        "Players/PlayerTwo/playerGreenBehind.png",
-                        "Players/PlayerTwo/playerGreenLeft.png",
-                        "Players/PlayerTwo/playerGreenFront.png",
-                        "Players/PlayerTwo/playerGreenRight.png"},
+                        "Players/PlayerOne/playerGreenBack.png",
+                        "Players/PlayerOne/playerGreenLeft.png",
+                        "Players/PlayerOne/playerGreenFront.png",
+                        "Players/PlayerOne/playerGreenRight.png"},
                 new Vector2(750, 300),
                 new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
         );

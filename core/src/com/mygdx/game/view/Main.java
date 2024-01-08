@@ -207,7 +207,7 @@ public class Main extends ApplicationAdapter {
 	private void drawWorldObject(WorldObject object) {
 		if (object.isAnimation()) {
 			TextureRegion currentFrame = object.getAnimation().getKeyFrame(stateTime, true);
-			batch.draw(currentFrame, object.getPosition().x, object.getPosition().y);
+			batch.draw(currentFrame, object.getPosition().x, object.getPosition().y, object.getSize().x, object.getSize().y);
 		} else {
 			batch.draw(
 					object.getTexture(),

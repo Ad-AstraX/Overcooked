@@ -73,7 +73,7 @@ public class WorldController {
     /** Generates the kitchen scene. It positions all backgroundObjects as well as kitchenCounters */
     public void showKitchenScene() {
         Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/floorTiles.png", new Vector2(0, 0), new Vector2(1950, 1425)));
-        Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/coinAnimTextures.png", 1, 6, 0.2f, new Vector2(30, 1300)));
+        Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/coinAnimTextures.png", 1, 6, 0.2f, new Vector2(30, 1300), new Vector2(350, 90)));
 
         // The layout of the kitchen. These numbers will be converted into objects in the next step
         int[][] kitchenScene = new int[][] {
@@ -136,10 +136,10 @@ public class WorldController {
                 if (WorldController.isMultiplayerOn()) {
                     Main.getGameController().setPlayerController2(new PlayerController(
                             new String[]{
-                                    "Players/PlayerOne/playerOrangeBehind.png",
-                                    "Players/PlayerOne/playerOrangeLeft.png",
-                                    "Players/PlayerOne/playerOrangeFront.png",
-                                    "Players/PlayerOne/playerOrangeRight.png"},
+                                    "Players/PlayerTwo/playerOrangeBack.png",
+                                    "Players/PlayerTwo/playerOrangeLeft.png",
+                                    "Players/PlayerTwo/playerOrangeFront.png",
+                                    "Players/PlayerTwo/playerOrangeRight.png"},
                             new Vector2(750, 500),
                             new int[]{Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D, Input.Keys.E}
                     ));

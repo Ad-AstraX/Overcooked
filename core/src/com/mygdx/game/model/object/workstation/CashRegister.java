@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public class CashRegister extends KitchenCounter {
 
     public CashRegister(Vector2 position) {
-        super(new String[]{"Interactables/cashRegister.png", "Interactables/cashRegisterSelected.png"}, 1, 6, 0.15f, position);
+        super(new String[]{"Interactables/cashRegister.png", "Interactables/cashRegisterSelected.png"}, 1, 6, 0.15f, position, new Vector2(132, 160));
     }
 
     @Override

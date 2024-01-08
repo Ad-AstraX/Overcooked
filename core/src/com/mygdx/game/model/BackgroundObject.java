@@ -10,7 +10,7 @@ public class BackgroundObject extends WorldObject{
     public BackgroundObject(String texturePath, Vector2 position, Vector2 size) {
         super(texturePath, position, size);
     }
-    public BackgroundObject(String texturePath, int cols, int rows, float frameDuration, Vector2 position) {
-        super(texturePath, cols, rows, frameDuration, position);
+    public BackgroundObject(String texturePath, int cols, int rows, float frameDuration, Vector2 position, Vector2 size) {
+        super(texturePath, cols, rows, frameDuration, position, size);
     }
 }

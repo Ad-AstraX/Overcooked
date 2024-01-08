@@ -63,25 +63,25 @@ public class PlayerController {
         Vector2 move = new Vector2(0, 0);
 
         if (Gdx.input.isKeyPressed(controls[0])) {
-            player.setTexture(textures[0]);
+            player.setAnimation(textures[0], (int) player.getColsAndRows().x, (int) player.getColsAndRows().y, 0.3f);
             move.add(new Vector2(0, 1));
             player.setDirection(new Vector2(0, 1));
         }
 
         if (Gdx.input.isKeyPressed(controls[2])) {
-            player.setTexture(textures[2]);
+            player.setAnimation(textures[2], (int) player.getColsAndRows().x, (int) player.getColsAndRows().y, 0.3f);
             move.add(new Vector2(0, -1));
             player.setDirection(new Vector2(0, -1));
         }
 
         if (Gdx.input.isKeyPressed(controls[1])) {
-            player.setTexture(textures[1]);
+            player.setAnimation(textures[1], (int) player.getColsAndRows().x, (int) player.getColsAndRows().y, 0.3f);
             move.add(new Vector2(-1, 0));
             player.setDirection(new Vector2(-1, 0));
         }
 
         if (Gdx.input.isKeyPressed(controls[3])) {
-            player.setTexture(textures[3]);
+            player.setAnimation(textures[3], (int) player.getColsAndRows().x, (int) player.getColsAndRows().y, 0.3f);
             move.add(new Vector2(1, 0));
             player.setDirection(new Vector2(1, 0));
         }

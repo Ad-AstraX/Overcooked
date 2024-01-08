@@ -5,7 +5,7 @@ import com.mygdx.game.model.object.holdable.IHoldable;
 
 /** A representation of the player. It can move around, interact with objects and in some cases hold them */
 public class Player extends WorldObject {
-    /** The maximum moveent speed of the player */
+    /** The maximum movement speed of the player */
     public static final int MOVEMENT_SPEED = 265;
     /** The player's hand, which can hold and carry Objects */
     private IHoldable hand;
@@ -13,7 +13,7 @@ public class Player extends WorldObject {
     private Vector2 direction;
 
     public Player(String path, Vector2 position) {
-        super(path, position, new Vector2(80 * 1.3f, 140 * 1.3f));
+        super(path, 4, 1, 0.2f, position, new Vector2(80 * 1.35f, 140 * 1.35f));
         direction = new Vector2(0, 0);
     }
 
