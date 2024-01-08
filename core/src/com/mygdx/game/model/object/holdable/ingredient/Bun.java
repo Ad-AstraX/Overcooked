@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Bun extends Ingredient{
     public Bun() {
-        super("Ingredients/bunTop.png", Vector2.Zero, Vector2.Zero);
+        super("Ingredients/bunTop.png", Vector2.Zero, new Vector2(80, 60));
         price = 3;
     }
 

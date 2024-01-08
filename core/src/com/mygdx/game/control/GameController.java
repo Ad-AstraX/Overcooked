@@ -64,7 +64,7 @@ public class GameController {
             tickGenCustomer();
         }
 
-        customerController.UpdateCustomerMovement(dt);
+        customerController.UpdateCustomerAndOrderMovement(dt);
         worldController.update(dt);
     }
 
@@ -99,6 +99,9 @@ public class GameController {
     }
     public PlayerController getPlayerController2() {
         return playerController2;
+    }
+    public CustomerController getCustomerController() {
+        return customerController;
     }
 
     // All Setters

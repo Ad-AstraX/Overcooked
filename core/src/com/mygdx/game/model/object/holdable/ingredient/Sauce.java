@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Sauce extends Ingredient{
     public Sauce() {
-        super("Ingredients/sauce.png", Vector2.Zero, Vector2.Zero);
+        super("Ingredients/sauce.png", Vector2.Zero, new Vector2(80, 30));
         price = 1;
     }
 

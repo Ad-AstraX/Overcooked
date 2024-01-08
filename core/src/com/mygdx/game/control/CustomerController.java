@@ -2,9 +2,15 @@ package com.mygdx.game.control;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.model.BackgroundObject;
 import com.mygdx.game.model.datastructures.List;
 import com.mygdx.game.model.datastructures.Queue;
+import com.mygdx.game.model.datastructures.Stack;
 import com.mygdx.game.model.object.customer.Customer;
+import com.mygdx.game.model.object.holdable.Plate;
+import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
+import com.mygdx.game.model.utilities.Utilities;
+import com.mygdx.game.view.Main;
 
 /**
  * ES ERGIBT VIEL MEHR SINN FUER DIESE KLASSE NUR LIST ANSTATT QUEUE ZU NUTZEN.
@@ -19,7 +25,8 @@ public class CustomerController {
 
     /** The List of customers (mirrors the queue) used to dictate customer movement */
     private final List<Customer> customerList;
-    private Vector2 customerWalkTarget = new Vector2(795, 960);
+    private final Vector2 customerWalkTarget = new Vector2(795, 960);
+    private BackgroundObject orderDisplay;
 
     public CustomerController() {
         customerQ = new Queue<>();
@@ -51,6 +58,11 @@ public class CustomerController {
         customerQ.enqueue(customer);
         customerQLength += 1;
         customerList.append(customer);
+
+        if (customer.equals(customerQ.front())) {
+            orderDisplay = new BackgroundObject("Customers/order.png", new Vector2(1575, 0), new Vector2(200*1.8f, 260*1.8f));
+            Main.getStaticObjectLists()[1].append(orderDisplay);
+        }
     }
 
     /**
@@ -70,7 +82,7 @@ public class CustomerController {
                 customerList.next();
     }
 
-    public void UpdateCustomerMovement(float dt) {
+    public void UpdateCustomerAndOrderMovement(float dt) {
         customerList.toFirst();
 
         int counter = 0;
@@ -90,10 +102,24 @@ public class CustomerController {
             customerList.next();
             counter++;
         }
+
+        if (orderDisplay != null && !orderDisplay.getPosition().equals(new Vector2(1575, 860))) {
+            Vector2 orderDisplayTarget = new Vector2().add(new Vector2(1575, 860)).add(new Vector2(0, 60));
+
+            Vector2 newPosition = new Vector2(
+                    Interpolation.pow2InInverse.apply(orderDisplay.getPosition().x, orderDisplayTarget.x, dt * 0.125f),
+                    Interpolation.pow2InInverse.apply(orderDisplay.getPosition().y, orderDisplayTarget.y, dt * 0.125f)
+            );
+
+            orderDisplay.setPosition(newPosition);
+        }
     }
 
     // All Getters
     public Queue<Customer> getCustomerQ() {
         return customerQ;
+    }
+    public BackgroundObject getOrderDisplay() {
+        return orderDisplay;
     }
 }

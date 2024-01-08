@@ -13,11 +13,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
+import com.mygdx.game.control.CustomerController;
 import com.mygdx.game.control.GameController;
 import com.mygdx.game.control.WorldController;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
+import com.mygdx.game.model.object.customer.Customer;
 import com.mygdx.game.model.utilities.RectangleColored;
 import com.mygdx.game.model.datastructures.Stack;
 import com.mygdx.game.model.utilities.Utilities;
@@ -124,6 +126,23 @@ public class Main extends ApplicationAdapter {
 				drawFromWorldObjectList(STATIC_OBJECT_LISTS[0]);
 				drawFromPlayersArray();
 				drawFromWorldObjectList(STATIC_OBJECT_LISTS[1]);
+
+				CustomerController customerC = gameController.getCustomerController();
+				if (!customerC.getCustomerQ().isEmpty()) {
+					Stack<Ingredient> copy = Utilities.copyStack(customerC.getCustomerQ().front().getOrder().getRecipe().getIngredients());
+					copy = Utilities.invertStack(copy);
+					int count = 0;
+					while (!copy.isEmpty()) {
+						batch.draw(
+							copy.top().getTexture(),
+							customerC.getOrderDisplay().getPosition().x+customerC.getOrderDisplay().getSize().x/2-copy.top().getSize().x*0.75f,
+							customerC.getOrderDisplay().getPosition().y+ 100+15*count,
+							copy.top().getSize().x*1.5f, copy.top().getSize().y*1.5f
+						);
+						count++;
+						copy.pop();
+					}
+				}
 
 				font.getData().setScale(2.5f);
 				font.draw(batch, GameController.getGame().getPayTotal() + " $", 250 - (float) (GameController.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);

@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Patty extends Cookable {
     public Patty() {
-        super(new String[] {"Ingredients/patty.png", "Ingredients/pattyCooked.png"}, Vector2.Zero, Vector2.Zero, 7);
+        super(new String[] {"Ingredients/pattyCooked.png"}, Vector2.Zero, new Vector2(75, 30), 7);
         price = 5;
     }
 

@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Lettuce extends Cuttable {
 
    public Lettuce() {
-      super(new String[] {"Ingredients/lettuce.png", "Ingredients/lettuceSlices.png"}, Vector2.Zero, Vector2.Zero, 5);
+      super(new String[] {"Ingredients/lettuceSlices.png"}, Vector2.Zero, new Vector2(95, 40), 5);
       price = 2;
    }
 
