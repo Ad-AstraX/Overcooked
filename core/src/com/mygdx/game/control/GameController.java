@@ -10,6 +10,9 @@ import com.mygdx.game.view.Main;
  * Just like the Main class, there is only one gameController Object, which is unique in the whole program
  */
 public class GameController {
+    /** For global access */
+    public static GameController singleton;
+
     /** The PlayerController for the first player */
     private final PlayerController playerController1;
     /** The PlayerController for the second player. This one will only be instantiated if the player chose "multiplayer" */
@@ -27,6 +30,9 @@ public class GameController {
     private static Game game;
 
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
+        if (singleton == null)
+            singleton = this;
+
         game = new Game(roundLength, payGoal, customerSpawnChance);
 
         // Right now, only the first player is instantiated. Whether the second one will be too, depends on the game mode that the player chooses

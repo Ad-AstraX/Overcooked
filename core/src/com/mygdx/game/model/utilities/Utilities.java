@@ -141,4 +141,20 @@ public class Utilities {
         }
         return count;
     }
+
+    public static <ContentType> void removeItemList(List<ContentType> list, ContentType item) {
+        if (list.isEmpty())
+            return;
+
+        list.toFirst();
+        while (list.hasAccess()) {
+            if (list.getContent().equals(item)) {
+                list.remove();
+                return;
+            }
+            list.next();
+        }
+
+        System.out.println("Item not found in the list");
+    }
 }

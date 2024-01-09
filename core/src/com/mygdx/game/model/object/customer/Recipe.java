@@ -20,31 +20,6 @@ public class Recipe {
             ingredients.push(ingredient);
     }
 
-    /**
-     * This method takes a given plate and compares the stack of ingredients
-     * on the plate to the stack of ingredients in this recipe
-     * <p>
-     * @param plate the plate that this recipe will be compared to
-     * @return whether the recipe and given plate match
-     */
-    public boolean compareToPlate(Plate plate) {
-        if (plate == null)
-            return false;
-
-        Stack<Ingredient> recipeStackCopy = Utilities.copyStack(this.getIngredients());
-        Stack<Ingredient> plateStackCopy = Utilities.copyStack(plate.getIngredients());
-
-        while (!recipeStackCopy.isEmpty() || !plateStackCopy.isEmpty()) {
-            if (recipeStackCopy.top().getClass() != plateStackCopy.top().getClass())
-                return false;
-
-            recipeStackCopy.pop();
-            plateStackCopy.pop();
-        }
-
-        return true;
-    }
-
     // All Getters
     public Stack<Ingredient> getIngredients() {
         return ingredients;
