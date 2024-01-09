@@ -19,7 +19,6 @@ import com.mygdx.game.control.WorldController;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.datastructures.List;
-import com.mygdx.game.model.object.customer.Customer;
 import com.mygdx.game.model.utilities.RectangleColored;
 import com.mygdx.game.model.datastructures.Stack;
 import com.mygdx.game.model.utilities.Utilities;
@@ -41,7 +40,7 @@ import com.mygdx.game.model.object.workstation.Workbench;
 public class Main extends ApplicationAdapter {
 	// Attributes regarding graphics and sound
 	private static OrthographicCamera camera;
-	private static Viewport viewport;
+	private static ExtendViewport viewport;
 	private static ShapeRenderer shapeRenderer;
 	private static SpriteBatch batch;
 	private static BitmapFont font;
@@ -78,7 +77,7 @@ public class Main extends ApplicationAdapter {
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1950, 1425);
-		viewport = new FitViewport(1950, 1425, camera);
+		viewport = new ExtendViewport(1950, 1425, camera);
 
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
@@ -97,7 +96,6 @@ public class Main extends ApplicationAdapter {
 			gameController.mainLoop(Gdx.graphics.getDeltaTime());
 
 			ScreenUtils.clear(0, 0, 0, 1);
-			camera.update();
 
 			MOUSE_POSITION.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(MOUSE_POSITION);
@@ -236,9 +234,7 @@ public class Main extends ApplicationAdapter {
 		}
 	}
 
-	/**
-	 * Draws all coloured rectangles in the list allRectangles
-	 */
+	/** Draws all coloured rectangles in the list allRectangles */
 	private void drawFromRectanglesList() {
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -334,6 +330,8 @@ public class Main extends ApplicationAdapter {
 	 */
 	public void resize(int width, int height) {
 		viewport.update(width, height);
+
+		camera.update();
 	}
 
 	// All Getters
