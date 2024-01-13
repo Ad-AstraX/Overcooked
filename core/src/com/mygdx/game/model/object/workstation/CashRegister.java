@@ -30,7 +30,9 @@ public class CashRegister extends KitchenCounter {
 
         customerServed.play(1.0f);
         //customerServed.dispose();
+
         interactionPartner.setHand(null);
         GameController.singleton.getCustomerController().nextCustomer();
+        GameController.getGame().setPayTotal(GameController.getGame().getPayTotal() + 15);
     }
 }

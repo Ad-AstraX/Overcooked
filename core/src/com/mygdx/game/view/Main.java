@@ -3,6 +3,7 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -27,6 +28,8 @@ import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 import com.mygdx.game.model.object.workstation.Processable;
 import com.mygdx.game.model.object.workstation.Workbench;
 
+import java.awt.*;
+
 /**
  * <p> This class handles all the graphics. Since the Main class is unique in the whole program, all its attributes are static </p> <br>
  *
@@ -44,6 +47,7 @@ public class Main extends ApplicationAdapter {
 	private static ShapeRenderer shapeRenderer;
 	private static SpriteBatch batch;
 	private static BitmapFont font;
+	private static BitmapFont fontButBlack;
 	private static Music music;
 
 	// Lists / Array that store(s) the objects which need to be drawn
@@ -83,6 +87,8 @@ public class Main extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
+		fontButBlack = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
+		fontButBlack.setColor(Color.BLACK);
 
 		gameController = new GameController(120f, 60, 15f);
 	}
@@ -146,10 +152,19 @@ public class Main extends ApplicationAdapter {
 					}
 				}
 
+				// Draw Cash
 				font.getData().setScale(2.5f);
-				font.draw(batch, GameController.getGame().getPayTotal() + " $", 250 - (float) (GameController.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);
-				batch.end();
+				font.draw(batch,
+						GameController.getGame().getPayTotal() + " $ / " + GameController.getGame().getPayGoal() + " $",
+						205 - (float) (GameController.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);
 
+				// Draw Time left
+				fontButBlack.getData().setScale(2.5f);
+				fontButBlack.draw(batch,
+						"" + Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100.0,
+						viewport.getWorldWidth() / 2 - 50, 1380);
+
+				batch.end();
 				drawFromRectanglesList();
 			}
 

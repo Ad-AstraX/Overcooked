@@ -73,7 +73,7 @@ public class WorldController {
     /** Generates the kitchen scene. It positions all backgroundObjects as well as kitchenCounters */
     public void showKitchenScene() {
         Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/floorTiles.png", new Vector2(0, 0), new Vector2(1950, 1425)));
-        Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/coinAnimTextures.png", 1, 6, 0.2f, new Vector2(30, 1300), new Vector2(350, 90)));
+        Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/coinAnimTextures.png", 1, 6, 0.2f, new Vector2(30, 1300), new Vector2(447, 90)));
 
         // The layout of the kitchen. These numbers will be converted into objects in the next step
         int[][] kitchenScene = new int[][] {
@@ -147,6 +147,7 @@ public class WorldController {
                 }
             }
             discard();
+
             if (sceneID == 1) showKitchenScene();
         }
 

@@ -82,6 +82,14 @@ public class GameController {
     private void tickTime(float dt) {
         game.setTimeLeftLastFrame(game.getTimeLeft());
         game.setTimeLeft(game.getTimeLeft() - dt);
+
+        if (game.getTimeLeft() < 0) {
+            System.out.println("LOSS! Restart Game"); // TODO Restart Game
+        }
+
+        if (game.getPayTotal() >= game.getPayGoal()) {
+            System.out.println("WON! Restart Game"); // TODO Restart Game
+        }
     }
 
     /** Executes every second with a certain chance to generate a new customer */
