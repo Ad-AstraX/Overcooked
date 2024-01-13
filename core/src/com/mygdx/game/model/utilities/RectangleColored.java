@@ -3,6 +3,7 @@ package com.mygdx.game.model.utilities;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * This class extends the regular Rectangle class that is given by libGdx. This one also takes parameters for Color
@@ -23,6 +24,9 @@ public class RectangleColored extends Rectangle {
     }
 
     // All Getters
+    public Vector2 getPosition() {
+        return new Vector2(x, y);
+    }
     public Color getColor() {
         return color;
     }

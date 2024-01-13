@@ -70,7 +70,7 @@ public class GameController {
             tickGenCustomer();
         }
 
-        customerController.UpdateCustomerAndOrderMovement(dt);
+        customerController.UpdateCustomerAndOrder(dt);
         worldController.update(dt);
     }
 
@@ -85,10 +85,12 @@ public class GameController {
 
         if (game.getTimeLeft() < 0) {
             System.out.println("LOSS! Restart Game"); // TODO Restart Game
+            //worldController.setTransitionDarker(true);
         }
 
         if (game.getPayTotal() >= game.getPayGoal()) {
-            System.out.println("WON! Restart Game"); // TODO Restart Game
+            System.out.println("WON! Restart Game");
+            //worldController.setTransitionDarker(true);// TODO Restart Game
         }
     }
 

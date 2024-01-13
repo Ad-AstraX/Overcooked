@@ -1,6 +1,9 @@
 package com.mygdx.game.model.object.button;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.control.PlayerController;
+import com.mygdx.game.control.WorldController;
 import com.mygdx.game.view.Main;
 
 /**
@@ -18,6 +21,19 @@ public class PlayButton extends Button {
             if (mouseClicked()) {
                 Main.getGameController().getWorldController().setTransitionDarker(true);
                 clickedSound.play(0.5f);
+
+                if (WorldController.isMultiplayerOn()) {
+                    Main.getGameController().setPlayerController2(new PlayerController(
+                            new String[]{
+                                    "Players/PlayerTwo/playerOrangeBack.png",
+                                    "Players/PlayerTwo/playerOrangeLeft.png",
+                                    "Players/PlayerTwo/playerOrangeFront.png",
+                                    "Players/PlayerTwo/playerOrangeRight.png"},
+                            new Vector2(750, 500),
+                            new int[]{ Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
+                    ));
+                    Main.getPlayers()[1] = Main.getGameController().getPlayerController2().getPlayer();
+                }
                 return true;
             }
         } else if (this.texture.toString().equals("Textures/" + textures[1])) this.setTexture(textures[0]);

@@ -370,9 +370,6 @@ public class Main extends ApplicationAdapter {
 	public static Vector3 getMousePosition() {
 		return MOUSE_POSITION;
 	}
-	public static OrthographicCamera getCamera() {
-		return camera;
-	}
 	public static Music getMusic() {
 		return music;
 	}

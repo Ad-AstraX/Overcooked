@@ -51,7 +51,7 @@ public class WorldController {
             backgroundRects[i] = rect;
         }
 
-        Button newButton = new PlayButton(new Vector2(Main.getCamera().viewportWidth/2f - 250, 650), new Vector2(500, 200));
+        Button newButton = new PlayButton(new Vector2(1950/2f - 250, 650), new Vector2(500, 200));
         Main.getStaticObjectLists()[1].append(newButton);
         allButtons.append(newButton);
 
@@ -63,7 +63,7 @@ public class WorldController {
         Main.getStaticObjectLists()[1].append(newButton);
         allButtons.append(newButton);
 
-        newButton = new GamemodeToggleButton(new Vector2(Main.getCamera().viewportWidth/2f - 250, 475), new Vector2(500, 160));
+        newButton = new GamemodeToggleButton(new Vector2(1950/2f - 250, 475), new Vector2(500, 160));
         Main.getStaticObjectLists()[1].append(newButton);
         allButtons.append(newButton);
 
@@ -130,22 +130,7 @@ public class WorldController {
 
         if (transitionDarker && transitionRect.getColor().a >= 1) {
             transitionDarker = false;
-            if (allButtons.getContent() instanceof PlayButton) {
-                sceneID = 1;
-
-                if (WorldController.isMultiplayerOn()) {
-                    Main.getGameController().setPlayerController2(new PlayerController(
-                            new String[]{
-                                    "Players/PlayerTwo/playerOrangeBack.png",
-                                    "Players/PlayerTwo/playerOrangeLeft.png",
-                                    "Players/PlayerTwo/playerOrangeFront.png",
-                                    "Players/PlayerTwo/playerOrangeRight.png"},
-                            new Vector2(750, 500),
-                            new int[]{ Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
-                    ));
-                    Main.getPlayers()[1] = Main.getGameController().getPlayerController2().getPlayer();
-                }
-            }
+            if (allButtons.getContent() instanceof PlayButton) sceneID = 1;
             discard();
 
             if (sceneID == 1) showKitchenScene();
@@ -154,7 +139,7 @@ public class WorldController {
         if (sceneID == 0) {
             for (RectangleColored rect : backgroundRects) {
                 rect.y -= dt*200;
-                if (rect.y + rect.height < 0) rect.y = Main.getCamera().viewportHeight+50;
+                if (rect.y + rect.height < 0) rect.y = 1475;
             }
         } else if (sceneID == 1) {
             allProcessableObjects.toFirst();
