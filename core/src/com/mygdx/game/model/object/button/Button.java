@@ -1,6 +1,7 @@
 package com.mygdx.game.model.object.button;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.view.Main;
@@ -12,6 +13,7 @@ import com.mygdx.game.view.Main;
 public abstract class Button extends WorldObject {
     /** The textures that the buttons switch between when the mouse touches them/they are toggled */
     protected String[] textures;
+    protected Sound clickedSound = Gdx.audio.newSound(Gdx.files.internal("Sound/clickButtonSound.mp3"));
     public Button(String[] textures, Vector2 position, Vector2 size) {
         super(textures[0], position, size);
         this.textures = textures;

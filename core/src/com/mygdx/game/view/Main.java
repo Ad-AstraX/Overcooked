@@ -63,6 +63,7 @@ public class Main extends ApplicationAdapter {
 	private static final Vector3 MOUSE_POSITION = new Vector3(0, 0, 0);
 	/** Time that has passed since the creation of the project */
 	private static float stateTime;
+	private static final Vector2 averageFPS = new Vector2();
 
 	/**
 	 * This method is called when the application is first created.
@@ -70,7 +71,7 @@ public class Main extends ApplicationAdapter {
 	 */
 	@Override
 	public void create() {
-		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/Lynn Music Boulangerie - Gaming Background Music (HD).mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/backgroundMusic.mp3"));
 		music.setLooping(true);
 		music.setVolume(0.2f);
 		music.play();
@@ -83,7 +84,7 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
 
-		gameController = new GameController(120f, 60, 20f);
+		gameController = new GameController(120f, 60, 15f);
 	}
 
 	/** This method is called once every frame and updates the graphics on the screen */
@@ -91,6 +92,9 @@ public class Main extends ApplicationAdapter {
 	public void render() {
 		// If condition that stops program from updating when it is being resized or dragged
 		if (Gdx.graphics.getDeltaTime() < 0.02f) {
+			averageFPS.x += Gdx.graphics.getFramesPerSecond();
+			averageFPS.y++;
+
 			// updating the stateTime, camera and mousePosition to prepare for the next frame
 			stateTime += Gdx.graphics.getDeltaTime();
 			gameController.mainLoop(Gdx.graphics.getDeltaTime());
@@ -308,6 +312,7 @@ public class Main extends ApplicationAdapter {
 	 */
 	@Override
 	public void dispose() {
+		System.out.println("Average Frames per Second in this game: " + (int) (averageFPS.x/averageFPS.y));
 		batch.dispose();
 		music.dispose();
 		shapeRenderer.dispose();

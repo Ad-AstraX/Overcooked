@@ -1,5 +1,7 @@
 package com.mygdx.game.model.object.workstation;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.*;
@@ -12,6 +14,8 @@ import com.mygdx.game.model.object.holdable.ingredient.*;
 public class IngredientSpawner<IngredientType> extends KitchenCounter implements IInteractible {
     /** The type of ingredient that this class spawns */
     private final Class<IngredientType> ingredientType;
+    Sound ketchupSound = Gdx.audio.newSound(Gdx.files.internal("Sound/ketchupSound.mp3"));
+    Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal("Sound/pickUpSound.mp3"));
 
     public IngredientSpawner(Class<IngredientType> type, Vector2 position) {
         super(new String[]{"fallbackTexture.png", "fallbackTexture.png"}, position, new Vector2(130, 160));
@@ -36,10 +40,14 @@ public class IngredientSpawner<IngredientType> extends KitchenCounter implements
                 if (((holdable instanceof Cuttable && !((Cuttable) holdable).isCut()) ||
                     (holdable instanceof Cookable && !((Cookable) holdable).isCooked())) && this.interactionPartner.getHand() == null) {
                     this.interactionPartner.setHand(holdable);
+                    pickUpSound.play(0.5f);
                 // If holdable is either a bun or sauce then it must be placed onto a plate. If the player does not have a plate, one is created for him
                 } else if (!(holdable instanceof Cookable) && !(holdable instanceof Cuttable)) {
                     if (this.interactionPartner.getHand() == null) this.interactionPartner.setHand(new Plate(interactionPartner.getPosition()));
                     ((Plate) this.interactionPartner.getHand()).addIngredient(holdable);
+
+                    if (holdable instanceof Sauce) ketchupSound.play(0.5f);
+                    else pickUpSound.play(0.5f);
                 }
             } catch (Exception ignored) {  }
         }

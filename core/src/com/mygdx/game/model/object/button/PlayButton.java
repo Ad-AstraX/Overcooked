@@ -17,6 +17,7 @@ public class PlayButton extends Button {
             if (this.texture.toString().equals("Textures/" + textures[0])) this.setTexture(textures[1]);
             if (mouseClicked()) {
                 Main.getGameController().getWorldController().setTransitionDarker(true);
+                clickedSound.play(0.5f);
                 return true;
             }
         } else if (this.texture.toString().equals("Textures/" + textures[1])) this.setTexture(textures[0]);

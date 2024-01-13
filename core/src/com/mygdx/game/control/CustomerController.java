@@ -1,5 +1,7 @@
 package com.mygdx.game.control;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.BackgroundObject;
@@ -21,8 +23,9 @@ public class CustomerController {
 
     /** The List of customers (mirrors the queue) used to dictate customer movement */
     private final List<Customer> customerList;
-    private final Vector2 customerWalkTarget = new Vector2(795, 960);
+    private final Vector2 customerWalkTarget = new Vector2(780, 960);
     private BackgroundObject orderDisplay;
+    private Sound newCustomerChime = Gdx.audio.newSound(Gdx.files.internal("Sound/newCustomerSound.mp3"));
 
     public CustomerController() {
         customerQ = new Queue<>();
@@ -54,6 +57,7 @@ public class CustomerController {
         customerQ.enqueue(customer);
         customerQLength += 1;
         customerList.append(customer);
+        newCustomerChime.play(0.8f);
 
         if (customer.equals(customerQ.front())) {
             orderDisplay = new BackgroundObject("Customers/order.png", new Vector2(1575, 0), new Vector2(200*1.8f, 260*1.8f));

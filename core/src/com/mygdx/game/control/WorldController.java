@@ -141,7 +141,7 @@ public class WorldController {
                                     "Players/PlayerTwo/playerOrangeFront.png",
                                     "Players/PlayerTwo/playerOrangeRight.png"},
                             new Vector2(750, 500),
-                            new int[]{Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D, Input.Keys.E}
+                            new int[]{ Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
                     ));
                     Main.getPlayers()[1] = Main.getGameController().getPlayerController2().getPlayer();
                 }

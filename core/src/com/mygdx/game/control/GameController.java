@@ -43,7 +43,7 @@ public class GameController {
                         "Players/PlayerOne/playerGreenFront.png",
                         "Players/PlayerOne/playerGreenRight.png"},
                 new Vector2(750, 300),
-                new int[] { Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
+                new int[] { Input.Keys.W, Input.Keys.A, Input.Keys.S, Input.Keys.D, Input.Keys.E }
         );
         Main.getPlayers()[0] = playerController1.getPlayer();
         playerController2 = null;

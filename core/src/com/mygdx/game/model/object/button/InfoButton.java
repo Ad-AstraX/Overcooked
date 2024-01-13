@@ -14,7 +14,10 @@ public class InfoButton extends Button {
     public boolean checkForInteraction() {
         if (mouseOnButton()) {
             if (this.texture.toString().equals("Textures/" + textures[0])) this.setTexture(textures[1]);
-            return mouseClicked();
+            if (mouseClicked()) {
+                clickedSound.play(0.5f);
+                return true;
+            }
         } else if (this.texture.toString().equals("Textures/" + textures[1])) this.setTexture(textures[0]);
         return false;
     }

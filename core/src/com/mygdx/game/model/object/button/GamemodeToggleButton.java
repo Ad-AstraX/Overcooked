@@ -23,6 +23,7 @@ public class GamemodeToggleButton extends Button {
             if (mouseClicked()) {
                 toggleOn = !toggleOn;
                 WorldController.setMultiplayerOn(toggleOn);
+                clickedSound.play(0.5f);
                 return true;
             }
         } else {

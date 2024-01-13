@@ -1,5 +1,7 @@
 package com.mygdx.game.model.object.workstation;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.model.WorldObject;
@@ -7,6 +9,7 @@ import com.mygdx.game.model.object.holdable.ingredient.Cookable;
 
 /** The abstract parent class for all kitchenCounters. Checks for and reacts to interaction checks */
 public abstract class KitchenCounter extends WorldObject implements IInteractible {
+    protected Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal("Sound/pickUpSound.mp3"));
     /** The textures that the kitchenCounters switch between */
     protected String[] textures;
     /** The player this object is currently interacting with */

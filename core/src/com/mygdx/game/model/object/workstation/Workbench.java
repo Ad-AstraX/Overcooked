@@ -19,22 +19,24 @@ public class Workbench extends KitchenCounter {
     /** Method is called whenever player wishes to put on or remove a Holdable object from this Workbench */
     @Override
     public void interact() {
-        // If the player wishes to drop IHoldable's on here
+        // If the player wishes to drop IHoldables on here
         if (interactionPartner.getHand() != null && currentHoldable == null) {
             playerDropItemOnWorkbench();
+            pickUpSound.play(0.5f);
             return;
         }
 
-        // If the player wishes to pick up IHoldable's from here
+        // If the player wishes to pick up IHoldables from here
         if (interactionPartner.getHand() == null && currentHoldable != null) {
             playerPickupItemOnWorkbench();
+            pickUpSound.play(0.5f);
             return;
         }
 
         // If the player wishes to place Ingredients onto the plate stored on the workbench
         if (interactionPartner.getHand() instanceof Plate && currentHoldable != null) {
             playerPlaceIngredientsOnWorkbenchPlate();
-            return;
+            pickUpSound.play(0.5f);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.mygdx.game.model.object.workstation;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.control.GameController;
 import com.mygdx.game.model.WorldObject;
@@ -8,6 +10,7 @@ import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 
 /** This class represents a trash can, which can remove an object from the plate or the player's hand and delete it*/
 public class Trash extends KitchenCounter {
+    private final Sound throwAway = Gdx.audio.newSound(Gdx.files.internal("Sound/throwAwayTrashSound.mp3"));
     public Trash(Vector2 position) {
         super(new String[]{"Interactables/trashCan.png", "Interactables/trashCanSelected.png"}, position, new Vector2(130, 160));
     }
@@ -24,6 +27,7 @@ public class Trash extends KitchenCounter {
                 ((WorldObject) this.interactionPartner.getHand()).getTexture().dispose();
                 interactionPartner.setHand(null);
             }
+            throwAway.play(0.8f);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.mygdx.game.model.object.workstation;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.utilities.RectangleColored;
@@ -14,6 +15,7 @@ import com.mygdx.game.view.Main;
  * is being processed already and if not, it takes the object in the player's hand and processes it.
  */
 public abstract class Processable extends KitchenCounter {
+    protected Sound interactionSound;
     /** The ingredient that is currently on this KitchenCounter */
     protected Ingredient currentIngredient;
     /** The progressbar */
@@ -25,9 +27,10 @@ public abstract class Processable extends KitchenCounter {
     /** The time that is left until the object is finished processing */
     protected float timeTillFinish;
 
-    public Processable(String[] textures, Vector2 position, Vector2 size, float timeTillFinish) {
+    public Processable(String[] textures, Vector2 position, Vector2 size, float timeTillFinish, Sound interactionSound) {
         super(textures, position, size);
         this.timeTillFinish = timeTillFinish;
+        this.interactionSound = interactionSound;
     }
 
     /**
@@ -84,11 +87,15 @@ public abstract class Processable extends KitchenCounter {
             Main.getAllRectangles().append(progressBarOutline);
             // This line of code is meant for the grill, so it can turn on once an ingredient is placed on it
             try { this.setTexture(textures[2 + (isInteracting ? 1 : 0)]); } catch (Exception ignore){}
+
+            interactionSound.play(0.4f);
         // If the player wishes to retrieve the object, then it is placed onto a plate (if the player has none, one is created for him)
         } else if (interactionPartner.getHand() == null || interactionPartner.getHand() instanceof Plate) {
             if (interactionPartner.getHand() == null) interactionPartner.setHand(new Plate(interactionPartner.getPosition()));
             ((Plate) interactionPartner.getHand()).addIngredient(this.currentIngredient);
             this.currentIngredient = null;
+
+            pickUpSound.play(0.5f);
         }
     }
 

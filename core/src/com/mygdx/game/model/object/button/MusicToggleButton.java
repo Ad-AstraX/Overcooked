@@ -23,6 +23,7 @@ public class MusicToggleButton extends Button {
                 toggleOn = !toggleOn;
                 if (Main.getMusic().isPlaying()) Main.getMusic().pause();
                 else Main.getMusic().play();
+                clickedSound.play(0.5f);
                 return true;
             }
         } else {

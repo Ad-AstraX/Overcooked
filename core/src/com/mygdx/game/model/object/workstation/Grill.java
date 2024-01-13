@@ -1,5 +1,6 @@
 package com.mygdx.game.model.object.workstation;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.Plate;
@@ -12,7 +13,7 @@ import com.mygdx.game.model.object.holdable.ingredient.Cookable;
 public class Grill extends Processable {
     public Grill(Vector2 position) {
         super(new String[]{"Interactables/grill.png", "Interactables/grillSelected.png", "Interactables/grillActivated.png", "Interactables/grillActivatedSelected.png"},
-                position, new Vector2(130, 160), 7);
+                position, new Vector2(130, 160), 7, Gdx.audio.newSound(Gdx.files.internal("Sound/grillingSound.mp3")));
     }
 
     @Override
