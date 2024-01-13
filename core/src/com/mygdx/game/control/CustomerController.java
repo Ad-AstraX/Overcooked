@@ -30,9 +30,8 @@ public class CustomerController {
     private final Vector2 customerWalkTarget = new Vector2(780, 960);
     private BackgroundObject orderDisplay;
     private final Sound newCustomerChime = Gdx.audio.newSound(Gdx.files.internal("Sound/newCustomerSound.mp3"));
-    private int startPatience;
 
-    private RectangleColored[] patienceProgressBars;
+    private final RectangleColored[] patienceProgressBars;
 
     public CustomerController() {
         customerQ = new Queue<>();
@@ -68,18 +67,7 @@ public class CustomerController {
         customerList.append(customer);
         newCustomerChime.play(0.8f);
 
-        if (customer.equals(customerQ.front())) {
-            orderDisplay = new BackgroundObject("Customers/order.png", new Vector2(1575, 0), new Vector2(200*1.8f, 260*1.8f));
-            Main.getStaticObjectLists()[1].append(orderDisplay);
-
-            RectangleColored outline = new RectangleColored(ShapeRenderer.ShapeType.Line, 1720, 0, 165, 25, 0, 0, 0, 1);
-            RectangleColored filling = new RectangleColored(ShapeRenderer.ShapeType.Filled, 1720, 0, 165, 25, 0.5f, 0, 0, 1);
-            patienceProgressBars[0] = outline;
-            patienceProgressBars[1] = filling;
-            Main.getAllRectangles().append(patienceProgressBars[0]);
-            Main.getAllRectangles().append(patienceProgressBars[1]);
-            startPatience = customerQ.front().getPatience();
-        }
+        if (customer.equals(customerQ.front())) prepareOrder();
     }
 
     /** Removes first customer in line with their respective entries in Queue and List */
@@ -104,69 +92,48 @@ public class CustomerController {
 
         // deregister customer from drawing
         help.deregisterFromDrawing();
-        if (!customerQ.isEmpty()) {
-            startPatience = customerQ.front().getPatience();
-            orderDisplay = new BackgroundObject("Customers/order.png", new Vector2(1575, 0), new Vector2(200*1.8f, 260*1.8f));
-            Main.getStaticObjectLists()[1].append(orderDisplay);
+        if (!customerQ.isEmpty()) prepareOrder();
+    }
 
-            RectangleColored outline = new RectangleColored(ShapeRenderer.ShapeType.Line, 1720, 0, 165, 25, 0, 0, 0, 1);
-            RectangleColored filling = new RectangleColored(ShapeRenderer.ShapeType.Filled, 1720, 0, 165, 25, 0.5f, 0, 0, 1);
-            patienceProgressBars[0] = outline;
-            patienceProgressBars[1] = filling;
-            Main.getAllRectangles().append(patienceProgressBars[0]);
-            Main.getAllRectangles().append(patienceProgressBars[1]);
-        }
+    private void prepareOrder() {
+        orderDisplay = new BackgroundObject("Customers/order.png", new Vector2(1575, 0), new Vector2(200*1.8f, 260*1.8f));
+        Main.getStaticObjectLists()[1].append(orderDisplay);
+
+        patienceProgressBars[0] = new RectangleColored(ShapeRenderer.ShapeType.Filled, 1720, 0, 165, 25, 0.5f, 0, 0, 1);
+        patienceProgressBars[1] = new RectangleColored(ShapeRenderer.ShapeType.Line, 1720, 0, 165, 25, 0, 0, 0, 1);
+        Main.getAllRectangles().append(patienceProgressBars[0]);
+        Main.getAllRectangles().append(patienceProgressBars[1]);
     }
 
     public void UpdateCustomerAndOrder(float dt) {
         UpdateCustomerMovement(dt);
         UpdateCustomerPatience(dt);
-        UpdateOrderMovement(dt);
-        UpdatePatienceBarMovement(dt);
+        UpdateMovement(orderDisplay, new Vector2(1575, 860), Vector2.Zero, dt);
+
+        if (patienceProgressBars[0] != null) patienceProgressBars[0].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 325);
+        if (patienceProgressBars[1] != null) patienceProgressBars[1].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 325);
     }
 
     private void UpdateCustomerMovement(float dt) {
         customerList.toFirst();
         int counter = 0;
         while (customerList.hasAccess()) {
-            Customer customer = customerList.getContent();
-
-            Vector2 customerPos = customer.getPosition();
-            Vector2 customerTarget = new Vector2().add(customerWalkTarget).add(new Vector2(0, counter * 60));
-
-            Vector2 newPosition = new Vector2(
-                    Interpolation.pow2InInverse.apply(customerPos.x, customerTarget.x, dt * 0.125f),
-                    Interpolation.pow2InInverse.apply(customerPos.y, customerTarget.y, dt * 0.125f)
-            );
-            customer.setPosition(newPosition);
-
+            UpdateMovement(customerList.getContent(), customerWalkTarget, new Vector2(0, counter*60), dt);
             customerList.next();
             counter++;
         }
     }
 
-    private void UpdateOrderMovement(float dt) {
-        if (!(orderDisplay != null && !orderDisplay.getPosition().equals(new Vector2(1575, 860))) )
+    private void UpdateMovement(WorldObject object, Vector2 target, Vector2 addition, float dt) {
+        if (!(object != null && !object.getPosition().equals(target)))
             return;
 
-        Vector2 orderDisplayTarget = new Vector2().add(new Vector2(1575, 860)).add(new Vector2(0, 60));
+        Vector2 movementTarget = new Vector2().add(target).add(addition);
         Vector2 newPosition = new Vector2(
-                Interpolation.pow2InInverse.apply(orderDisplay.getPosition().x, orderDisplayTarget.x, dt * 0.125f),
-                Interpolation.pow2InInverse.apply(orderDisplay.getPosition().y, orderDisplayTarget.y, dt * 0.125f)
+                Interpolation.pow2InInverse.apply(object.getPosition().x, movementTarget.x, dt * 0.125f),
+                Interpolation.pow2InInverse.apply(object.getPosition().y, movementTarget.y, dt * 0.125f)
         );
-        orderDisplay.setPosition(newPosition);
-    }
-
-    private void UpdatePatienceBarMovement(float dt) {
-        if (!(patienceProgressBars[1] != null && !patienceProgressBars[1].getPosition().equals(new Vector2(1720, 1180))) )
-            return;
-
-        Vector2 progressBarTarget = new Vector2().add(new Vector2(1720, 1180)).add(new Vector2(0, 60));
-        Vector2 newPosition = new Vector2(
-                Interpolation.pow2InInverse.apply(patienceProgressBars[1].getPosition().x, progressBarTarget.x, dt * 0.125f),
-                Interpolation.pow2InInverse.apply(patienceProgressBars[1].getPosition().y, progressBarTarget.y, dt * 0.125f)
-        );
-        patienceProgressBars[1].setPosition(newPosition);
+        object.setPosition(newPosition);
     }
 
     private void UpdateCustomerPatience(float dt) {
@@ -175,7 +142,6 @@ public class CustomerController {
 
             int burgerElements = Utilities.countStackElements(customerQ.front().getOrder().getRecipe().getIngredients());
             patienceProgressBars[0].setWidth(patienceProgressBars[0].getWidth() - dt*(50f/burgerElements));
-            patienceProgressBars[1].setWidth(patienceProgressBars[1].getWidth() - dt*(50f/burgerElements));
             
             if(customerQ.front().getPatience() <= 0) nextCustomer();
         }

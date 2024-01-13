@@ -28,8 +28,6 @@ import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 import com.mygdx.game.model.object.workstation.Processable;
 import com.mygdx.game.model.object.workstation.Workbench;
 
-import java.awt.*;
-
 /**
  * <p> This class handles all the graphics. Since the Main class is unique in the whole program, all its attributes are static </p> <br>
  *
