@@ -11,11 +11,11 @@ import com.mygdx.game.model.object.holdable.ingredient.*;
  * hands of the player / onto the plate of the player
  * @param <IngredientType> The type of ingredient that is to be spawned here
  */
-public class IngredientSpawner<IngredientType> extends KitchenCounter implements IInteractible {
+public class IngredientSpawner<IngredientType> extends KitchenCounter implements IInteractable {
     /** The type of ingredient that this class spawns */
     private final Class<IngredientType> ingredientType;
-    Sound ketchupSound = Gdx.audio.newSound(Gdx.files.internal("Sound/ketchupSound.mp3"));
-    Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal("Sound/pickUpSound.mp3"));
+    /** The sound that is played when a new Sauce instance is created */
+    private final Sound ketchupSound = Gdx.audio.newSound(Gdx.files.internal("Sound/ketchupSound.mp3"));
 
     public IngredientSpawner(Class<IngredientType> type, Vector2 position) {
         super(new String[]{"fallbackTexture.png", "fallbackTexture.png"}, position, new Vector2(130, 160));
@@ -30,7 +30,7 @@ public class IngredientSpawner<IngredientType> extends KitchenCounter implements
     /** Method is called whenever player wishes to spawn an Ingredient of type IngredientType from this IngredientSpawner */
     @Override
     public void interact() {
-        // Only spawns an ingredient if the player's hand is empty or they are trying to stack the ingredient onto a plate
+        // Only spawns an ingredient if the player's hand is empty, or they are trying to stack the ingredient onto a plate
         if (this.interactionPartner.getHand() == null || this.interactionPartner.getHand() instanceof Plate) {
             Ingredient holdable;
             try {

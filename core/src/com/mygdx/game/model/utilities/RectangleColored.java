@@ -10,16 +10,12 @@ import com.badlogic.gdx.math.Vector2;
  * as well as the shapeType to allow more efficient rendering.
  */
 public class RectangleColored extends Rectangle {
+    /** Whether the rectangle is outlined or filled */
     ShapeRenderer.ShapeType shapeType;
-    private Color color;
+    private final Color color;
     public RectangleColored(ShapeRenderer.ShapeType shapeType, float x, float y, int width, int height, float r, float g, float b, float a) {
         super(x, y, width, height);
         color = new Color(r, g, b, a);
-        this.shapeType = shapeType;
-    }
-    public RectangleColored(ShapeRenderer.ShapeType shapeType, float x, float y, int width, int height, Color color) {
-        super(x, y, width, height);
-        this.color = color;
         this.shapeType = shapeType;
     }
 
@@ -35,21 +31,9 @@ public class RectangleColored extends Rectangle {
     }
 
     // All Setters
-    public void setColor(Color color) {
-        this.color = color;
-    }
-    public void setColor(float r, float g, float b, float a) {
-        if (a < 0) {
-            a = 0;
-        }
-        this.color = new Color(r, g, b, a);
-    }
     public void setAlpha(float a) {
         if (a < 0) a = 0;
         if (a > 1) a = 1;
         this.color.a = a;
-    }
-    public void setShapeType(ShapeRenderer.ShapeType shapeType) {
-        this.shapeType = shapeType;
     }
 }

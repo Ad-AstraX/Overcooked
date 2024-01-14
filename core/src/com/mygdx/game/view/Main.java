@@ -148,8 +148,8 @@ public class Main extends ApplicationAdapter {
 				// Draw Cash
 				font.getData().setScale(2.5f);
 				font.draw(batch,
-						GameController.getGame().getPayTotal() + " $ / " + GameController.getGame().getPayGoal() + " $",
-						205 - (float) (GameController.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);
+						GameController.singleton.getGame().getPayTotal() + " $ / " + GameController.singleton.getGame().getPayGoal() + " $",
+						205 - (float) (GameController.singleton.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);
 				batch.end();
 				drawFromRectanglesList();
 			}
@@ -175,7 +175,7 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer.arc(150, 1200, 70, 0, 360);
 
 		shapeRenderer.setColor(0, 154/255f, 205/255f, 1);
-		shapeRenderer.arc(150, 1200, 70, 0, 360 - (maxGameTime - (Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
+		shapeRenderer.arc(150, 1200, 70, 0, 360 - (maxGameTime - (Math.round(GameController.singleton.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
 		shapeRenderer.end();
 
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -184,7 +184,7 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer.arc(150, 1200, 70, 0, 360);
 
 		shapeRenderer.setColor(0, 0, 0, 1);
-		shapeRenderer.arc(150, 1200, 70, 0, 360 - (maxGameTime - (Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
+		shapeRenderer.arc(150, 1200, 70, 0, 360 - (maxGameTime - (Math.round(GameController.singleton.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
 		shapeRenderer.end();
 	}
 

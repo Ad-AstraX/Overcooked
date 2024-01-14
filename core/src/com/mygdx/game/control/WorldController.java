@@ -187,7 +187,4 @@ public class WorldController {
     public static boolean isMultiplayerOn() {
         return multiplayerOn;
     }
-    public List<Button> getAllButtons() {
-        return allButtons;
-    }
 }

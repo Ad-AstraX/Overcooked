@@ -37,7 +37,4 @@ public abstract class Ingredient extends WorldObject implements IHoldable {
     public void setInteractionPartner(Player interactionPartner) {
         this.interactionPartner = interactionPartner;
     }
-    public void setPrice(int price) {
-        this.price = price;
-    }
 }

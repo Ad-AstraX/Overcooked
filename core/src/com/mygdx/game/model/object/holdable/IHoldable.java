@@ -16,6 +16,9 @@ public interface IHoldable {
      */
     void beCarriedByPlayer(Vector2 direction);
 
+    // All Getters
     Player getInteractionPartner();
+
+    // All Setters
     void setInteractionPartner(Player interactionPartner);
 }

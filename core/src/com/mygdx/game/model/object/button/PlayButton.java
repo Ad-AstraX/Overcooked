@@ -24,8 +24,8 @@ public class PlayButton extends Button {
                 GameController.singleton.getPlayerController1().getPlayer().setPosition(new Vector2(750, 300));
                 if (GameController.singleton.getPlayerController1().getPlayer() != null)
                     GameController.singleton.getPlayerController1().getPlayer().setHand(null);
-                GameController.getGame().setPayTotal(0);
-                GameController.getGame().setTimeLeft(Main.singleton.getMaxGameTime());
+                GameController.singleton.getGame().setPayTotal(0);
+                GameController.singleton.getGame().setTimeLeft(Main.singleton.getMaxGameTime());
 
                 GameController.singleton.getCustomerController().emptyQueue();
 

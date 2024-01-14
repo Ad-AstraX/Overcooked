@@ -28,9 +28,11 @@ public class GameController {
     /** The controller that controls the scenes and the objects visible on them */
     private final WorldController worldController;
 
-    // TODO
-    private static Game game;
-    private static BackgroundObject gameMessage;
+    /** The game which stores values like the player's current amount of money */
+    private final Game game;
+    /** The message which shows up when the game is finished */
+    private BackgroundObject gameMessage;
+    /** Time until the game is restarted (after the game has finished) */
     private float timer = 2;
 
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
@@ -73,7 +75,7 @@ public class GameController {
             tickTime(dt);
             tickGenCustomer();
 
-            customerController.UpdateCustomerAndOrder(dt);
+            customerController.updateCustomerAndOrder(dt);
         } else if (game.getTimeLeft() <= 0 || game.getPayGoal() <= game.getPayTotal()) {
             timer -= dt;
             moveGameMessage(dt);
@@ -92,7 +94,7 @@ public class GameController {
     }
 
     /**
-     * // TODO NEED TO LOOK INTO THAT
+     * Handles the decrease of the timer and the end of the game
      * <p>
      * @param dt Time
      */
@@ -110,6 +112,7 @@ public class GameController {
         }
     }
 
+    /** Moves the game message to the center of the screen */
     private void moveGameMessage(float dt) {
         if (gameMessage.getPosition().equals(new Vector2(1950/2f-380, 1425/2f-250)))
             return;
@@ -135,7 +138,7 @@ public class GameController {
     }
 
     // All Getters
-    public static Game getGame() {
+    public Game getGame() {
         return game;
     }
     public WorldController getWorldController() {

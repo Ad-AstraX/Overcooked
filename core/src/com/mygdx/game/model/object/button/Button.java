@@ -13,6 +13,7 @@ import com.mygdx.game.view.Main;
 public abstract class Button extends WorldObject {
     /** The textures that the buttons switch between when the mouse touches them/they are toggled */
     protected String[] textures;
+    /** The sound that the buttons make when they are clicked */
     protected Sound clickedSound = Gdx.audio.newSound(Gdx.files.internal("Sound/clickButtonSound.mp3"));
     public Button(String[] textures, Vector2 position, Vector2 size) {
         super(textures[0], position, size);

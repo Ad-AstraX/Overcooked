@@ -14,23 +14,26 @@ import com.mygdx.game.model.utilities.RectangleColored;
 import com.mygdx.game.model.utilities.Utilities;
 import com.mygdx.game.view.Main;
 
-/**
- * ES ERGIBT VIEL MEHR SINN FUER DIESE KLASSE NUR LIST ANSTATT QUEUE ZU NUTZEN.
- * QUEUE WURDE HIER NUR GENUTZT UM DIE BEWERTUNGSKRITERIEN ZU ERFUELLEN.
- */
-
-/** Controls all the customers and their orders */
+/** Controls all the customers and their orders
+ * <p>
+ * ES ERGIBT VIEL MEHR SINN FÜR DIESE KLASSE NUR LIST ANSTATT QUEUE ZU NUTZEN.
+ * QUEUE WURDE HIER NUR GENUTZT UM DIE BEWERTUNGSKRITERIEN ZU ERFÜLLEN.
+ * */
 public class CustomerController {
     /** The Queue of customers */
     private final Queue<Customer> customerQ;
+    /** The Queue's length (tracked here because the Queue implementation of NRW is trash) */
     private int customerQLength = 0;
 
     /** The List of customers (mirrors the queue) used to dictate customer movement */
     private final List<Customer> customerList;
+    /** The final destination fo the customer after walking in */
     private final Vector2 customerWalkTarget = new Vector2(780, 960);
+    /** The display of the order */
     private BackgroundObject orderDisplay;
+    /** The sound that is played when a customer enters the shop */
     private final Sound newCustomerChime = Gdx.audio.newSound(Gdx.files.internal("Sound/newCustomerSound.mp3"));
-
+    /** The progressbar which displays the customer's patience (outline and filled rectangle) */
     private final RectangleColored[] patienceProgressBars;
 
     public CustomerController() {
@@ -95,6 +98,7 @@ public class CustomerController {
         if (!customerQ.isEmpty()) prepareOrder();
     }
 
+    /** Instantiates the order object, along with the new progressBars for the new customer */
     private void prepareOrder() {
         orderDisplay = new BackgroundObject("Customers/order.png", new Vector2(1575, 0), new Vector2(200*1.8f, 260*1.8f));
         Main.getStaticObjectLists()[1].append(orderDisplay);
@@ -105,11 +109,12 @@ public class CustomerController {
         Main.getAllRectangles().append(patienceProgressBars[1]);
     }
 
-    public void UpdateCustomerAndOrder(float dt) {
-        if (GameController.getGame().getTimeLeft() > 0 && GameController.getGame().getPayTotal() < GameController.getGame().getPayGoal()) {
-            UpdateCustomerMovement(dt);
-            UpdateCustomerPatience(dt);
-            UpdateMovement(orderDisplay, new Vector2(1575, 860), Vector2.Zero, dt);
+    /** Updates the movement of the customer and the order display. Called once in the GameController */
+    public void updateCustomerAndOrder(float dt) {
+        if (GameController.singleton.getGame().getTimeLeft() > 0 && GameController.singleton.getGame().getPayTotal() < GameController.singleton.getGame().getPayGoal()) {
+            updateCustomerMovement(dt);
+            updateCustomerPatience(dt);
+            updateMovement(orderDisplay, new Vector2(1575, 860), Vector2.Zero, dt);
 
             if (patienceProgressBars[0] != null)
                 patienceProgressBars[0].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 330);
@@ -118,17 +123,19 @@ public class CustomerController {
         }
     }
 
-    private void UpdateCustomerMovement(float dt) {
+    /** Updates the movement of the customers (so they can go to their respective places in the queue) */
+    private void updateCustomerMovement(float dt) {
         customerList.toFirst();
         int counter = 0;
         while (customerList.hasAccess()) {
-            UpdateMovement(customerList.getContent(), customerWalkTarget, new Vector2(0, counter*60), dt);
+            updateMovement(customerList.getContent(), customerWalkTarget, new Vector2(0, counter*60), dt);
             customerList.next();
             counter++;
         }
     }
 
-    private void UpdateMovement(WorldObject object, Vector2 target, Vector2 addition, float dt) {
+    /** Interpolates between two positions */
+    private void updateMovement(WorldObject object, Vector2 target, Vector2 addition, float dt) {
         if (!(object != null && !object.getPosition().equals(target)))
             return;
 
@@ -140,7 +147,8 @@ public class CustomerController {
         object.setPosition(newPosition);
     }
 
-    private void UpdateCustomerPatience(float dt) {
+    /** Updates the patience of the customer in the front of the queue */
+    private void updateCustomerPatience(float dt) {
         if (!customerQ.isEmpty()) {
             customerQ.front().setPatience((int) (customerQ.front().getPatience()-dt));
 
@@ -151,6 +159,7 @@ public class CustomerController {
         }
     }
 
+    /** Clears the queue and the list so that the game can be restarted */
     public void emptyQueue() {
         customerList.toFirst();
         while (!customerQ.isEmpty()) {
@@ -172,9 +181,5 @@ public class CustomerController {
     }
     public BackgroundObject getOrderDisplay() {
         return orderDisplay;
-    }
-
-    public void setCustomerQLength(int customerQLength) {
-        this.customerQLength = customerQLength;
     }
 }

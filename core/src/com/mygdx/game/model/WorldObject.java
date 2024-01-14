@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 public abstract class WorldObject {
     /** The animation of this object (if it has any) */
     protected Animation<TextureRegion> animation = new Animation<>(1);
-    /** The rows and columns used to seperate each frame in the texture */
+    /** The rows and columns used to separate each frame in the texture */
     protected Vector2 colsAndRows = new Vector2(1, 1);
     /** Dictates whether the current Object is animated or simply static */
     protected boolean isAnimation;
@@ -83,9 +83,6 @@ public abstract class WorldObject {
     }
     public void setSize(Vector2 size) {
         this.size = size;
-    }
-    public void setIsAnimation(boolean animation) {
-        isAnimation = animation;
     }
     public void setAnimation(String texture, int cols, int rows, float frameDuration) {
         setTexture(texture);

@@ -8,7 +8,8 @@ import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.ingredient.Cookable;
 
 /** The abstract parent class for all kitchenCounters. Checks for and reacts to interaction checks */
-public abstract class KitchenCounter extends WorldObject implements IInteractible {
+public abstract class KitchenCounter extends WorldObject implements IInteractable {
+    /** The sound that is played when an object is picked up */
     protected Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal("Sound/pickUpSound.mp3"));
     /** The textures that the kitchenCounters switch between */
     protected String[] textures;

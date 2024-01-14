@@ -40,6 +40,7 @@ public class Workbench extends KitchenCounter {
         }
     }
 
+    /** Allows the player to drop an item on this workbench */
     private void playerDropItemOnWorkbench() {
         this.currentHoldable = interactionPartner.getHand();
         interactionPartner.setHand(null);
@@ -49,11 +50,13 @@ public class Workbench extends KitchenCounter {
             updateIngredientPosition();
     }
 
+    /** Allows the player to pick up an item from here */
     private void playerPickupItemOnWorkbench() {
         interactionPartner.setHand(this.currentHoldable);
         this.currentHoldable = null;
     }
 
+    /** Allows the player to store a plate on this workbench */
     private void playerPlaceIngredientsOnWorkbenchPlate() {
         if (!(currentHoldable instanceof Plate))
             return;
@@ -77,6 +80,7 @@ public class Workbench extends KitchenCounter {
         updateIngredientPosition();
     }
 
+    /** Positions the object onf this workbench properly */
     private void updateIngredientPosition() {
         Stack<Ingredient> stack = Utilities.copyStack(((Plate) currentHoldable).getIngredients());
         int placeInStack = Utilities.countStackElements(stack);

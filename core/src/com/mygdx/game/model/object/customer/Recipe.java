@@ -1,8 +1,6 @@
 package com.mygdx.game.model.object.customer;
 
 import com.mygdx.game.model.datastructures.Stack;
-import com.mygdx.game.model.utilities.Utilities;
-import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.*;
 
 /**

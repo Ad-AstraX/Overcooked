@@ -12,6 +12,7 @@ import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 
 /** This class represents a cash register. Customers queue here so they can put their order. */
 public class CashRegister extends KitchenCounter {
+    /** The sound that is played when a customer is served */
     private final Sound customerServed = Gdx.audio.newSound(Gdx.files.internal("Sound/serveCustomerSound.mp3"));
 
     public CashRegister(Vector2 position) {
@@ -35,9 +36,14 @@ public class CashRegister extends KitchenCounter {
 
         interactionPartner.setHand(null);
         GameController.singleton.getCustomerController().nextCustomer();
-        GameController.getGame().setPayTotal(GameController.getGame().getPayTotal() + calculatePrice(((Plate) item).getIngredients()));
+        GameController.singleton.getGame().setPayTotal(GameController.singleton.getGame().getPayTotal() + calculatePrice(((Plate) item).getIngredients()));
     }
 
+    /** Takes a given stack of ingredients and calculates the price of all of them
+     * <p>
+     * @param burger the stack of ingredients to be calculated from
+     * @return the total sum
+     */
     private int calculatePrice(Stack<Ingredient> burger) {
         int price = 0;
         while (!burger.isEmpty()) {

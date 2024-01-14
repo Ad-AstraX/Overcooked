@@ -15,6 +15,7 @@ import com.mygdx.game.view.Main;
  * is being processed already and if not, it takes the object in the player's hand and processes it.
  */
 public abstract class Processable extends KitchenCounter {
+    /** The sound that is played upon processing an ingredient */
     protected Sound interactionSound;
     /** The ingredient that is currently on this KitchenCounter */
     protected Ingredient currentIngredient;
@@ -22,7 +23,7 @@ public abstract class Processable extends KitchenCounter {
     protected RectangleColored progressBar;
     /** The black outline of the progressbar */
     private RectangleColored progressBarOutline;
-    /** The white inside of the progressbar */
+    /** The white inside the progressbar */
     private RectangleColored progressBarInside;
     /** The time that is left until the object is finished processing */
     protected float timeTillFinish;

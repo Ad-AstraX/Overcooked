@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.control.GameController;
+import com.mygdx.game.model.Game;
 import com.mygdx.game.model.WorldObject;
 import com.mygdx.game.model.object.holdable.Plate;
 import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
@@ -19,11 +20,12 @@ public class Trash extends KitchenCounter {
     @Override
     public void interact() {
         if (this.interactionPartner.getHand() != null) {
+            Game game = GameController.singleton.getGame();
             if (this.interactionPartner.getHand() instanceof Plate) {
-                GameController.getGame().setPayTotal(GameController.getGame().getPayTotal() - ((Plate) interactionPartner.getHand()).getIngredients().top().getPrice());
+                game.setPayTotal(game.getPayTotal() - ((Plate) interactionPartner.getHand()).getIngredients().top().getPrice());
                 ((Plate) interactionPartner.getHand()).removeTop();
             } else {
-                GameController.getGame().setPayTotal(GameController.getGame().getPayTotal() - ((Ingredient) interactionPartner.getHand()).getPrice());
+                game.setPayTotal(game.getPayTotal() - ((Ingredient) interactionPartner.getHand()).getPrice());
                 ((WorldObject) this.interactionPartner.getHand()).getTexture().dispose();
                 interactionPartner.setHand(null);
             }

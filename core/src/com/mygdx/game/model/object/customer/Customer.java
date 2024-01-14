@@ -21,7 +21,7 @@ public class Customer extends WorldObject {
         super(texturePath, position, new Vector2(120, 180));
         Main.getStaticObjectLists()[0].toFirst();
         Main.getStaticObjectLists()[0].next();
-        Main.getStaticObjectLists()[0].next(); // 💀💀 Darüber reden wir lieber nicht TODO neues layer anlegen
+        Main.getStaticObjectLists()[0].next(); // 💀💀 Darüber reden wir lieber nicht
         Main.getStaticObjectLists()[0].insert(this);
         this.order = order;
         this.patience = Utilities.countStackElements(order.getRecipe().getIngredients())*600;
@@ -38,6 +38,8 @@ public class Customer extends WorldObject {
     public int getPatience() {
         return patience;
     }
+
+    // All Setters
     public void setPatience(int patience) {
         this.patience = patience;
     }

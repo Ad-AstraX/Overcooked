@@ -9,6 +9,7 @@ import com.mygdx.game.model.utilities.Utilities;
 
 /** Generates the orders for the customers  */
 public class OrderController {
+    /** The recipeController which controls the recipes for the orders */
     private final RecipeController recipeController;
 
     public OrderController(RecipeController recipes){

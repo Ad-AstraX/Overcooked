@@ -2,16 +2,19 @@ package com.mygdx.game.model;
 
 /**
  * This class sets the game's goal and initial settings
- * TODO look into this too, will not comment anything here
  */
 public class Game {
+    /** The time left until the game ends */
     private float timeLeft;
     private float timeLeftLastFrame = 0;
 
+    /** The amount of money the player has already gathered */
     private int payTotal = 0;
-    private int payGoal;
+    /** The amount of money the player need to gather to win the game */
+    private final int payGoal;
 
-    private float customerSpawnChance;
+    /** The spawnChance of the customers */
+    private final float customerSpawnChance;
 
     public Game(float initialTime, int payGoal, float initialCustomerSpawnChance) {
         this.timeLeft = initialTime;
@@ -45,11 +48,5 @@ public class Game {
     }
     public void setPayTotal(int payTotal) {
         this.payTotal = payTotal;
-    }
-    public void setPayGoal(int payGoal) {
-        this.payGoal = payGoal;
-    }
-    public void setCustomerSpawnChance(float customerSpawnChance) {
-        this.customerSpawnChance = customerSpawnChance;
     }
 }
