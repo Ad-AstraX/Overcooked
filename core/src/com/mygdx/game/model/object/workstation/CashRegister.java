@@ -5,8 +5,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.control.GameController;
 import com.mygdx.game.control.OrderController;
+import com.mygdx.game.model.datastructures.Stack;
 import com.mygdx.game.model.object.holdable.IHoldable;
 import com.mygdx.game.model.object.holdable.Plate;
+import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
 
 /** This class represents a cash register. Customers queue here so they can put their order. */
 public class CashRegister extends KitchenCounter {
@@ -33,6 +35,15 @@ public class CashRegister extends KitchenCounter {
 
         interactionPartner.setHand(null);
         GameController.singleton.getCustomerController().nextCustomer();
-        GameController.getGame().setPayTotal(GameController.getGame().getPayTotal() + 15);
+        GameController.getGame().setPayTotal(GameController.getGame().getPayTotal() + calculatePrice(((Plate) item).getIngredients()));
+    }
+
+    private int calculatePrice(Stack<Ingredient> burger) {
+        int price = 0;
+        while (!burger.isEmpty()) {
+            price += burger.top().getPrice();
+            burger.pop();
+        }
+        return price;
     }
 }
