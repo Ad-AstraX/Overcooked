@@ -3,7 +3,6 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -45,7 +44,6 @@ public class Main extends ApplicationAdapter {
 	private static ShapeRenderer shapeRenderer;
 	private static SpriteBatch batch;
 	private static BitmapFont font;
-	private static BitmapFont fontButBlack;
 	private static Music music;
 
 	// Lists / Array that store(s) the objects which need to be drawn
@@ -66,6 +64,7 @@ public class Main extends ApplicationAdapter {
 	/** Time that has passed since the creation of the project */
 	private static float stateTime;
 	private static final Vector2 averageFPS = new Vector2();
+	private float maxGameTime;
 
 	/**
 	 * This method is called when the application is first created.
@@ -85,10 +84,9 @@ public class Main extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
-		fontButBlack = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
-		fontButBlack.setColor(Color.BLACK);
 
 		gameController = new GameController(120f, 60, 15f);
+		maxGameTime = 120f;
 	}
 
 	/** This method is called once every frame and updates the graphics on the screen */
@@ -120,6 +118,7 @@ public class Main extends ApplicationAdapter {
 
 			// Second scene - actual game, kitchen scene
 			} else if (gameController.getWorldController().getSceneID() == 1) {
+
 				// Switches the places of the players in the array (if multiplayer mode is on) so that their drawing order is updated
 				if (WorldController.isMultiplayerOn() && PLAYERS[0].getPosition().y < PLAYERS[1].getPosition().y) {
 					Player help = PLAYERS[1];
@@ -131,37 +130,20 @@ public class Main extends ApplicationAdapter {
 				batch.setProjectionMatrix(camera.combined);
 				drawFromWorldObjectList(STATIC_OBJECT_LISTS[0]);
 				drawFromPlayersArray();
-				drawFromWorldObjectList(STATIC_OBJECT_LISTS[1]);
+				batch.end();
 
-				CustomerController customerC = gameController.getCustomerController();
-				if (!customerC.getCustomerQ().isEmpty()) {
-					Stack<Ingredient> copy = Utilities.copyStack(customerC.getCustomerQ().front().getOrder().getRecipe().getIngredients());
-					copy = Utilities.invertStack(copy);
-					int count = 0;
-					while (!copy.isEmpty()) {
-						batch.draw(
-							copy.top().getTexture(),
-							customerC.getOrderDisplay().getPosition().x+customerC.getOrderDisplay().getSize().x/2-copy.top().getSize().x*0.75f,
-							customerC.getOrderDisplay().getPosition().y+ 100+15*count,
-							copy.top().getSize().x*1.5f, copy.top().getSize().y*1.5f
-						);
-						count++;
-						copy.pop();
-					}
-				}
+				// Draw time left until the end of the game
+				drawTimer();
+
+				batch.begin();
+				drawFromWorldObjectList(STATIC_OBJECT_LISTS[1]);
+				drawOrder();
 
 				// Draw Cash
 				font.getData().setScale(2.5f);
 				font.draw(batch,
 						GameController.getGame().getPayTotal() + " $ / " + GameController.getGame().getPayGoal() + " $",
 						205 - (float) (GameController.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);
-
-				// Draw Time left
-				fontButBlack.getData().setScale(2.5f);
-				fontButBlack.draw(batch,
-						"" + Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100.0,
-						viewport.getWorldWidth() / 2 - 50, 1380);
-
 				batch.end();
 				drawFromRectanglesList();
 			}
@@ -176,6 +158,47 @@ public class Main extends ApplicationAdapter {
 			shapeRenderer.rect(current.x, current.y, current.width, current.height);
 			shapeRenderer.end();
 			Gdx.gl.glDisable(GL20.GL_BLEND);
+		}
+	}
+
+	/** Draws the timer which indicates the time until the game is finished */
+	private void drawTimer() {
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		shapeRenderer.setColor(1, 1, 1, 1);
+		shapeRenderer.arc(150, 1200, 70, 10, 360);
+
+		shapeRenderer.setColor(0, 154/255f, 205/255f, 1);
+		shapeRenderer.arc(150, 1200, 70, 10, 360 - (maxGameTime - (Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
+		shapeRenderer.end();
+
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		shapeRenderer.setColor(0, 0, 0, 1);
+		shapeRenderer.arc(150, 1200, 70, 10, 360);
+
+		shapeRenderer.setColor(0, 0, 0, 1);
+		shapeRenderer.arc(150, 1200, 70, 10, 360 - (maxGameTime - (Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
+		shapeRenderer.end();
+	}
+
+	/** Draws the currentCustomer's order */
+	private void drawOrder() {
+		CustomerController customerC = gameController.getCustomerController();
+		if (!customerC.getCustomerQ().isEmpty()) {
+			Stack<Ingredient> copy = Utilities.copyStack(customerC.getCustomerQ().front().getOrder().getRecipe().getIngredients());
+			copy = Utilities.invertStack(copy);
+			int count = 0;
+			while (!copy.isEmpty()) {
+				batch.draw(
+						copy.top().getTexture(),
+						customerC.getOrderDisplay().getPosition().x+customerC.getOrderDisplay().getSize().x/2-copy.top().getSize().x*0.75f,
+						customerC.getOrderDisplay().getPosition().y+ 100+15*count,
+						copy.top().getSize().x*1.5f, copy.top().getSize().y*1.5f
+				);
+				count++;
+				copy.pop();
+			}
 		}
 	}
 
