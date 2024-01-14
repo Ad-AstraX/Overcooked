@@ -85,7 +85,7 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
 
-		gameController = new GameController(120f, 60, 15f);
+		gameController = new GameController(120f, 60, 20f);
 		maxGameTime = 120f;
 	}
 
@@ -267,9 +267,9 @@ public class Main extends ApplicationAdapter {
 			batch.draw(currentFrame, object.getPosition().x, object.getPosition().y, object.getSize().x, object.getSize().y);
 		} else {
 			batch.draw(
-					object.getTexture(),
-					object.getPosition().x, object.getPosition().y,
-					object.getSize().x, object.getSize().y
+				object.getTexture(),
+				object.getPosition().x, object.getPosition().y,
+				object.getSize().x, object.getSize().y
 			);
 		}
 	}

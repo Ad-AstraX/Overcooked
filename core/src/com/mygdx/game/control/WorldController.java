@@ -73,7 +73,7 @@ public class WorldController {
     public void showKitchenScene() {
         Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/floorTiles.png", new Vector2(0, 0), new Vector2(1950, 1425)));
         Main.getStaticObjectLists()[0].append(new BackgroundObject("Other/coinAnimTextures.png", 1, 6, 0.2f, new Vector2(30, 1300), new Vector2(447, 90)));
-        Main.getStaticObjectLists()[1].append(new BackgroundObject("Other/hourglass.png", new Vector2(30, 1150), new Vector2(170/2.5f, 275/2.5f)));
+        Main.getStaticObjectLists()[1].append(new BackgroundObject("Other/hourglass.png", new Vector2(50, 1150), new Vector2(170/2.5f, 275/2.5f)));
 
         // The layout of the kitchen. These numbers will be converted into objects in the next step
         int[][] kitchenScene = new int[][] {

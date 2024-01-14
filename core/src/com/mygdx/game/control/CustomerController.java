@@ -99,8 +99,8 @@ public class CustomerController {
         orderDisplay = new BackgroundObject("Customers/order.png", new Vector2(1575, 0), new Vector2(200*1.8f, 260*1.8f));
         Main.getStaticObjectLists()[1].append(orderDisplay);
 
-        patienceProgressBars[0] = new RectangleColored(ShapeRenderer.ShapeType.Filled, 1720, 0, 165, 25, 0.5f, 0, 0, 1);
-        patienceProgressBars[1] = new RectangleColored(ShapeRenderer.ShapeType.Line, 1720, 0, 165, 25, 0, 0, 0, 1);
+        patienceProgressBars[0] = new RectangleColored(ShapeRenderer.ShapeType.Filled, 1720, 0, 170, 15, 0, 0.5f, 0, 1);
+        patienceProgressBars[1] = new RectangleColored(ShapeRenderer.ShapeType.Line, 1720, 0, 170, 15, 0, 0, 0, 1);
         Main.getAllRectangles().append(patienceProgressBars[0]);
         Main.getAllRectangles().append(patienceProgressBars[1]);
     }
@@ -110,8 +110,8 @@ public class CustomerController {
         UpdateCustomerPatience(dt);
         UpdateMovement(orderDisplay, new Vector2(1575, 860), Vector2.Zero, dt);
 
-        if (patienceProgressBars[0] != null) patienceProgressBars[0].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 325);
-        if (patienceProgressBars[1] != null) patienceProgressBars[1].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 325);
+        if (patienceProgressBars[0] != null) patienceProgressBars[0].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 330);
+        if (patienceProgressBars[1] != null) patienceProgressBars[1].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 330);
     }
 
     private void UpdateCustomerMovement(float dt) {
@@ -141,7 +141,7 @@ public class CustomerController {
             customerQ.front().setPatience((int) (customerQ.front().getPatience()-dt));
 
             int burgerElements = Utilities.countStackElements(customerQ.front().getOrder().getRecipe().getIngredients());
-            patienceProgressBars[0].setWidth(patienceProgressBars[0].getWidth() - dt*(50f/burgerElements));
+            patienceProgressBars[0].setWidth(patienceProgressBars[0].getWidth() - dt*((100f/burgerElements)/burgerElements));
             
             if(customerQ.front().getPatience() <= 0) nextCustomer();
         }

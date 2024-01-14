@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.control.WorldController;
 import com.mygdx.game.model.object.holdable.IHoldable;
 
 /** A representation of the player. It can move around, interact with objects and in some cases hold them */
