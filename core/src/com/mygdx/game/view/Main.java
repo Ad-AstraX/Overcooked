@@ -91,7 +91,7 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
 
-		maxGameTime = 10f;
+		maxGameTime = 120f;
 		gameController = new GameController(maxGameTime, 60, 20f);
 	}
 
