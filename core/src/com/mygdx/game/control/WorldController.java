@@ -133,6 +133,7 @@ public class WorldController {
             if (allButtons.getContent() instanceof PlayButton) sceneID = 1;
             discard();
 
+            if (sceneID == 0) showStart();
             if (sceneID == 1) showKitchenScene();
         }
 
@@ -165,12 +166,18 @@ public class WorldController {
         Main.disposeOfTexturesInList(Main.getStaticObjectLists()[1]);
     }
 
+    // All Setters
     public void setTransitionDarker(boolean transitionDarker) {
         this.transitionDarker = transitionDarker;
     }
     public static void setMultiplayerOn(boolean multiplayerOn) {
         WorldController.multiplayerOn = multiplayerOn;
     }
+    public void setSceneID(int sceneID) {
+        this.sceneID = sceneID;
+    }
+
+    // All Getters
     public int getSceneID() {
         return sceneID;
     }
@@ -179,5 +186,8 @@ public class WorldController {
     }
     public static boolean isMultiplayerOn() {
         return multiplayerOn;
+    }
+    public List<Button> getAllButtons() {
+        return allButtons;
     }
 }

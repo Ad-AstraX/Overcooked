@@ -2,6 +2,7 @@ package com.mygdx.game.model.object.button;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.control.GameController;
 import com.mygdx.game.control.PlayerController;
 import com.mygdx.game.control.WorldController;
 import com.mygdx.game.view.Main;
@@ -19,7 +20,16 @@ public class PlayButton extends Button {
         if (mouseOnButton()) {
             if (this.texture.toString().equals("Textures/" + textures[0])) this.setTexture(textures[1]);
             if (mouseClicked()) {
-                Main.getGameController().getWorldController().setTransitionDarker(true);
+                // prepare
+                GameController.singleton.getPlayerController1().getPlayer().setPosition(new Vector2(750, 300));
+                if (GameController.singleton.getPlayerController1().getPlayer() != null)
+                    GameController.singleton.getPlayerController1().getPlayer().setHand(null);
+                GameController.getGame().setPayTotal(0);
+                GameController.getGame().setTimeLeft(Main.singleton.getMaxGameTime());
+
+                GameController.singleton.getCustomerController().emptyQueue();
+
+                GameController.singleton.getWorldController().setTransitionDarker(true);
                 clickedSound.play(0.5f);
 
                 if (WorldController.isMultiplayerOn()) {
@@ -32,7 +42,7 @@ public class PlayButton extends Button {
                             new Vector2(750, 500),
                             new int[]{ Input.Keys.UP, Input.Keys.LEFT, Input.Keys.DOWN, Input.Keys.RIGHT, Input.Keys.ENTER }
                     ));
-                    Main.getPlayers()[1] = Main.getGameController().getPlayerController2().getPlayer();
+                    Main.getPlayers()[1] = GameController.singleton.getPlayerController2().getPlayer();
                 }
                 return true;
             }

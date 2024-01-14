@@ -1,7 +1,9 @@
 package com.mygdx.game.control;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.model.BackgroundObject;
 import com.mygdx.game.model.Game;
 import com.mygdx.game.view.Main;
 
@@ -28,6 +30,7 @@ public class GameController {
 
     // TODO
     private static Game game;
+    private static BackgroundObject gameMessage;
 
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
         if (singleton == null)
@@ -61,16 +64,17 @@ public class GameController {
      * @param dt time
      */
     public void mainLoop(float dt) {
-        if (worldController.getSceneID() == 1) {
+        if (worldController.getSceneID() == 1 && game.getTimeLeft() >= 0) {
             playerController1.updateInput(dt);
             if (WorldController.isMultiplayerOn())
                 playerController2.updateInput(dt);
 
             tickTime(dt);
             tickGenCustomer();
-        }
 
-        customerController.UpdateCustomerAndOrder(dt);
+            customerController.UpdateCustomerAndOrder(dt);
+        } else if (game.getTimeLeft() <= 0) moveGameMessage(dt);
+
         worldController.update(dt);
     }
 
@@ -83,18 +87,34 @@ public class GameController {
         game.setTimeLeftLastFrame(game.getTimeLeft());
         game.setTimeLeft(game.getTimeLeft() - dt);
 
-        if (game.getTimeLeft() < 0) {
-            System.out.println("LOSS! Restart Game"); // TODO Restart Game
-            //worldController.setTransitionDarker(true);
-        }
+        if (game.getTimeLeft() <= 0 || game.getPayTotal() >= game.getPayGoal()) {
+            if (game.getTimeLeft() <= 0) {
+                gameMessage = new BackgroundObject("Other/lossGameMessage.png", new Vector2(1950/2f-380, 1675), new Vector2(380*2, 500));
+            } else {
+                gameMessage = new BackgroundObject("Other/winGameMessage.png", new Vector2(1950/2f-38, 1550), new Vector2(380*2, 500));
+            }
+            Main.getStaticObjectLists()[1].append(gameMessage);
 
-        if (game.getPayTotal() >= game.getPayGoal()) {
-            System.out.println("WON! Restart Game");
-            //worldController.setTransitionDarker(true);// TODO Restart Game
+            //TODO wait a little
+            worldController.setTransitionDarker(true);
+            worldController.setSceneID(0);
         }
     }
 
-    /** Executes every second with a certain chance to generate a new customer */
+    private void moveGameMessage(float dt) {
+        if (gameMessage.getPosition().equals(new Vector2(1950/2f-380, 1425/2f-250)))
+            return;
+
+        Vector2 movementTarget = new Vector2().add(new Vector2(1950/2f-380, 1425/2f-250));
+        Vector2 newPosition = new Vector2(
+                Interpolation.pow2InInverse.apply(gameMessage.getPosition().x, movementTarget.x, dt * 0.25f),
+                Interpolation.pow2InInverse.apply(gameMessage.getPosition().y, movementTarget.y, dt * 0.25f)
+        );
+        gameMessage.setPosition(newPosition);
+    }
+
+
+    /** Executes every frame with a certain chance to generate a new customer */
     private void tickGenCustomer() {
         if (Math.floor(game.getTimeLeft()) == Math.floor(game.getTimeLeftLastFrame()))
             return;
@@ -102,7 +122,6 @@ public class GameController {
         if ((float)Math.random() * 100f > game.getCustomerSpawnChance())
             return;
 
-        System.out.println("Spawned Customer");
         customerController.generateNewCustomer(orderController);
     }
 
@@ -118,6 +137,9 @@ public class GameController {
     }
     public CustomerController getCustomerController() {
         return customerController;
+    }
+    public PlayerController getPlayerController1() {
+        return playerController1;
     }
 
     // All Setters

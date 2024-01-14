@@ -32,7 +32,7 @@ public class OrderController {
      * @return whether the recipe and given plate match
      */
     public static boolean compareCustomerOrderToPlate(Customer customer,  Plate plate) {
-        if (plate == null)
+        if (plate == null || customer == null)
             return false;
 
         Stack<Ingredient> recipeStackCopy = Utilities.copyStack(customer.getOrder().getRecipe().getIngredients());

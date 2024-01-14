@@ -29,7 +29,7 @@ public class Player extends WorldObject {
     // All Setters
     public void setHand(IHoldable hand) {
         if (hand != null) hand.setInteractionPartner(this);
-        if (hand == null) this.hand.setInteractionPartner(null);
+        if (hand == null && this.hand != null) this.hand.setInteractionPartner(null);
         this.hand = hand;
     }
     public void setDirection(Vector2 direction) {

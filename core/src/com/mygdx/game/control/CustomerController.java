@@ -106,12 +106,16 @@ public class CustomerController {
     }
 
     public void UpdateCustomerAndOrder(float dt) {
-        UpdateCustomerMovement(dt);
-        UpdateCustomerPatience(dt);
-        UpdateMovement(orderDisplay, new Vector2(1575, 860), Vector2.Zero, dt);
+        if (GameController.getGame().getTimeLeft() > 0 && GameController.getGame().getPayTotal() < GameController.getGame().getPayGoal()) {
+            UpdateCustomerMovement(dt);
+            UpdateCustomerPatience(dt);
+            UpdateMovement(orderDisplay, new Vector2(1575, 860), Vector2.Zero, dt);
 
-        if (patienceProgressBars[0] != null) patienceProgressBars[0].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 330);
-        if (patienceProgressBars[1] != null) patienceProgressBars[1].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 330);
+            if (patienceProgressBars[0] != null)
+                patienceProgressBars[0].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 330);
+            if (patienceProgressBars[1] != null)
+                patienceProgressBars[1].setPosition(orderDisplay.getPosition().x + 150, orderDisplay.getPosition().y + 330);
+        }
     }
 
     private void UpdateCustomerMovement(float dt) {
@@ -147,11 +151,30 @@ public class CustomerController {
         }
     }
 
+    public void emptyQueue() {
+        customerList.toFirst();
+        while (!customerQ.isEmpty()) {
+            customerQ.dequeue();
+            customerList.remove();
+        }
+        customerQLength = 0;
+
+        System.out.println(Utilities.countListElements(customerList));
+
+        orderDisplay = null;
+        patienceProgressBars[0] = null;
+        patienceProgressBars[1] = null;
+    }
+
     // All Getters
     public Queue<Customer> getCustomerQ() {
         return customerQ;
     }
     public BackgroundObject getOrderDisplay() {
         return orderDisplay;
+    }
+
+    public void setCustomerQLength(int customerQLength) {
+        this.customerQLength = customerQLength;
     }
 }

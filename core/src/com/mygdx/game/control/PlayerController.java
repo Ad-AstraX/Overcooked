@@ -86,7 +86,7 @@ public class PlayerController {
             player.setDirection(new Vector2(1, 0));
         }
 
-        player.getPosition().add(move.nor().scl(Player.MOVEMENT_SPEED + ((!WorldController.isMultiplayerOn() ? 1 : 0) * 100)).scl(dt));
+        player.getPosition().add(move.nor().scl(Player.MOVEMENT_SPEED + ((!WorldController.isMultiplayerOn() ? 1 : 0) * 50)).scl(dt));
     }
 
     /**

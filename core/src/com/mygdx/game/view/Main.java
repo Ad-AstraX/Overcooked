@@ -38,6 +38,9 @@ import com.mygdx.game.model.object.workstation.Workbench;
  * and font are disposed of </p>
  */
 public class Main extends ApplicationAdapter {
+	/** For global access */
+	public static Main singleton;
+
 	// Attributes regarding graphics and sound
 	private static OrthographicCamera camera;
 	private static ExtendViewport viewport;
@@ -72,6 +75,9 @@ public class Main extends ApplicationAdapter {
 	 */
 	@Override
 	public void create() {
+		if (singleton == null)
+			singleton = this;
+
 		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/backgroundMusic.mp3"));
 		music.setLooping(true);
 		music.setVolume(0.2f);
@@ -85,8 +91,8 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("Fonts/CoinDisplay/coinDisplay.fnt"), false);
 
-		gameController = new GameController(120f, 60, 20f);
-		maxGameTime = 120f;
+		maxGameTime = 10f;
+		gameController = new GameController(maxGameTime, 60, 20f);
 	}
 
 	/** This method is called once every frame and updates the graphics on the screen */
@@ -166,19 +172,19 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.setColor(1, 1, 1, 1);
-		shapeRenderer.arc(150, 1200, 70, 10, 360);
+		shapeRenderer.arc(150, 1200, 70, 0, 360);
 
 		shapeRenderer.setColor(0, 154/255f, 205/255f, 1);
-		shapeRenderer.arc(150, 1200, 70, 10, 360 - (maxGameTime - (Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
+		shapeRenderer.arc(150, 1200, 70, 0, 360 - (maxGameTime - (Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
 		shapeRenderer.end();
 
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.setColor(0, 0, 0, 1);
-		shapeRenderer.arc(150, 1200, 70, 10, 360);
+		shapeRenderer.arc(150, 1200, 70, 0, 360);
 
 		shapeRenderer.setColor(0, 0, 0, 1);
-		shapeRenderer.arc(150, 1200, 70, 10, 360 - (maxGameTime - (Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
+		shapeRenderer.arc(150, 1200, 70, 0, 360 - (maxGameTime - (Math.round(GameController.getGame().getTimeLeft() * 100.0) / 100f))*(360/maxGameTime));
 		shapeRenderer.end();
 	}
 
@@ -393,5 +399,8 @@ public class Main extends ApplicationAdapter {
 	}
 	public static Music getMusic() {
 		return music;
+	}
+	public float getMaxGameTime() {
+		return maxGameTime;
 	}
 }

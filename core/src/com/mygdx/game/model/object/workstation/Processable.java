@@ -58,8 +58,9 @@ public abstract class Processable extends KitchenCounter {
                     RectangleColored current = Main.getAllRectangles().getContent();
                     if (current.equals(progressBar) || current.equals(progressBarInside) || current.equals(progressBarOutline)) {
                         Main.getAllRectangles().remove();
+                    } else {
+                        Main.getAllRectangles().next();
                     }
-                    Main.getAllRectangles().next();
                 }
                 progressBar = null;
                 progressBarInside = null;
