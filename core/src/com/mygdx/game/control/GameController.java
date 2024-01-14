@@ -31,6 +31,7 @@ public class GameController {
     // TODO
     private static Game game;
     private static BackgroundObject gameMessage;
+    private float timer = 2;
 
     public GameController(float roundLength, int payGoal, float customerSpawnChance) {
         if (singleton == null)
@@ -64,7 +65,7 @@ public class GameController {
      * @param dt time
      */
     public void mainLoop(float dt) {
-        if (worldController.getSceneID() == 1 && game.getTimeLeft() >= 0) {
+        if (worldController.getSceneID() == 1 && game.getTimeLeft() >= 0 && game.getPayGoal() >= game.getPayTotal()) {
             playerController1.updateInput(dt);
             if (WorldController.isMultiplayerOn())
                 playerController2.updateInput(dt);
@@ -73,7 +74,19 @@ public class GameController {
             tickGenCustomer();
 
             customerController.UpdateCustomerAndOrder(dt);
-        } else if (game.getTimeLeft() <= 0) moveGameMessage(dt);
+        } else if (game.getTimeLeft() <= 0 || game.getPayGoal() <= game.getPayTotal()) {
+            timer -= dt;
+            moveGameMessage(dt);
+
+            if (timer <= 0) {
+                worldController.setTransitionDarker(true);
+                WorldController.setMultiplayerOn(true);
+                worldController.setSceneID(0);
+                game.setTimeLeft(Main.singleton.getMaxGameTime());
+                game.setPayTotal(0);
+                timer = 2;
+            }
+        }
 
         worldController.update(dt);
     }
@@ -91,13 +104,9 @@ public class GameController {
             if (game.getTimeLeft() <= 0) {
                 gameMessage = new BackgroundObject("Other/lossGameMessage.png", new Vector2(1950/2f-380, 1675), new Vector2(380*2, 500));
             } else {
-                gameMessage = new BackgroundObject("Other/winGameMessage.png", new Vector2(1950/2f-38, 1550), new Vector2(380*2, 500));
+                gameMessage = new BackgroundObject("Other/winGameMessage.png", new Vector2(1950/2f-380, 1675), new Vector2(380*2, 500));
             }
             Main.getStaticObjectLists()[1].append(gameMessage);
-
-            //TODO wait a little
-            worldController.setTransitionDarker(true);
-            worldController.setSceneID(0);
         }
     }
 
