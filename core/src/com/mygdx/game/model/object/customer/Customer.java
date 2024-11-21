@@ -24,7 +24,7 @@ public class Customer extends WorldObject {
         Main.getStaticObjectLists()[0].next(); // 💀💀 Darüber reden wir lieber nicht
         Main.getStaticObjectLists()[0].insert(this);
         this.order = order;
-        this.patience = Utilities.countStackElements(order.getRecipe().getIngredients())*600;
+        this.patience = Utilities.countStackElements(order.getRecipe())*600;
     }
 
     public void deregisterFromDrawing() {

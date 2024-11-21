@@ -79,11 +79,11 @@ public class WorldController {
         int[][] kitchenScene = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 1, 7, 1, 1, 1, 1, 1, 1, 1, 7, 1, 0, 0, 0},
-                {0, 1, 0, 0, 2, 0, 0, 0, 4, 0, 0, 1, 0, 0, 0},
-                {0, 9, 0, 0, 3, 0, 0, 0, 5, 0, 0, 10, 0, 0, 0},
+                {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+                {0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0},
                 {0, 1, 0, 0, 6, 0, 0, 0, 6, 0, 0, 1, 0, 0, 0},
-                {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-                {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+                {0, 1, 0, 0, 3, 0, 0, 0, 5, 0, 0, 1, 0, 0, 0},
+                {0, 1, 0, 0, 2, 0, 0, 0, 4, 0, 0, 1, 0, 0, 0},
                 {0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0},
                 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
                 {0, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 0, 0, 0},
@@ -92,7 +92,7 @@ public class WorldController {
 
         for (int i = kitchenScene.length-1; i > 0; i--) {
             List<WorldObject> currentList = Main.getStaticObjectLists()[1];
-            if (i > 4) currentList = Main.getStaticObjectLists()[0];
+            if (i > 1) currentList = Main.getStaticObjectLists()[0];
             for (int j = 0; j < kitchenScene[i].length; j++) {
                 Vector2 position = new Vector2(j*130, i*95);
                 if (kitchenScene[i][j] == 1) currentList.append(new Workbench(position));

@@ -152,7 +152,7 @@ public class CustomerController {
         if (!customerQ.isEmpty()) {
             customerQ.front().setPatience((int) (customerQ.front().getPatience()-dt));
 
-            int burgerElements = Utilities.countStackElements(customerQ.front().getOrder().getRecipe().getIngredients());
+            int burgerElements = Utilities.countStackElements(customerQ.front().getOrder().getRecipe());
             patienceProgressBars[0].setWidth(patienceProgressBars[0].getWidth() - dt*(17f/burgerElements));
             
             if(customerQ.front().getPatience() <= 0) nextCustomer();

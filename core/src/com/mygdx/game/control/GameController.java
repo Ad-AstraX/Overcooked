@@ -55,7 +55,7 @@ public class GameController {
         playerController2 = null;
 
         customerController = new CustomerController();
-        orderController = new OrderController(new RecipeController());
+        orderController = new OrderController();
 
         worldController = new WorldController();
         worldController.showStart();

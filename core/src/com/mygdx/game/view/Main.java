@@ -99,7 +99,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void render() {
 		// If condition that stops program from updating when it is being resized or dragged
-		if (Gdx.graphics.getDeltaTime() < 0.02f) {
+		//if (Gdx.graphics.getDeltaTime() < 0.02f) {
 			averageFPS.x += Gdx.graphics.getFramesPerSecond();
 			averageFPS.y++;
 
@@ -152,7 +152,7 @@ public class Main extends ApplicationAdapter {
 						205 - (float) (GameController.singleton.getGame().getPayTotal() + " $").length() / 2 * 32f, 1380);
 				batch.end();
 				drawFromRectanglesList();
-			}
+			//}
 
 			// The "transitionRectangle" of the worldController is drawn last as it has to be in front of all other objects
 			Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -192,7 +192,7 @@ public class Main extends ApplicationAdapter {
 	private void drawOrder() {
 		CustomerController customerC = gameController.getCustomerController();
 		if (!customerC.getCustomerQ().isEmpty()) {
-			Stack<Ingredient> copy = Utilities.copyStack(customerC.getCustomerQ().front().getOrder().getRecipe().getIngredients());
+			Stack<Ingredient> copy = Utilities.copyStack(customerC.getCustomerQ().front().getOrder().getRecipe());
 			copy = Utilities.invertStack(copy);
 			int count = 0;
 			while (!copy.isEmpty()) {

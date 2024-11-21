@@ -1,16 +1,19 @@
 package com.mygdx.game.model.object.customer;
 
+import com.mygdx.game.model.datastructures.Stack;
+import com.mygdx.game.model.object.holdable.ingredient.Ingredient;
+
 /** This class represents an order containing a recipes that the player must recreate and serve to the customer */
 public class Order {
     /** The recipe stored in this order */
-    private final Recipe recipe;
+    private final Stack<Ingredient> recipe;
 
-    public Order(Recipe recipes) {
-        this.recipe = recipes;
+    public Order(Stack<Ingredient> recipe) {
+        this.recipe = recipe;
     }
 
     // All Getters
-    public Recipe getRecipe() {
+    public Stack<Ingredient> getRecipe() {
         return recipe;
     }
 }
