@@ -74,6 +74,9 @@ public class PlayerController {
             player.setDirection(new Vector2(0, -1));
         }
 
+        player.getPosition().add(move.nor().scl(Player.MOVEMENT_SPEED + ((!WorldController.isMultiplayerOn() ? 1 : 0) * 50)).scl(dt));
+        move = new Vector2(0, 0);
+
         if (Gdx.input.isKeyPressed(controls[1])) {
             player.setAnimation(textures[1], (int) player.getColsAndRows().x, (int) player.getColsAndRows().y, 0.3f);
             move.add(new Vector2(-1, 0));
